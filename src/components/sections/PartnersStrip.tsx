@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import Image from "next/image";
+import { motion } from "framer-motion";
 import { Plane, Hotel, Building2, Shield } from "lucide-react";
 
 interface Partner {
@@ -55,12 +56,12 @@ const PARTNERS: Partner[] = [
     bgColor: "bg-[#002B7F]/10 border-[#002B7F]/20",
   },
   {
-    name: "FlyDubai",
-    code: "FZ",
+    name: "Singapore Airlines",
+    code: "SQ",
     category: "Airline",
     logo: "https://images.unsplash.com/photo-1524592714635-d77511a4834d?w=200&q=80",
-    color: "text-[#EE7000]",
-    bgColor: "bg-[#EE7000]/10 border-[#EE7000]/20",
+    color: "text-[#00266B]",
+    bgColor: "bg-[#00266B]/10 border-[#00266B]/20",
   },
   {
     name: "Thai Airways",
@@ -111,12 +112,17 @@ export default function PartnersStrip() {
         </p>
 
         <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-6 md:gap-8">
-          {PARTNERS.map((partner) => {
+          {PARTNERS.map((partner, idx) => {
             const hasFailed = failedLogos[partner.name];
 
             return (
-              <div
+              <motion.div
                 key={partner.name}
+                initial={{ opacity: 0, y: 16 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.45, delay: idx * 0.05, ease: "easeOut" }}
+                whileHover={{ y: -4, scale: 1.03, transition: { duration: 0.2 } }}
                 className="group relative flex items-center gap-2.5 px-4 py-2.5 rounded-2xl bg-[#f8fafc] border border-[#e2e8f0] hover:border-[#0ea5e9]/40 hover:bg-white hover:shadow-lg transition-all duration-300 cursor-pointer select-none"
               >
                 {/* Logo Image or Code Badge */}
@@ -146,7 +152,7 @@ export default function PartnersStrip() {
                     {partner.category}
                   </span>
                 </div>
-              </div>
+              </motion.div>
             );
           })}
         </div>

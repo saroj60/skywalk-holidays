@@ -39,54 +39,53 @@ export default function PackageInquirySidebar({
     setErrorMsg("");
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!formData.fullName || !formData.travelDate || !formData.whatsappNumber) {
-      setErrorMsg("Please fill in your Full Name, Travel Date, and WhatsApp Number.");
+    if (!formData.fullName.trim() || !formData.whatsappNumber.trim()) {
+      setErrorMsg("Please fill in your Full Name and WhatsApp Number.");
       return;
     }
 
     setIsSubmitting(true);
     setErrorMsg("");
 
-    try {
-      const res = await fetch("/api/inquiries/package", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          packageId: packageId || null,
-          packageName: packageTitle,
-          destination,
-          travelDate: formData.travelDate,
-          travelers: formData.travelers,
-          customerName: formData.fullName,
-          whatsappNumber: formData.whatsappNumber,
-          specialRequirements: formData.specialRequirements,
-        }),
-      });
+    // Build the direct WhatsApp URL
+    const waLink = buildWhatsAppLink({
+      service: "Holiday Package Booking",
+      name: formData.fullName.trim(),
+      destination,
+      travelDate: formData.travelDate || "Flexible / Soon",
+      passengers: formData.travelers || "2 Adults",
+      whatsappNumber: formData.whatsappNumber.trim(),
+      additionalDetails: `Package: ${packageTitle} (${duration})${
+        formData.specialRequirements.trim() ? ` | Notes: ${formData.specialRequirements.trim()}` : ""
+      }`,
+    });
 
-      if (!res.ok) {
-        const errData = await res.json().catch(() => ({}));
-        throw new Error(errData.error || "Failed to save package inquiry.");
-      }
+    setWhatsappUrl(waLink);
+    setSubmitted(true);
+    setIsSubmitting(false);
 
-      const waLink = buildWhatsAppLink({
-        service: "Holiday Package Booking",
-        name: formData.fullName,
-        destination,
-        travelDate: formData.travelDate,
-        passengers: formData.travelers,
-        whatsappNumber: formData.whatsappNumber,
-        additionalDetails: `Package: ${packageTitle} (${duration}) | Special Notes: ${formData.specialRequirements || "None"}`,
-      });
-
-      setWhatsappUrl(waLink);
-      setSubmitted(true);
-    } catch (err: any) {
-      setErrorMsg(err.message || "An error occurred while saving inquiry.");
-    } finally {
-      setIsSubmitting(false);
+    // Directly open WhatsApp window immediately
+    if (typeof window !== "undefined") {
+      window.open(waLink, "_blank", "noopener,noreferrer");
     }
+
+    // Save inquiry to backend asynchronously in background (non-blocking)
+    fetch("/api/inquiries/package", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        packageId: packageId || null,
+        packageName: packageTitle,
+        destination,
+        travelDate: formData.travelDate || "Flexible",
+        travelers: formData.travelers,
+        customerName: formData.fullName,
+        whatsappNumber: formData.whatsappNumber,
+        specialRequirements: formData.specialRequirements,
+      }),
+    }).catch(() => {});
   };
 
   return (
@@ -106,26 +105,26 @@ export default function PackageInquirySidebar({
       </div>
 
       {submitted ? (
-        <div className="text-center py-4 space-y-4">
-          <div className="w-12 h-12 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center mx-auto">
-            <CheckCircle2 size={28} />
+        <div className="text-center py-6 space-y-4">
+          <div className="w-14 h-14 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center mx-auto">
+            <CheckCircle2 size={32} />
           </div>
-          <h4 className="font-bold text-[#0a1628] text-base">Inquiry Saved!</h4>
-          <p className="text-xs text-[#64748b]">
-            Click below to send your flight, hotel &amp; visa details directly to our tour consultant on WhatsApp.
+          <h4 className="font-bold text-[#0a1628] text-lg">Opening WhatsApp...</h4>
+          <p className="text-xs text-[#64748b] leading-relaxed">
+            WhatsApp should open automatically. If it did not open or your browser blocked the popup, click below:
           </p>
           <a
             href={whatsappUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="w-full inline-flex items-center justify-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3.5 px-4 rounded-xl shadow-lg transition-all text-xs min-h-[44px]"
+            className="w-full inline-flex items-center justify-center gap-2 bg-[#25D366] hover:bg-[#20bd5a] text-white font-extrabold py-3.5 px-4 rounded-xl shadow-lg transition-all text-sm min-h-[46px]"
           >
-            <MessageSquare size={16} />
-            Send Inquiry via WhatsApp Now
+            <MessageSquare size={18} />
+            Open WhatsApp Chat Now
           </a>
           <button
             onClick={() => setSubmitted(false)}
-            className="text-xs text-[#0ea5e9] font-semibold hover:underline block mx-auto pt-2"
+            className="text-xs text-[#0ea5e9] font-semibold hover:underline block mx-auto pt-2 cursor-pointer"
           >
             Edit Inquiry Details
           </button>

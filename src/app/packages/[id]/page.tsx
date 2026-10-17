@@ -21,892 +21,79 @@ import {
   FileCheck2,
   AlertCircle,
   Package,
+  Play,
+  Video,
 } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import PackageInquirySidebar from "@/components/packages/PackageInquirySidebar";
 import PackageGallerySection from "@/components/packages/PackageGallerySection";
 import PackageSubNav from "@/components/packages/PackageSubNav";
 import PackagePdfButton from "@/components/packages/PackagePdfButton";
 
-export const PACKAGES_DICTIONARY: Record<string, any> = {
-  "dubai-6d": {
-    id: "dubai-6d",
-    title: "Dubai Extravaganza & Desert Safari",
-    destination: "Dubai & Abu Dhabi, United Arab Emirates",
-    duration: "5 Nights / 6 Days",
-    price: 65000,
-    originalPrice: 78000,
-    rating: 4.9,
-    reviewsCount: 184,
-    gallery: [
-      "https://images.unsplash.com/photo-1512453979798-5ea266f8880c?w=1200&q=85",
-      "https://images.unsplash.com/photo-1509316975850-ff9c5deb0cd9?w=800&q=80",
-      "https://images.unsplash.com/photo-1546412414-8035e1786b9e?w=800&q=80",
-      "https://images.unsplash.com/photo-1518684079-3c830dcef090?w=800&q=80",
-    ],
-    overview:
-      "Embark on an unforgettable 6-day journey to Dubai — the city of gold and futuristic wonder. This carefully designed package blends cosmopolitan luxury with desert adventure. Experience dune bashing and traditional barbecue under the stars, marvel at the skyline from the 124th floor of Burj Khalifa, sail along Dubai Marina on a traditional Dhow cruise, and explore the Sheikh Zayed Grand Mosque in Abu Dhabi.",
-    highlights: [
-      "Round-trip international flights from Kathmandu",
-      "4-Star luxury hotel stay with daily breakfast",
-      "Thrill-packed Desert Safari with Dune Bashing, Camel Rides & BBQ Dinner",
-      "Entry ticket to Burj Khalifa 124th Floor Observation Deck",
-      "Full-day Abu Dhabi City Tour with Sheikh Zayed Mosque visit",
-      "Dubai Marina Sunset Dhow Cruise with International Buffet",
-      "Seamless Tourist Visa processing & airport transfers",
-    ],
-    outlineItinerary: [
-      { day: "Day 1", title: "Arrival in Dubai & Marina Dhow Cruise", activity: "Airport pickup, hotel check-in, evening 2-hour Dhow Cruise with buffet dinner." },
-      { day: "Day 2", title: "Dubai City Tour & Burj Khalifa At The Top", activity: "Half-day city tour (Gold Souk, Atlantis photo stop), 124th floor Burj Khalifa deck." },
-      { day: "Day 3", title: "Shopping & Afternoon Desert Safari", activity: "Free morning for Dubai Mall shopping. 3:00 PM 4WD dune bashing, camel rides & BBQ show." },
-      { day: "Day 4", title: "Abu Dhabi City Tour & Sheikh Zayed Mosque", activity: "Full-day Abu Dhabi tour visiting Sheikh Zayed Grand Mosque & Corniche." },
-      { day: "Day 5", title: "Leisure Day / Optional Miracle Garden", activity: "Free day for Miracle Garden, Global Village, or Ski Dubai snow park." },
-      { day: "Day 6", title: "Final Shopping & Departure to Kathmandu", activity: "Hotel check-out and private transfer to Dubai International Airport for return flight." },
-    ],
-    itinerary: [
-      {
-        day: "Day 1",
-        title: "Arrival in Dubai & Evening Marina Dhow Cruise",
-        description:
-          "Arrive at Dubai International Airport (DXB). Meet our representative and transfer to your 4-star hotel. In the evening, enjoy a 2-hour romantic Dhow Cruise along Dubai Marina featuring a lavish international buffet dinner.",
-      },
-      {
-        day: "Day 2",
-        title: "Dubai City Tour & Burj Khalifa At The Top",
-        description:
-          "Guided city tour covering Gold Souk, Jumeirah Mosque, and Atlantis The Palm photo stop. Afternoon visit to Burj Khalifa 124th floor for panoramic views and Dubai Fountain show.",
-      },
-      {
-        day: "Day 3",
-        title: "Shopping & Afternoon Desert Safari",
-        description:
-          "Morning shopping at Dubai Mall. At 3:00 PM, 4WD Land Cruisers pick you up for Desert Safari with dune bashing, camel riding, belly dance performance, and BBQ dinner show.",
-      },
-      {
-        day: "Day 4",
-        title: "Abu Dhabi City Tour & Sheikh Zayed Mosque",
-        description:
-          "Full-day tour to Abu Dhabi visiting Sheikh Zayed Grand Mosque, Corniche waterfront, Heritage Village, and Yas Island photo stop.",
-      },
-      {
-        day: "Day 5",
-        title: "Leisure Day / Optional Visit to Miracle Garden",
-        description:
-          "Day at leisure to explore Miracle Garden, Global Village, or Ski Dubai snow park at your own pace.",
-      },
-      {
-        day: "Day 6",
-        title: "Final Shopping & Departure to Kathmandu",
-        description:
-          "Hotel check-out and private transfer to Dubai Airport for return flight back to Kathmandu.",
-      },
-    ],
-    inclusions: [
-      "International Flight Tickets (Kathmandu ⇄ Dubai)",
-      "5 Nights Accommodation in 4-Star Hotel (Double Sharing)",
-      "Daily International Buffet Breakfast",
-      "Desert Safari with 4WD Dune Bashing & BBQ Show",
-      "Burj Khalifa At The Top (124th Floor) Ticket",
-      "Dubai Marina Dhow Cruise with Buffet Dinner",
-      "Full-Day Abu Dhabi City Tour with Mosque Visit",
-      "UAE Tourist Visa with Insurance Coverage",
-      "Airport Transfers in Private AC Vehicle",
-    ],
-    exclusions: [
-      "Personal expenses (laundry, telephone calls, minibar)",
-      "Meals other than specified (Lunches and unmentioned dinners)",
-      "Driver and tour guide tips (Recommended $3-5/day)",
-      "Tourism Dirham fee paid directly to hotel (approx. 15 AED/room/night)",
-      "Optional entry tickets (Miracle Garden, Ferrari World, Ski Dubai)",
-    ],
-    equipment: [
-      {
-        category: "Clothing & Wearables",
-        items: [
-          "Lightweight cotton shirts & breathable summer clothing",
-          "Modest attire covering shoulders & knees for Sheikh Zayed Mosque (Abu Dhabi)",
-          "Comfortable walking sneakers / sandals for city tours & dune bashing",
-          "Sunglasses, UV sun hat, and light jacket for air-conditioned buses/malls",
-        ],
-      },
-      {
-        category: "Travel Essentials & Electronics",
-        items: [
-          "UK 3-pin G-type power adapter / universal travel plug",
-          "High-capacity power bank & camera equipment",
-          "Sunscreen (SPF 50+), lip balm, and moisturizer for desert climate",
-        ],
-      },
-      {
-        category: "Important Documents & Cash",
-        items: [
-          "Original passport valid for at least 6 months",
-          "Printed UAE e-Visa & travel insurance copy",
-          "International credit/debit card & Dirham (AED) or USD cash",
-        ],
-      },
-    ],
-    hotelInfo: {
-      name: "Al Khoory Atrium Hotel / Carlton Downtown (4-Star)",
-      rating: "4-Star Deluxe Hotel",
-      checkIn: "14:00 PM",
-      checkOut: "12:00 PM",
-      roomType: "Deluxe King / Twin Room",
-      amenities: ["Rooftop Pool", "Spa & Wellness", "Free High-Speed Wi-Fi", "Fitness Center"],
-    },
-    transportation: {
-      flightInfo: "Direct flights via Emirates, FlyDubai, or Nepal Airlines.",
-      transfers: "Air-conditioned private/shared tourist vehicle.",
-      driver: "Licensed English speaking tour guide & driver.",
-    },
-    importantNotes: [
-      "Passport valid for at least 6 months required.",
-      "UAE Visa issued within 3-5 business days.",
-      "30% deposit required at time of booking.",
-    ],
-    faqs: [
-      {
-        q: "What is the visa process for Nepali citizens?",
-        a: "We process official UAE e-visas directly. Scanned passport copy & photo required.",
-      },
-      {
-        q: "Can I customize this itinerary?",
-        a: "Yes! Extra nights and 5-Star Atlantis upgrades are available.",
-      },
-    ],
-  },
-
-  "thailand-5d": {
-    id: "thailand-5d",
-    title: "Thailand Bangkok & Phuket Beach Escape",
-    destination: "Bangkok & Phuket, Thailand",
-    duration: "4 Nights / 5 Days",
-    price: 38000,
-    originalPrice: 46000,
-    rating: 4.8,
-    reviewsCount: 156,
-    gallery: [
-      "https://images.unsplash.com/photo-1552465011-b4e21bf6e79a?w=1200&q=85",
-      "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800&q=80",
-      "https://images.unsplash.com/photo-1508009603885-50cf7c579365?w=800&q=80",
-      "https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800&q=80",
-    ],
-    overview:
-      "Experience the tropical magic of Thailand! Relax on Patong's white sand beaches in Phuket, take a high-speed speedboat to Phi Phi Islands and Maya Bay, and dive into Bangkok's vibrant night markets and sacred golden temples.",
-    highlights: [
-      "Round-trip international flights from Kathmandu",
-      "2 Nights Beachfront Resort in Phuket + 2 Nights City Hotel in Bangkok",
-      "Full-Day Phi Phi Island & Maya Bay Speedboat Tour with buffet lunch",
-      "Guided Bangkok Temple Tour: Wat Pho & Golden Buddha",
-      "Shopping tour to Asiatique Riverfront & Pratunam Night Market",
-      "Thailand Tourist Visa guidance & private airport transfers",
-    ],
-    outlineItinerary: [
-      { day: "Day 1", title: "Arrival in Phuket & Beach Leisure", activity: "Airport transfer to Patong beach resort, evening leisure at Bangla Road." },
-      { day: "Day 2", title: "Phi Phi Island & Maya Bay Speedboat Tour", activity: "Full-day speedboat island tour, Maya Bay, Viking Cave, snorkeling & buffet lunch." },
-      { day: "Day 3", title: "Domestic Flight to Bangkok & Riverfront Shopping", activity: "Flight to Bangkok, check-in, evening Asiatique Riverfront night market tour." },
-      { day: "Day 4", title: "Bangkok Golden Temple City Tour", activity: "Wat Pho (Reclining Buddha) & Wat Traimit (Golden Buddha) temple tour, shopping." },
-      { day: "Day 5", title: "Departure to Kathmandu", activity: "Free shopping morning, airport transfer for return flight to Kathmandu." },
-    ],
-    itinerary: [
-      {
-        day: "Day 1",
-        title: "Arrival in Phuket & Beach Leisure",
-        description:
-          "Arrive at Phuket International Airport (HKT). Private transfer to 4-Star Beach Resort. Free afternoon to enjoy Patong Beach and Bangla Road night market.",
-      },
-      {
-        day: "Day 2",
-        title: "Phi Phi Island & Maya Bay Speedboat Tour",
-        description:
-          "Full-day tour to Maya Bay (featured in 'The Beach'), Viking Cave, Monkey Beach, and Khai Island with snorkeling and buffet lunch.",
-      },
-      {
-        day: "Day 3",
-        title: "Domestic Flight to Bangkok & Riverfront Shopping",
-        description:
-          "Fly from Phuket to Bangkok. Check-in at Bangkok hotel. Evening visit to Asiatique The Riverfront night bazaar.",
-      },
-      {
-        day: "Day 4",
-        title: "Bangkok Temple & City Sightseeing",
-        description:
-          "Guided tour of Wat Pho (Reclining Buddha) and Wat Traimit (Golden Buddha). Free afternoon for shopping at Platinum Fashion Mall.",
-      },
-      {
-        day: "Day 5",
-        title: "Departure to Kathmandu",
-        description:
-          "Free time for last-minute shopping until transfer to Suvarnabhumi Airport for return flight to Kathmandu.",
-      },
-    ],
-    inclusions: [
-      "International Flight Tickets (Kathmandu ⇄ Phuket / Bangkok)",
-      "Domestic Flight (Phuket → Bangkok)",
-      "4 Nights Accommodation in 4-Star Hotels with Daily Breakfast",
-      "Phi Phi Island Speedboat Tour with Lunch & Snorkeling Equipment",
-      "Bangkok Temple & City Sightseeing Tour",
-      "Airport & Hotel Transfers in Private AC Minivan",
-    ],
-    exclusions: [
-      "National Park Entry Fee (approx. 400 THB/person paid in cash at pier)",
-      "Personal shopping & unmentioned meals",
-      "Tips for drivers and boat crew",
-      "Thailand Visa on Arrival fee (2,000 THB if applicable)",
-    ],
-    equipment: [
-      {
-        category: "Beach & Swimming Wearables",
-        items: [
-          "Swimsuits, rash guards, water shoes for island coral reefs",
-          "Quick-dry towels, beach tote bag, waterproof phone pouch",
-          "Reef-safe sunscreen (SPF 50+), sunglasses, and sun hat",
-        ],
-      },
-      {
-        category: "Temple Attire",
-        items: [
-          "Modest clothing covering knees & shoulders for Bangkok temples",
-          "Easy slip-on shoes (shoes removed before entering sacred temple halls)",
-        ],
-      },
-      {
-        category: "Documents & Currency",
-        items: [
-          "Passport valid for at least 6 months",
-          "Thai Baht (THB) cash for night markets & street food",
-        ],
-      },
-    ],
-    hotelInfo: {
-      name: "Centara Beach Resort Phuket & Centara Watergate Bangkok",
-      rating: "4-Star Hotel",
-      checkIn: "14:00 PM",
-      checkOut: "12:00 PM",
-      roomType: "Superior City / Ocean View Room",
-      amenities: ["Swimming Pool", "Fitness Center", "Spa", "Free Wi-Fi"],
-    },
-    transportation: {
-      flightInfo: "Direct / 1-stop flights via Thai Airways or Nepal Airlines.",
-      transfers: "Air-conditioned private minivan & luxury speedboat.",
-      driver: "English speaking Thai local driver & tour guide.",
-    },
-    importantNotes: [
-      "Visa on Arrival available at airport or pre-applied e-Visa.",
-      "Bring sunscreen and swimwear for Phi Phi Island tour.",
-    ],
-    faqs: [
-      {
-        q: "Is Visa on Arrival available for Nepalese citizens?",
-        a: "Yes, Visa on Arrival is available at Phuket and Bangkok airports with 2,000 THB fee and passport photos.",
-      },
-    ],
-  },
-
-  "bali-7d": {
-    id: "bali-7d",
-    title: "Tropical Bali Romance & Cultural Getaway",
-    destination: "Ubud & Kuta, Bali, Indonesia",
-    duration: "6 Nights / 7 Days",
-    price: 52000,
-    originalPrice: 64000,
-    rating: 4.9,
-    reviewsCount: 210,
-    gallery: [
-      "https://images.unsplash.com/photo-1537996194471-e657df975ab4?w=1200&q=85",
-      "https://images.unsplash.com/photo-1518548419970-58e3b4079ab2?w=800&q=80",
-      "https://images.unsplash.com/photo-1537953773345-d172ccf13cf1?w=800&q=80",
-      "https://images.unsplash.com/photo-1544644181-1484b3fdfc62?w=800&q=80",
-    ],
-    overview:
-      "Escape to the Island of the Gods! This romantic getaway combines luxury pool villas in the jungle hills of Ubud with sunset beachfront resorts in Seminyak. Swing over emerald rice terraces, witness the Uluwatu cliffside Kecak dance, and sail on a romantic sunset catamaran cruise.",
-    highlights: [
-      "3 Nights Luxury Private Pool Villa in Ubud + 3 Nights Beachfront Resort in Seminyak",
-      "Famous Ubud Jungle Swing photoshoot & Tegalalang rice terrace tour",
-      "Sunset Catamaran Cruise with buffet dinner & live acoustic music",
-      "Nusa Penida Island Speedboat Day Tour (Kelingking T-Rex Beach & Angel's Billabong)",
-      "Traditional 2-Hour Balinese Massage & Couples Flower Bath Spa Session",
-    ],
-    outlineItinerary: [
-      { day: "Day 1", title: "Arrival in Bali & Villa Check-in", activity: "Private airport transfer to Ubud pool villa, welcome drinks." },
-      { day: "Day 2", title: "Ubud Rice Terraces & Jungle Swing", activity: "Tegalalang rice terrace walk, jungle swing photoshoot, Sacred Monkey Forest." },
-      { day: "Day 3", title: "Water Temple & Kintamani Volcano Tour", activity: "Tirta Empul holy spring water temple, Luwak coffee plantation & Mt. Batur view." },
-      { day: "Day 4", title: "Transfer to Seminyak & Sunset Dinner Cruise", activity: "Move to Seminyak beachfront resort, sunset catamaran cruise with dinner." },
-      { day: "Day 5", title: "Nusa Penida Island Speedboat Tour", activity: "Speedboat to Nusa Penida island, Kelingking Beach, Broken Beach & lunch." },
-      { day: "Day 6", title: "Balinese Spa & Beach Leisure", activity: "2-Hour traditional Balinese massage & flower bath, Potato Head Beach Club." },
-      { day: "Day 7", title: "Departure to Kathmandu", activity: "Souvenir shopping, private transfer to Denpasar Airport for flight back." },
-    ],
-    itinerary: [
-      {
-        day: "Day 1",
-        title: "Arrival in Bali & Villa Check-in",
-        description:
-          "Arrive at Denpasar Airport (DPS). Private transfer to luxury pool villa in Ubud. Welcome flower garland & fresh coconut drink.",
-      },
-      {
-        day: "Day 2",
-        title: "Ubud Rice Terraces & Jungle Swing Photoshoot",
-        description:
-          "Visit Tegalalang Rice Terraces, famous Ubud Jungle Swing, Sacred Monkey Forest, and Ubud Art Market.",
-      },
-      {
-        day: "Day 3",
-        title: "Water Temple & Kintamani Volcano Tour",
-        description:
-          "Visit Tirta Empul holy spring water temple, Luwak coffee plantation, and view Batur active volcano.",
-      },
-      {
-        day: "Day 4",
-        title: "Transfer to Seminyak & Sunset Dinner Cruise",
-        description:
-          "Move to beachfront resort in Seminyak. Evening sunset catamaran cruise with buffet dinner.",
-      },
-      {
-        day: "Day 5",
-        title: "Nusa Penida Island Speedboat Day Tour",
-        description:
-          "Full-day speedboat tour to Nusa Penida. Visit Kelingking Beach (T-Rex viewpoint), Broken Beach, and Angel's Billabong.",
-      },
-      {
-        day: "Day 6",
-        title: "Balinese Spa & Beach Leisure",
-        description:
-          "Relax with a 2-Hour traditional Balinese Massage and flower bath session. Sunset drinks at Potato Head Beach Club.",
-      },
-      {
-        day: "Day 7",
-        title: "Departure to Kathmandu",
-        description:
-          "Free time for souvenir shopping before private transfer to airport for flight back to Kathmandu.",
-      },
-    ],
-    inclusions: [
-      "International Flight Tickets (Kathmandu ⇄ Bali)",
-      "3 Nights Luxury Pool Villa in Ubud + 3 Nights Resort in Seminyak",
-      "Daily Breakfast with Floating Breakfast option in Villa",
-      "Nusa Penida Island Speedboat Tour with Lunch",
-      "Sunset Catamaran Cruise with Buffet Dinner",
-      "2-Hour Traditional Balinese Massage & Spa",
-      "Private AC Car with Dedicated English Speaking Driver",
-    ],
-    exclusions: [
-      "Personal shopping & extra spa treatments",
-      "Visa on Arrival fee (approx. $35 USD paid at Bali airport)",
-      "Tourism Levy Fee (150,000 IDR per person)",
-    ],
-    equipment: [
-      {
-        category: "Clothing & Resortwear",
-        items: [
-          "Flowy dresses / linen shirts for photoshoots (Jungle Swing & Nusa Penida)",
-          "Swimwear & flip-flops for villa private pool and catamaran cruise",
-          "Sarong / modest cover-up for water temple visits",
-        ],
-      },
-      {
-        category: "Gear & Accessories",
-        items: [
-          "Waterproof dry bag for Nusa Penida speedboat tour",
-          "Action camera / phone gimbal for scenic cliff viewpoints",
-          "Mosquito repellent, SPF 50+ sunscreen & sunglasses",
-        ],
-      },
-      {
-        category: "Documents & Cash",
-        items: [
-          "Passport with at least 6 months validity",
-          "Indonesian Rupiah (IDR) cash & credit card",
-        ],
-      },
-    ],
-    hotelInfo: {
-      name: "Aksari Resort Ubud & Discovery Kartika Plaza Seminyak",
-      rating: "5-Star Resort & Villa",
-      checkIn: "14:00 PM",
-      checkOut: "12:00 PM",
-      roomType: "One-Bedroom Private Pool Villa",
-      amenities: ["Private Infinity Pool", "Jungle Spa", "Free Shuttle to Ubud Center"],
-    },
-    transportation: {
-      flightInfo: "1-stop flights via Singapore Airlines, Malaysia Airlines, or Malindo.",
-      transfers: "Private AC SUV with dedicated driver throughout the trip.",
-      driver: "English speaking local Balinese driver.",
-    },
-    importantNotes: [
-      "Indonesian Visa on Arrival issued at Bali Airport ($35 USD).",
-      "Floating breakfast in villa included for honeymoon couples.",
-    ],
-    faqs: [
-      {
-        q: "Is Bali safe for honeymoon couples and families?",
-        a: "Bali is one of the safest, most welcoming tourist destinations in the world with warm hospitality.",
-      },
-    ],
-  },
-
-  "europe-11d": {
-    id: "europe-11d",
-    title: "Grand Europe Highlights — Paris, Alps & Rome",
-    destination: "Paris, Swiss Alps, Venice & Rome",
-    duration: "10 Nights / 11 Days",
-    price: 195000,
-    originalPrice: 230000,
-    rating: 5.0,
-    reviewsCount: 62,
-    gallery: [
-      "https://images.unsplash.com/photo-1467269204594-9661b134dd2b?w=1200&q=85",
-      "https://images.unsplash.com/photo-1502602898657-3e91760cbb34?w=800&q=80",
-      "https://images.unsplash.com/photo-1534447677768-be436bb09401?w=800&q=80",
-      "https://images.unsplash.com/photo-1552832230-c0197dd311b5?w=800&q=80",
-    ],
-    overview:
-      "Fulfill your lifelong dream of visiting Europe! Journey across 4 world-renowned countries — France, Switzerland, Liechtenstein & Italy. Ascend the Eiffel Tower in Paris, ride the revolving Mt. Titlis cable car in the Swiss Alps, cruise the romantic canals of Venice on a gondola, and admire the Colosseum in Rome.",
-    highlights: [
-      "Round-trip flights from Kathmandu & TGV high-speed train rides across Europe",
-      "Paris: Eiffel Tower 2nd Floor, Louvre Museum & Seine River Cruise",
-      "Swiss Alps: Lucerne Chapel Bridge & Mt. Titlis Rotair Cable Car snow ride",
-      "Venice: Gondola ride along Grand Canal & St. Mark's Basilica",
-      "Rome & Vatican City: Colosseum, Roman Forum & St. Peter's Basilica tour",
-      "Full Schengen Visa documentation support & clearance from Kathmandu",
-    ],
-    outlineItinerary: [
-      { day: "Day 1-3", title: "Paris City of Lights", activity: "Eiffel Tower 2nd floor, Seine River Cruise, Louvre Museum & Champs-Élysées." },
-      { day: "Day 4-6", title: "TGV Train to Switzerland & Mt. Titlis Alps", activity: "High-speed train to Lucerne, Mt. Titlis revolving cable car & glacier snow park." },
-      { day: "Day 7-8", title: "Scenic Train to Venice Canals", activity: "Venice Grand Canal gondola cruise, St. Mark's Square & Murano Glass workshop." },
-      { day: "Day 9-11", title: "Rome, Vatican City & Departure", activity: "Guided Colosseum & Vatican City tour, return flight to Kathmandu." },
-    ],
-    itinerary: [
-      {
-        day: "Day 1-3",
-        title: "Paris City of Lights",
-        description:
-          "Arrive in Paris. Eiffel Tower 2nd floor, Seine River Cruise, Arc de Triomphe, Louvre Museum photo stop & Champs-Élysées shopping.",
-      },
-      {
-        day: "Day 4-6",
-        title: "TGV Train to Switzerland & Mt. Titlis Snow Alps",
-        description:
-          "High-speed train to Lucerne. Ride the world's first revolving cable car to Mt. Titlis 10,000 ft summit with Ice Flyer & Snow Park.",
-      },
-      {
-        day: "Day 7-8",
-        title: "Scenic Train to Venice Canals",
-        description:
-          "Cross the Swiss-Italian border to Venice. Gondola cruise on the Grand Canal, St. Mark's Square & Murano Glass factory.",
-      },
-      {
-        day: "Day 9-11",
-        title: "Eternal City Rome & Vatican & Departure",
-        description:
-          "Train to Rome. Guided tour of Colosseum, Trevi Fountain & Vatican City. Return flight to Kathmandu.",
-      },
-    ],
-    inclusions: [
-      "International Flights (Kathmandu ⇄ Paris / Rome)",
-      "10 Nights Accommodation in 4-Star City Hotels",
-      "Daily Buffet Breakfast",
-      "High-Speed TGV & EuroCity Train Tickets",
-      "Eiffel Tower 2nd Floor & Mt. Titlis Cable Car Admission",
-      "Venice Gondola Cruise Ticket",
-      "Complete Schengen Visa Documentation Support",
-    ],
-    exclusions: [
-      "City Tourist Taxes (approx. 2-4 Euros/night per person paid at hotels)",
-      "Meals not specified (Lunches & Dinners)",
-      "Schengen Visa fee paid directly to VFS Kathmandu",
-      "Travel insurance policy fee",
-    ],
-    equipment: [
-      {
-        category: "Clothing & Layering Gear",
-        items: [
-          "Heavy thermal wear, waterproof snow jacket & gloves for Mt. Titlis 10,000 ft summit",
-          "Comfortable walking shoes / sturdy sneakers for cobblestone European streets",
-          "Modest clothes covering shoulders & knees for Vatican City & Italian churches",
-        ],
-      },
-      {
-        category: "Travel Accessories",
-        items: [
-          "European 2-pin C/F type power adapter plug",
-          "Compact umbrella & lightweight rain poncho",
-          "Anti-theft crossbody bag / neck wallet for crowded tourist spots",
-        ],
-      },
-      {
-        category: "Documents & Currency",
-        items: [
-          "Passport valid for 6+ months with valid Schengen Visa sticker",
-          "Euro (EUR) cash & international Forex card",
-        ],
-      },
-    ],
-    hotelInfo: {
-      name: "Novotel Paris Centre & Hotel Astoria Lucerne & Golden Tulip Rome",
-      rating: "4-Star Hotel Network",
-      checkIn: "15:00 PM",
-      checkOut: "11:00 AM",
-      roomType: "Standard Double Room",
-      amenities: ["City Center Location", "Free Wi-Fi", "Breakfast Buffet"],
-    },
-    transportation: {
-      flightInfo: "Flights via Qatar Airways, Turkish Airlines, or Emirates.",
-      transfers: "First class Eurail high-speed trains & private AC tour coaches.",
-      driver: "Licensed European tour director.",
-    },
-    importantNotes: [
-      "Schengen Visa appointment booking & document file creation included.",
-      "Passport valid for at least 6 months required.",
-    ],
-    faqs: [
-      {
-        q: "Does Skywalk Holidays assist with the Schengen Visa application?",
-        a: "Yes! We handle full appointment scheduling, flight itineraries, hotel vouchers, cover letters, and insurance files for VFS Kathmandu.",
-      },
-    ],
-  },
-
-  "singapore-6d": {
-    id: "singapore-6d",
-    title: "Singapore & Malaysia Twin City Fun",
-    destination: "Singapore & Kuala Lumpur, Malaysia",
-    duration: "5 Nights / 6 Days",
-    price: 62000,
-    originalPrice: 74000,
-    rating: 4.7,
-    reviewsCount: 128,
-    gallery: [
-      "https://images.unsplash.com/photo-1525625293386-3f8f99389edd?w=1200&q=85",
-      "https://images.unsplash.com/photo-1565967511849-76a60a516170?w=800&q=80",
-      "https://images.unsplash.com/photo-1508964942454-1a56651d54ac?w=800&q=80",
-      "https://images.unsplash.com/photo-1596422846543-75c6fc197f07?w=800&q=80",
-    ],
-    overview:
-      "Explore Asia's top modern capitals! Experience Universal Studios Singapore on Sentosa Island, marvel at Marina Bay Sands and Gardens by the Bay, ride the Awana SkyWay cable car in Genting Highlands, and admire the Petronas Twin Towers in Kuala Lumpur.",
-    highlights: [
-      "Universal Studios Singapore Full-Day Admission Ticket",
-      "Marina Bay Sands SkyPark Observation Deck & Gardens by the Bay Light Show",
-      "Sentosa Island Cable Car Ride & Wings of Time Night Show",
-      "Kuala Lumpur City Tour: Petronas Twin Towers, King's Palace & Batu Caves",
-      "Genting Highlands Day Trip with Awana SkyWay Cable Car",
-      "Intercity Luxury Express Coach from Singapore to Kuala Lumpur",
-    ],
-    outlineItinerary: [
-      { day: "Day 1", title: "Arrival in Singapore & Gardens by the Bay", activity: "Changi airport transfer, hotel check-in, Supertree Grove light show." },
-      { day: "Day 2", title: "Universal Studios Singapore & Sentosa", activity: "Full day at Universal Studios theme park & Wings of Time laser show." },
-      { day: "Day 3", title: "Marina Bay SkyPark & Coach to KL", activity: "Marina Bay Sands SkyPark 57th deck, luxury coach transfer to Kuala Lumpur." },
-      { day: "Day 4", title: "Kuala Lumpur City Tour & Batu Caves", activity: "Petronas Twin Towers, Batu Caves rainbow stairs, King's Palace." },
-      { day: "Day 5", title: "Genting Highlands Cable Car Excursion", activity: "Full-day trip to Genting Highlands, Awana SkyWay cable car ride." },
-      { day: "Day 6", title: "Departure to Kathmandu", activity: "Bukit Bintang shopping, KLIA airport transfer for return flight." },
-    ],
-    itinerary: [
-      {
-        day: "Day 1",
-        title: "Arrival in Singapore & Gardens by the Bay",
-        description:
-          "Arrive at Changi Airport (SIN). Hotel check-in. Evening visit to Gardens by the Bay Supertree Grove light show.",
-      },
-      {
-        day: "Day 2",
-        title: "Universal Studios Singapore & Sentosa Island",
-        description:
-          "Full day at Universal Studios Singapore. Ride Transformers, Battlestar Galactica, and watch Wings of Time laser show.",
-      },
-      {
-        day: "Day 3",
-        title: "Marina Bay SkyPark & Coach to Kuala Lumpur",
-        description:
-          "Visit Marina Bay Sands SkyPark 57th floor deck. Afternoon luxury coach transfer across Johor border to Kuala Lumpur.",
-      },
-      {
-        day: "Day 4",
-        title: "Kuala Lumpur City Tour & Batu Caves",
-        description:
-          "Guided tour covering Petronas Twin Towers, Batu Caves rainbow steps, King's Palace, and Central Market shopping.",
-      },
-      {
-        day: "Day 5",
-        title: "Genting Highlands Cable Car Day Excursion",
-        description:
-          "Full-day excursion to Genting Highlands. Ride Awana SkyWay cable car, explore Genting SkyWorlds Theme Park & Casino.",
-      },
-      {
-        day: "Day 6",
-        title: "Departure to Kathmandu",
-        description:
-          "Free time for shopping at Bukit Bintang before transfer to KLIA Airport for return flight to Kathmandu.",
-      },
-    ],
-    inclusions: [
-      "International Flights (Kathmandu ⇄ Singapore / KL)",
-      "5 Nights Accommodation in 4-Star Hotels with Breakfast",
-      "Universal Studios Singapore Ticket",
-      "Genting Highlands Awana Cable Car Ticket",
-      "Intercity Express Coach (Singapore → KL)",
-      "Airport & City Sightseeing Transfers",
-    ],
-    exclusions: [
-      "Personal shopping & extra theme park rides",
-      "Malaysia Tourism Tax (10 MYR/room/night)",
-      "Meals not specified in itinerary",
-    ],
-    equipment: [
-      {
-        category: "Clothing & Shoes",
-        items: [
-          "Lightweight cotton clothes for humid weather & light jacket for Genting Highlands",
-          "Comfortable walking sneakers for Universal Studios & Batu Caves steps",
-        ],
-      },
-      {
-        category: "Travel Tech & Accessories",
-        items: [
-          "UK 3-pin G-type power adapter",
-          "Portable phone charger, sunscreen & sunglasses",
-        ],
-      },
-      {
-        category: "Documents & Cards",
-        items: [
-          "Passport valid for at least 6 months",
-          "SG Arrival Card & Malaysia Digital Arrival Card",
-          "Singapore Dollar (SGD) & Malaysian Ringgit (MYR)",
-        ],
-      },
-    ],
-    hotelInfo: {
-      name: "Hotel Boss Singapore & Furama Bukit Bintang Kuala Lumpur",
-      rating: "4-Star Hotel",
-      checkIn: "14:00 PM",
-      checkOut: "12:00 PM",
-      roomType: "Deluxe Queen Room",
-      amenities: ["Swimming Pool", "Gym", "Central Location"],
-    },
-    transportation: {
-      flightInfo: "Flights via Singapore Airlines, Malaysia Airlines, or Malindo Air.",
-      transfers: "Luxury intercity express coach & private AC van.",
-      driver: "English speaking local driver.",
-    },
-    importantNotes: [
-      "Singapore SG Arrival Card & Malaysia Digital Arrival Card submitted online.",
-    ],
-    faqs: [
-      {
-        q: "Is Universal Studios ticket included in the price?",
-        a: "Yes! Full-day one-day pass to Universal Studios Singapore is included.",
-      },
-    ],
-  },
-
-  "japan-7d": {
-    id: "japan-7d",
-    title: "Magical Japan — Tokyo, Mt. Fuji & Kyoto",
-    destination: "Tokyo, Kyoto & Mt. Fuji, Japan",
-    duration: "6 Nights / 7 Days",
-    price: 145000,
-    originalPrice: 170000,
-    rating: 4.9,
-    reviewsCount: 94,
-    gallery: [
-      "https://images.unsplash.com/photo-1503899036084-c55cdd92da26?w=1200&q=85",
-      "https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?w=800&q=80",
-      "https://images.unsplash.com/photo-1545569341-9eb8b30979d9?w=800&q=80",
-      "https://images.unsplash.com/photo-1492571350019-22de08371fd3?w=800&q=80",
-    ],
-    overview:
-      "Journey to the Land of the Rising Sun! Experience Tokyo's neon-lit Shibuya Crossing, ride the bullet train (Shinkansen) past majestic Mt. Fuji, and immerse yourself in Kyoto's ancient golden temples, bamboo groves, and traditional tea houses.",
-    highlights: [
-      "Shinkansen Bullet Train ride between Tokyo & Kyoto",
-      "Mt. Fuji 5th Station & Lake Kawaguchi scenic excursion",
-      "Guided Tokyo City Tour: Senso-ji Temple, Akihabara & Shibuya Crossing",
-      "Kyoto Ancient Temples: Kinkaku-ji (Golden Pavilion) & Arashiyama Bamboo Grove",
-      "Full Japan Tourist Visa application & appointment guidance from Kathmandu",
-    ],
-    outlineItinerary: [
-      { day: "Day 1", title: "Arrival in Tokyo & Hotel Check-in", activity: "Airport transfer to Tokyo hotel, evening free in Shinjuku." },
-      { day: "Day 2", title: "Tokyo Highlights Tour", activity: "Senso-ji Temple, Imperial Palace Outer Gardens, Tokyo Tower, Shibuya Crossing." },
-      { day: "Day 3", title: "Mt. Fuji & Lake Kawaguchi Day Trip", activity: "Drive to Mt. Fuji 5th Station, Hakone ropeway ride & Lake Ashi cruise." },
-      { day: "Day 4", title: "Shinkansen Bullet Train to Kyoto", activity: "Bullet train to Kyoto, check-in, evening Gion Geisha district walk." },
-      { day: "Day 5", title: "Kyoto Golden Temple & Bamboo Grove", activity: "Kinkaku-ji Golden Pavilion, Fushimi Inari torii gates, Arashiyama Bamboo Grove." },
-      { day: "Day 6", title: "Nara Deer Park & Osaka Castle Excursion", activity: "Visit Nara Park friendly deer, Osaka Castle & Dotonbori street food market." },
-      { day: "Day 7", title: "Departure to Kathmandu", activity: "Free morning for souvenir shopping, airport transfer for return flight." },
-    ],
-    itinerary: [
-      { day: "Day 1", title: "Arrival in Tokyo & Hotel Check-in", description: "Arrive at Narita or Haneda Airport. Transfer to Tokyo city center hotel. Evening walk in Shinjuku." },
-      { day: "Day 2", title: "Tokyo City Tour", description: "Visit Senso-ji Asakusa, Nakamise street, Tokyo Skytree photo stop, and Shibuya Crossing." },
-      { day: "Day 3", title: "Mt. Fuji & Hakone Excursion", description: "Travel to Mt. Fuji 5th station. Ride the Hakone ropeway cable car and cruise Lake Ashi." },
-      { day: "Day 4", title: "Shinkansen Bullet Train to Kyoto", description: "Ride the 300 km/h Bullet Train to Kyoto. Evening walk through historic Gion quarter." },
-      { day: "Day 5", title: "Kyoto Temples & Bamboo Forest", description: "Visit Kinkaku-ji Golden Pavilion, Fushimi Inari 10,000 red torii gates, and Arashiyama." },
-      { day: "Day 6", title: "Nara Deer Park & Osaka Day Excursion", description: "Feed bowing deer at Nara Park, visit Osaka Castle, and eat street food at Dotonbori." },
-      { day: "Day 7", title: "Departure to Kathmandu", description: "Shopping at Ginza before private transfer to airport for return flight." },
-    ],
-    inclusions: [
-      "International Flights (Kathmandu ⇄ Tokyo)",
-      "6 Nights Accommodation in 4-Star Hotels with Breakfast",
-      "JR Shinkansen Bullet Train Ticket (Tokyo → Kyoto)",
-      "Full-Day Mt. Fuji & Hakone Tour",
-      "Japan Tourist Visa Documentation Support",
-      "Airport & City Sightseeing Transfers",
-    ],
-    exclusions: [
-      "Personal expenses & unmentioned dinners",
-      "Japan Visa fee paid to Embassy (if applicable)",
-    ],
-    equipment: [
-      { category: "Clothing", items: ["Comfortable sneakers for walking", "Layered clothing depending on season"] },
-      { category: "Essentials", items: ["Japan 2-pin Type-A adapter", "Pocket Wi-Fi / Suica IC card"] },
-      { category: "Documents", items: ["Passport valid 6+ months", "Printed e-Visa / Sticker copy"] },
-    ],
-    hotelInfo: {
-      name: "Shinjuku Washington Hotel Tokyo & Hotel Gracery Kyoto",
-      rating: "4-Star Hotel",
-      checkIn: "15:00 PM",
-      checkOut: "11:00 AM",
-      roomType: "Standard Twin Room",
-      amenities: ["Free High-Speed Wi-Fi", "Breakfast Buffet", "Central Station Access"],
-    },
-    transportation: { flightInfo: "Flights via Singapore Airlines, Cathay Pacific, or Malaysia Airlines.", transfers: "High-speed train & private AC coach.", driver: "English speaking local guide." },
-    importantNotes: ["Japan Tourist Visa processed within 5-7 business days."],
-    faqs: [{ q: "Is Japan Visa difficult for Nepalese passport holders?", a: "With complete tax & bank documents through Skywalks, Japan visa approvals are fast and straightforward!" }],
-  },
-
-  "vietnam-6d": {
-    id: "vietnam-6d",
-    title: "Discover Vietnam — Ha Long Bay Cruise & Hanoi",
-    destination: "Ha Long Bay & Hanoi, Vietnam",
-    duration: "5 Nights / 6 Days",
-    price: 45000,
-    originalPrice: 56000,
-    rating: 4.8,
-    reviewsCount: 112,
-    gallery: [
-      "https://images.unsplash.com/photo-1528127269322-539801943592?w=1200&q=85",
-      "https://images.unsplash.com/photo-1509030450996-939a26352142?w=800&q=80",
-      "https://images.unsplash.com/photo-1557750255-c76072a7aad1?w=800&q=80",
-    ],
-    overview:
-      "Discover the emerald waters and limestone pillars of Ha Long Bay! Sail on a luxury 5-star cruise ship, kayak through hidden caves, and explore the ancient streets and egg coffee cafes of Hanoi.",
-    highlights: [
-      "2-Day 1-Night Luxury Ha Long Bay Cruise with private balcony cabin",
-      "Guided Hanoi Old Quarter Cyclo tour & Hoan Kiem Lake walk",
-      "Ninh Binh Trang An boat tour through water caves",
-      "Fast Vietnam e-Visa issuance within 3 days",
-    ],
-    outlineItinerary: [
-      { day: "Day 1", title: "Arrival in Hanoi & Old Quarter Walk", activity: "Airport pickup, hotel check-in, evening street food walk." },
-      { day: "Day 2", title: "Hanoi to Ha Long Bay Luxury Cruise", activity: "Scenic drive to pier, board luxury cruise ship, kayaking & cave tour." },
-      { day: "Day 3", title: "Tai Chi on Deck & Return to Hanoi", activity: "Sunrise Tai Chi, Sung Sot cave, return to Hanoi." },
-      { day: "Day 4", title: "Ninh Binh Trang An Boat Excursion", activity: "Rowboat cruise through Trang An karst mountains & Tam Coc." },
-      { day: "Day 5", title: "Hanoi Cultural Tour & Coffee Tasting", activity: "Ho Chi Minh Complex, Temple of Literature, famous egg coffee." },
-      { day: "Day 6", title: "Departure to Kathmandu", activity: "Free morning shopping, airport transfer." },
-    ],
-    itinerary: [
-      { day: "Day 1", title: "Arrival in Hanoi", description: "Arrive at Noi Bai Airport. Transfer to boutique hotel in Old Quarter." },
-      { day: "Day 2", title: "Ha Long Bay Cruise Boarding", description: "Board 5-star cruise ship. Kayak through limestone karst lagoons and enjoy seafood buffet." },
-      { day: "Day 3", title: "Morning Cave Tour & Return to Hanoi", description: "Visit Surprise Cave, Tai Chi lesson on deck, drive back to Hanoi." },
-      { day: "Day 4", title: "Ninh Binh Trang An Karst Boat Tour", description: "Cruise through Trang An UNESCO water caves and climb Mua Cave viewpoint." },
-      { day: "Day 5", title: "Hanoi City Tour & Egg Coffee", description: "Visit Temple of Literature, Train Street, and sample legendary Vietnamese egg coffee." },
-      { day: "Day 6", title: "Departure to Kathmandu", description: "Free time for shopping before transfer to airport for return flight." },
-    ],
-    inclusions: [
-      "International Flights (Kathmandu ⇄ Hanoi)",
-      "4 Nights Hotel + 1 Night 5-Star Ha Long Bay Cruise",
-      "All Meals on Cruise Ship & Daily Hotel Breakfast",
-      "Kayaking & Cave Entry Tickets",
-      "Vietnam e-Visa Approval Letter",
-    ],
-    exclusions: ["Personal expenses & alcoholic drinks on cruise."],
-    equipment: [
-      { category: "Clothing", items: ["Swimwear for kayaking", "Light summer clothes"] },
-      { category: "Documents", items: ["Passport valid 6+ months", "Printed Vietnam e-Visa"] },
-    ],
-    hotelInfo: {
-      name: "La Sinfonía del Rey Hanoi & Ambassador Ha Long Cruise",
-      rating: "4-Star Hotel & 5-Star Cruise",
-      checkIn: "14:00 PM",
-      checkOut: "12:00 PM",
-      roomType: "Balcony Executive Cabin",
-      amenities: ["Rooftop Bar", "Cruise Kayaks", "Free Wi-Fi"],
-    },
-    transportation: { flightInfo: "Flights via Thai Airways, Singapore Airlines, or VietJet.", transfers: "Luxury AC Limousine bus.", driver: "English speaking local guide." },
-    importantNotes: ["Vietnam e-Visa issued online in 3 business days."],
-    faqs: [{ q: "Is Vietnam suitable for budget travelers?", a: "Vietnam offers exceptional value for money with world-class food, cruises, and sights at affordable rates!" }],
-  },
-
-  "maldives-5d": {
-    id: "maldives-5d",
-    title: "Maldives Luxury Overwater Villa Resort",
-    destination: "Malé & South Atoll, Maldives",
-    duration: "4 Nights / 5 Days",
-    price: 85000,
-    originalPrice: 105000,
-    rating: 5.0,
-    reviewsCount: 142,
-    gallery: [
-      "https://images.unsplash.com/photo-1514282401047-d79a71a590e8?w=1200&q=85",
-      "https://images.unsplash.com/photo-1573843981267-be1999ff37cd?w=800&q=80",
-      "https://images.unsplash.com/photo-1540555700478-4be289fbecef?w=800&q=80",
-    ],
-    overview:
-      "Paradise found! Wake up above crystal-clear turquoise lagoons in your private overwater villa. Step directly into the Indian Ocean, swim with manta rays and sea turtles, and watch spectacular sunsets.",
-    highlights: [
-      "4 Nights Overwater Ocean Villa with private deck & ocean staircase",
-      "Speedboat / Seaplane transfers between Malé Airport & Resort Island",
-      "All-Inclusive / Half-Board meal plan with international gourmet buffets",
-      "Guided coral reef snorkeling tour & sunset dolphin cruise",
-      "Free Visa on Arrival for Nepalese citizens at Malé Airport",
-    ],
-    outlineItinerary: [
-      { day: "Day 1", title: "Arrival in Malé & Speedboat to Island Resort", activity: "Airport greeting, speedboat transfer to island, villa check-in." },
-      { day: "Day 2", title: "Coral Reef Snorkeling & Lagoon Swimming", activity: "Guided house reef snorkeling, sea turtle spotting, beach relaxation." },
-      { day: "Day 3", title: "Sunset Dolphin Cruise & Candlelight Dinner", activity: "Dolphin watching boat cruise, beachfront romantic candlelight dinner." },
-      { day: "Day 4", title: "Water Sports & Spa Relaxation", activity: "Kayaking, paddleboarding, couple's oceanfront spa session." },
-      { day: "Day 5", title: "Departure to Kathmandu", activity: "Breakfast over lagoon, speedboat transfer to Malé for return flight." },
-    ],
-    itinerary: [
-      { day: "Day 1", title: "Arrival in Malé & Resort Transfer", description: "Arrive at Velana Airport (MLE). Speedboat transfer across turquoise lagoon to resort island villa." },
-      { day: "Day 2", title: "Lagoon Swimming & Coral Reef Snorkeling", description: "Swim directly from your overwater deck into crystal lagoon. Guided snorkeling with tropical fish." },
-      { day: "Day 3", title: "Sunset Dolphin Cruise & Beachfront Dinner", description: "Board traditional Maldivian Dhoni for dolphin watching. Seafood candlelight dinner under stars." },
-      { day: "Day 4", title: "Water Sports & Oceanfront Spa", description: "Enjoy complimentary glass-bottom kayaks, stand-up paddleboarding, and ocean spa." },
-      { day: "Day 5", title: "Departure to Kathmandu", description: "Final breakfast over ocean before speedboat transfer to Malé Airport for return flight." },
-    ],
-    inclusions: [
-      "International Flights (Kathmandu ⇄ Malé)",
-      "4 Nights Accommodation in Luxury Overwater Villa",
-      "Daily Breakfast, Lunch & Dinner (Full Board)",
-      "Round-Trip Speedboat Airport Transfers",
-      "Snorkeling Gear Rental & Sunset Dolphin Cruise",
-      "Free Visa on Arrival at Malé Airport",
-    ],
-    exclusions: ["Personal motorized water sports (jet ski, scuba diving)."],
-    equipment: [
-      { category: "Resortwear", items: ["Flowy beach dresses, linen shirts, swimsuits", "Flip-flops & sunglasses"] },
-      { category: "Gear", items: ["Waterproof phone case", "Reef-safe SPF 50+ sunscreen"] },
-    ],
-    hotelInfo: {
-      name: "Adaaran Prestige Water Villas / Sun Siyam Olhuveli Maldives",
-      rating: "5-Star Island Resort",
-      checkIn: "14:00 PM",
-      checkOut: "12:00 PM",
-      roomType: "Water Villa with Lagoon Access",
-      amenities: ["Private Sundeck", "Infinity Pool", "Ocean Spa", "Free Water Sports"],
-    },
-    transportation: { flightInfo: "Flights via SriLankan Airlines, Qatar Airways, or FlyDubai.", transfers: "Luxury speedboat or seaplane.", driver: "Resort island host." },
-    importantNotes: ["30-Day Tourist Visa on Arrival issued FREE for Nepalese passport holders!"],
-    faqs: [{ q: "Do Nepalese citizens need a visa before traveling to Maldives?", a: "No! Maldives provides a FREE 30-day Visa on Arrival for all Nepalese travelers." }],
-  },
-};
-
+import { PACKAGES_DICTIONARY } from "@/lib/packagesData";
+export { PACKAGES_DICTIONARY };
 export async function generateMetadata({
   params,
 }: {
   params: Promise<{ id: string }>;
 }): Promise<Metadata> {
   const { id } = await params;
-  const pkg = PACKAGES_DICTIONARY[id] || PACKAGES_DICTIONARY["dubai-6d"];
+  let pkg = PACKAGES_DICTIONARY[id];
+  if (!pkg && (id === "1" || id === "bangkok-pattaya")) {
+    pkg = PACKAGES_DICTIONARY["bangkok-pattaya-6d"];
+  }
+  if (!pkg && (id === "2" || id === "bali-malaysia")) {
+    pkg = PACKAGES_DICTIONARY["bali-malaysia-7d"];
+  }
+  if (!pkg && (id === "3" || id === "bangkok-pattaya-8d" || id === "thailand-8d")) {
+    pkg = PACKAGES_DICTIONARY["bangkok-pattaya-8d"];
+  }
+  if (!pkg && (id === "4" || id === "bangkok-pattaya-phuket-8d" || id === "thailand-phuket-8d" || id === "phuket-8d")) {
+    pkg = PACKAGES_DICTIONARY["bangkok-pattaya-phuket-8d"];
+  }
+  if (!pkg && (id === "5" || id === "bangkok-pattaya-5d" || id === "thailand-5d")) {
+    pkg = PACKAGES_DICTIONARY["bangkok-pattaya-5d"];
+  }
+  if (!pkg && (id === "6" || id === "krabi-phuket-bangkok-8d" || id === "krabi-8d" || id === "thailand-krabi-8d")) {
+    pkg = PACKAGES_DICTIONARY["krabi-phuket-bangkok-8d"];
+  }
+  if (!pkg && (id === "7" || id === "malaysia-singapore-6d" || id === "singapore-malaysia-6d" || id === "malaysia-singapore" || id === "singapore-malaysia")) {
+    pkg = PACKAGES_DICTIONARY["malaysia-singapore-6d"];
+  }
+  if (!pkg && (id === "8" || id === "maldives-4d" || id === "maldives-3n4d" || id === "maldives")) {
+    pkg = PACKAGES_DICTIONARY["maldives-4d"];
+  }
+  if (!pkg && (id === "9" || id === "philippines-6d" || id === "philippines-5n6d" || id === "philippines")) {
+    pkg = PACKAGES_DICTIONARY["philippines-6d"];
+  }
+  if (!pkg && (id === "10" || id === "philippines-8d" || id === "philippines-7n8d")) {
+    pkg = PACKAGES_DICTIONARY["philippines-8d"];
+  }
+  if (!pkg && (id === "11" || id === "phuket-bangkok-6d" || id === "bangkok-phuket-6d" || id === "phuket-bangkok")) {
+    pkg = PACKAGES_DICTIONARY["phuket-bangkok-6d"];
+  }
+  if (!pkg && (id === "12" || id === "singapore-4d" || id === "singapore-3n4d" || id === "singapore")) {
+    pkg = PACKAGES_DICTIONARY["singapore-4d"];
+  }
+  if (!pkg && (id === "13" || id === "sri-lanka-thailand-7d" || id === "sri-lanka-thailand" || id === "thailand-sri-lanka-7d" || id === "thailand-sri-lanka")) {
+    pkg = PACKAGES_DICTIONARY["sri-lanka-thailand-7d"];
+  }
+  if (!pkg && (id === "14" || id === "thailand-vietnam-8d" || id === "thailand-vietnam" || id === "vietnam-thailand-8d" || id === "vietnam-thailand" || id === "hanoi-8d")) {
+    pkg = PACKAGES_DICTIONARY["thailand-vietnam-8d"];
+  }
+  if (!pkg && (id === "15" || id === "thailand-malaysia-singapore-9d" || id === "thailand-singapore-malaysia-9d" || id === "thailand-malaysia-singapore" || id === "thailand-singapore-malaysia" || id === "singapore-malaysia-thailand-9d")) {
+    pkg = PACKAGES_DICTIONARY["thailand-malaysia-singapore-9d"];
+  }
+  if (!pkg && (id === "16" || id === "vietnam-6d" || id === "vietnam-5n6d" || id === "vietnam-hanoi-halong-danang-6d" || id === "vietnam" || id === "hanoi-halong-danang-6d" || id === "danang-6d")) {
+    pkg = PACKAGES_DICTIONARY["vietnam-6d"];
+  }
+  if (!pkg && (id === "17" || id === "vietnam-8d" || id === "vietnam-7n8d" || id === "vietnam-premium-8d" || id === "vietnam-danang-8d" || id === "hanoi-halong-danang-8d" || id === "danang-8d")) {
+    pkg = PACKAGES_DICTIONARY["vietnam-8d"];
+  }
 
   return {
-    title: `${pkg.title} (${pkg.duration}) | Skywalks Holidays`,
-    description: pkg.overview,
+    title: pkg ? `${pkg.title} (${pkg.duration}) | Skywalks Holidays` : "Holiday Package | Skywalks Holidays",
+    description: pkg ? pkg.overview : "Curated holiday packages by Skywalks Holidays.",
   };
 }
 
@@ -916,22 +103,77 @@ export default async function PackageDetailPage({
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
-
-  // 1. Try static dictionary lookup
   let pkg = PACKAGES_DICTIONARY[id];
-
-  // 2. Fallback lookup by numeric ID if passed as '1', '2', '3', etc.
-  if (!pkg) {
-    if (id === "1") pkg = PACKAGES_DICTIONARY["dubai-6d"];
-    if (id === "2") pkg = PACKAGES_DICTIONARY["thailand-5d"];
-    if (id === "3") pkg = PACKAGES_DICTIONARY["bali-7d"];
-    if (id === "4") pkg = PACKAGES_DICTIONARY["europe-11d"];
-    if (id === "5") pkg = PACKAGES_DICTIONARY["singapore-6d"];
+  if (!pkg && (id === "1" || id === "bangkok-pattaya")) {
+    pkg = PACKAGES_DICTIONARY["bangkok-pattaya-6d"];
+  }
+  if (!pkg && (id === "2" || id === "bali-malaysia")) {
+    pkg = PACKAGES_DICTIONARY["bali-malaysia-7d"];
+  }
+  if (!pkg && (id === "3" || id === "bangkok-pattaya-8d" || id === "thailand-8d")) {
+    pkg = PACKAGES_DICTIONARY["bangkok-pattaya-8d"];
+  }
+  if (!pkg && (id === "4" || id === "bangkok-pattaya-phuket-8d" || id === "thailand-phuket-8d" || id === "phuket-8d")) {
+    pkg = PACKAGES_DICTIONARY["bangkok-pattaya-phuket-8d"];
+  }
+  if (!pkg && (id === "5" || id === "bangkok-pattaya-5d" || id === "thailand-5d")) {
+    pkg = PACKAGES_DICTIONARY["bangkok-pattaya-5d"];
+  }
+  if (!pkg && (id === "6" || id === "krabi-phuket-bangkok-8d" || id === "krabi-8d" || id === "thailand-krabi-8d")) {
+    pkg = PACKAGES_DICTIONARY["krabi-phuket-bangkok-8d"];
+  }
+  if (!pkg && (id === "7" || id === "malaysia-singapore-6d" || id === "singapore-malaysia-6d" || id === "malaysia-singapore" || id === "singapore-malaysia")) {
+    pkg = PACKAGES_DICTIONARY["malaysia-singapore-6d"];
+  }
+  if (!pkg && (id === "8" || id === "maldives-4d" || id === "maldives-3n4d" || id === "maldives")) {
+    pkg = PACKAGES_DICTIONARY["maldives-4d"];
+  }
+  if (!pkg && (id === "9" || id === "philippines-6d" || id === "philippines-5n6d" || id === "philippines")) {
+    pkg = PACKAGES_DICTIONARY["philippines-6d"];
+  }
+  if (!pkg && (id === "10" || id === "philippines-8d" || id === "philippines-7n8d")) {
+    pkg = PACKAGES_DICTIONARY["philippines-8d"];
+  }
+  if (!pkg && (id === "11" || id === "phuket-bangkok-6d" || id === "bangkok-phuket-6d" || id === "phuket-bangkok")) {
+    pkg = PACKAGES_DICTIONARY["phuket-bangkok-6d"];
+  }
+  if (!pkg && (id === "12" || id === "singapore-4d" || id === "singapore-3n4d" || id === "singapore")) {
+    pkg = PACKAGES_DICTIONARY["singapore-4d"];
+  }
+  if (!pkg && (id === "13" || id === "sri-lanka-thailand-7d" || id === "sri-lanka-thailand" || id === "thailand-sri-lanka-7d" || id === "thailand-sri-lanka")) {
+    pkg = PACKAGES_DICTIONARY["sri-lanka-thailand-7d"];
+  }
+  if (!pkg && (id === "14" || id === "thailand-vietnam-8d" || id === "thailand-vietnam" || id === "vietnam-thailand-8d" || id === "vietnam-thailand" || id === "hanoi-8d")) {
+    pkg = PACKAGES_DICTIONARY["thailand-vietnam-8d"];
+  }
+  if (!pkg && (id === "15" || id === "thailand-malaysia-singapore-9d" || id === "thailand-singapore-malaysia-9d" || id === "thailand-malaysia-singapore" || id === "thailand-singapore-malaysia" || id === "singapore-malaysia-thailand-9d")) {
+    pkg = PACKAGES_DICTIONARY["thailand-malaysia-singapore-9d"];
   }
 
-  // Fallback to Dubai default package if ID isn't matched
   if (!pkg) {
-    pkg = PACKAGES_DICTIONARY["dubai-6d"];
+    return (
+      <div className="min-h-[70vh] flex items-center justify-center container-custom py-20">
+        <div className="bg-white rounded-3xl p-10 sm:p-14 text-center border border-[#e2e8f0] shadow-sm space-y-4 max-w-lg mx-auto">
+          <div className="w-16 h-16 rounded-full bg-sky-50 text-[#0ea5e9] flex items-center justify-center mx-auto text-2xl font-bold">
+            ✈️
+          </div>
+          <h1 className="text-2xl font-bold text-[#0a1628]">Package Not Found</h1>
+          <p className="text-sm text-[#64748b] leading-relaxed">
+            This package is no longer available or is currently being updated with new seasonal itineraries.
+          </p>
+          <div className="pt-2 flex flex-col sm:flex-row gap-3 justify-center">
+            <Button asChild className="bg-[#0a1628] hover:bg-[#163058] text-white">
+              <Link href="/services/packages/international">Browse All Packages</Link>
+            </Button>
+            <Button variant="outline" asChild className="border-emerald-600 text-emerald-600 hover:bg-emerald-50">
+              <a href="https://wa.me/9779714491103" target="_blank" rel="noopener noreferrer">
+                Inquire on WhatsApp
+              </a>
+            </Button>
+          </div>
+        </div>
+      </div>
+    );
   }
 
   return (
@@ -965,7 +207,14 @@ export default async function PackageDetailPage({
               </span>
             </div>
             <h1 className="text-3xl sm:text-4xl font-extrabold text-[#0a1628] leading-tight">
-              {pkg.title}
+              {pkg.title.includes(" - ") ? (
+                <>
+                  <span className="block text-3xl sm:text-4xl font-extrabold">{pkg.title.split(" - ")[0]}</span>
+                  <span className="block text-xl sm:text-2xl text-[#0ea5e9] font-bold mt-1">{pkg.title.split(" - ")[1]}</span>
+                </>
+              ) : (
+                pkg.title
+              )}
             </h1>
             <div className="flex flex-wrap items-center gap-4 text-xs md:text-sm text-[#64748b] mt-2">
               <span className="flex items-center gap-1.5 font-medium">
@@ -1006,7 +255,7 @@ export default async function PackageDetailPage({
       <div className="container-custom">
         {/* Main Content Layout with Sticky Sidebar */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-10 items-start">
-          {/* Left Column: All 6 Required Detail Modules */}
+          {/* Left Column: All Detail Modules */}
           <div className="lg:col-span-2 space-y-12 text-left">
             
             {/* 1. Package Introduction & Overview Section */}
@@ -1036,6 +285,48 @@ export default async function PackageDetailPage({
             <section id="gallery">
               <PackageGallerySection gallery={pkg.gallery} packageTitle={pkg.title} />
             </section>
+
+            {/* Tour Guide Video Section */}
+            {pkg.videoEmbedUrl && (
+              <section id="tour-video" className="bg-[#0a1628] rounded-3xl p-6 md:p-8 border border-white/10 text-white shadow-xl relative overflow-hidden">
+                <div className="absolute top-0 right-0 w-80 h-80 bg-[#0ea5e9]/10 rounded-full blur-3xl pointer-events-none" />
+                <div className="relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-4 mb-6">
+                  <div>
+                    <div className="inline-flex items-center gap-2 bg-[#0ea5e9]/20 border border-[#0ea5e9]/40 text-[#38bdf8] text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider mb-2">
+                      <Video size={14} className="text-[#f97316]" />
+                      Official Tour Guide Video
+                    </div>
+                    <h2 className="text-xl sm:text-2xl font-extrabold text-white">
+                      {pkg.videoTitle || "Tour Guide Video & Visual Highlights"}
+                    </h2>
+                    <p className="text-xs text-white/70 mt-1">
+                      Official travel experience walkthrough prepared by SkyWalk Tours &amp; Travels.
+                    </p>
+                  </div>
+                  {pkg.videoShortUrl && (
+                    <a
+                      href={pkg.videoShortUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1.5 text-xs font-bold text-white bg-red-600 hover:bg-red-700 px-4 py-2 rounded-xl transition-colors shrink-0 shadow-md"
+                    >
+                      <Play size={14} className="fill-white" />
+                      Watch on YouTube
+                    </a>
+                  )}
+                </div>
+
+                <div className={`relative w-full ${pkg.isShort ? "max-w-sm sm:max-w-md mx-auto aspect-[9/16] max-h-[640px]" : "aspect-video"} rounded-2xl overflow-hidden shadow-2xl bg-black border border-white/15`}>
+                  <iframe
+                    src={pkg.videoEmbedUrl}
+                    title={pkg.videoTitle || pkg.title}
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                    className="w-full h-full border-0"
+                  />
+                </div>
+              </section>
+            )}
 
             {/* 3. Outline Itinerary Section */}
             <section id="outline-itinerary" className="bg-white rounded-3xl p-6 md:p-8 border border-[#e2e8f0] shadow-sm">
@@ -1097,14 +388,40 @@ export default async function PackageDetailPage({
                       {idx + 1}
                     </div>
 
-                    <div className="bg-[#f8fafc] rounded-2xl p-5 border border-[#e2e8f0]">
-                      <span className="inline-block text-xs font-bold text-[#0ea5e9] bg-[#e0f2fe] px-3 py-1 rounded-full mb-2">
-                        {dayItem.day}
-                      </span>
-                      <h3 className="text-lg font-bold text-[#0a1628] mb-2">{dayItem.title}</h3>
-                      <p className="text-xs sm:text-sm text-[#64748b] leading-relaxed">
-                        {dayItem.description}
+                    <div className="bg-[#f8fafc] rounded-2xl p-5 sm:p-6 border border-[#e2e8f0] space-y-3">
+                      <div className="flex flex-wrap items-center gap-2">
+                        <span className="inline-block text-xs font-extrabold text-[#0ea5e9] bg-[#e0f2fe] px-3 py-1 rounded-full">
+                          {dayItem.day}
+                        </span>
+                        {dayItem.highlight && (
+                          <span className="text-[11px] font-semibold text-[#0284c7] bg-white border border-[#e0f2fe] px-2.5 py-1 rounded-full shadow-xs">
+                            ✨ {dayItem.highlight}
+                          </span>
+                        )}
+                      </div>
+
+                      <h3 className="text-lg font-bold text-[#0a1628]">{dayItem.title}</h3>
+
+                      <p className="text-xs sm:text-sm text-[#475569] leading-relaxed whitespace-pre-line">
+                        {dayItem.desc || dayItem.description}
                       </p>
+
+                      {(dayItem.meals || dayItem.stay) && (
+                        <div className="pt-3 border-t border-[#e2e8f0] flex flex-wrap items-center gap-4 text-xs text-[#64748b]">
+                          {dayItem.meals && (
+                            <span className="flex items-center gap-1.5 font-medium">
+                              <span className="text-amber-500">🍽️</span>
+                              <strong className="text-[#0a1628]">Meals:</strong> {dayItem.meals}
+                            </span>
+                          )}
+                          {dayItem.stay && (
+                            <span className="flex items-center gap-1.5 font-medium">
+                              <span className="text-sky-500">🏨</span>
+                              <strong className="text-[#0a1628]">Stay:</strong> {dayItem.stay}
+                            </span>
+                          )}
+                        </div>
+                      )}
                     </div>
                   </div>
                 ))}
@@ -1112,7 +429,8 @@ export default async function PackageDetailPage({
             </section>
 
             {/* Inclusions Card */}
-            <section className="bg-white rounded-3xl p-6 md:p-8 border border-[#e2e8f0] shadow-sm">
+            <div id="inclusions-section" className="scroll-mt-24" />
+            <section id="inclusions" className="bg-white rounded-3xl p-6 md:p-8 border border-[#e2e8f0] shadow-sm scroll-mt-24">
               <h2 className="text-2xl font-extrabold text-[#0a1628] mb-6 flex items-center gap-2">
                 <CheckCircle2 className="text-emerald-500" size={24} />
                 What&apos;s Included In This Package
@@ -1129,7 +447,7 @@ export default async function PackageDetailPage({
             </section>
 
             {/* 5. Excluding Cost / Exclusions Section */}
-            <section id="excluding-cost" className="bg-white rounded-3xl p-6 md:p-8 border border-[#e2e8f0] shadow-sm">
+            <section id="excluding-cost" className="bg-white rounded-3xl p-6 md:p-8 border border-[#e2e8f0] shadow-sm scroll-mt-24">
               <h2 className="text-2xl font-extrabold text-[#0a1628] mb-4 flex items-center gap-2">
                 <XCircle className="text-rose-500" size={24} />
                 Excluding Cost (What&apos;s Not Included)
@@ -1148,30 +466,362 @@ export default async function PackageDetailPage({
               </div>
             </section>
 
-            {/* 6. Equipment & Packing List / Travel Essentials Section */}
-            <section id="equipment" className="bg-white rounded-3xl p-6 md:p-8 border border-[#e2e8f0] shadow-sm">
+            {/* Visa Requirements Section */}
+            <section id="visa-requirements" className="bg-white rounded-3xl p-6 md:p-8 border border-[#e2e8f0] shadow-sm scroll-mt-24">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6 pb-4 border-b border-[#e2e8f0]">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-2xl bg-sky-50 text-[#0ea5e9] flex items-center justify-center font-bold">
+                    <FileCheck2 size={22} />
+                  </div>
+                  <div>
+                    <h2 className="text-xl sm:text-2xl font-extrabold text-[#0a1628]">
+                      Visa Requirements &amp; Mandatory Documents
+                    </h2>
+                    <p className="text-xs text-[#64748b] mt-0.5">
+                      Clearance guidelines &amp; document preparation managed by SkyWalk Tours and Travels Pvt. Ltd.
+                    </p>
+                  </div>
+                </div>
+                <span className="inline-flex items-center gap-1.5 text-xs font-bold text-emerald-700 bg-emerald-50 border border-emerald-200 px-3.5 py-1.5 rounded-full shrink-0">
+                  <CheckCircle2 size={14} className="text-emerald-600" />
+                  {pkg.country === "Thailand"
+                    ? "Thailand Tourist Visa Fee Included"
+                    : pkg.country === "Maldives"
+                    ? "Free 30-Day Visa on Arrival Included"
+                    : "Visa Documentation Assistance Included"}
+                </span>
+              </div>
+
+              {/* 4 Core Visa Requirements Highlights */}
               <div className="mb-6">
-                <h2 className="text-2xl font-extrabold text-[#0a1628] flex items-center gap-2">
-                  <Briefcase className="text-[#0ea5e9]" size={24} />
-                  Equipment &amp; Travel Essentials Checklist
-                </h2>
-                <p className="text-xs text-[#64748b] mt-1">
-                  Recommended clothing, travel gear, footwear, and documents to pack for this trip.
-                </p>
+                <h3 className="text-xs font-extrabold text-[#0ea5e9] uppercase tracking-wider mb-3 flex items-center gap-2">
+                  <span>📌 Mandatory Visa &amp; Entry Requirements</span>
+                </h3>
+                {pkg.country === "Maldives" ? (
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+                    <div className="flex items-start gap-3 bg-gradient-to-br from-sky-50/70 to-white border border-sky-100 p-4 rounded-2xl shadow-xs">
+                      <span className="text-2xl shrink-0 mt-0.5">📑</span>
+                      <div>
+                        <h4 className="text-xs font-bold text-[#0a1628] uppercase tracking-wider mb-1">Valid Original Passport</h4>
+                        <p className="text-xs sm:text-sm text-[#475569] leading-relaxed">
+                          Original passport valid for minimum 6 months from entry date into the Maldives.
+                        </p>
+                      </div>
+                    </div>
+
+                    <div className="flex items-start gap-3 bg-gradient-to-br from-sky-50/70 to-white border border-sky-100 p-4 rounded-2xl shadow-xs">
+                      <span className="text-2xl shrink-0 mt-0.5">✈️</span>
+                      <div>
+                        <h4 className="text-xs font-bold text-[#0a1628] uppercase tracking-wider mb-1">Confirmed Return Flights</h4>
+                        <p className="text-xs sm:text-sm text-[#475569] leading-relaxed">
+                          Confirmed round-trip flight booking to Kathmandu (provided by SkyWalk Tours and Travels).
+                        </p>
+                      </div>
+                    </div>
+
+                    <div className="flex items-start gap-3 bg-gradient-to-br from-sky-50/70 to-white border border-sky-100 p-4 rounded-2xl shadow-xs">
+                      <span className="text-2xl shrink-0 mt-0.5">🏨</span>
+                      <div>
+                        <h4 className="text-xs font-bold text-[#0a1628] uppercase tracking-wider mb-1">Confirmed Hotel Voucher</h4>
+                        <p className="text-xs sm:text-sm text-[#475569] leading-relaxed">
+                          Confirmed 3-star Hulhumalé beachfront hotel booking voucher &amp; itinerary (provided by SkyWalk Tours).
+                        </p>
+                      </div>
+                    </div>
+
+                    <div className="flex items-start gap-3 bg-gradient-to-br from-sky-50/70 to-white border border-sky-100 p-4 rounded-2xl shadow-xs">
+                      <span className="text-2xl shrink-0 mt-0.5">📝</span>
+                      <div>
+                        <h4 className="text-xs font-bold text-[#0a1628] uppercase tracking-wider mb-1">Online IMUGA Declaration</h4>
+                        <p className="text-xs sm:text-sm text-[#475569] leading-relaxed">
+                          Free Maldives Immigration Traveler Declaration (IMUGA) completed online within 96 hours before departure.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                ) : (
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+                    <div className="flex items-start gap-3 bg-gradient-to-br from-sky-50/70 to-white border border-sky-100 p-4 rounded-2xl shadow-xs">
+                      <span className="text-2xl shrink-0 mt-0.5">📑</span>
+                      <div>
+                        <h4 className="text-xs font-bold text-[#0a1628] uppercase tracking-wider mb-1">Clear Passport Scan</h4>
+                        <p className="text-xs sm:text-sm text-[#475569] leading-relaxed">
+                          Clear passport scan (if old passport, then front &amp; back scan is required). Must be valid for minimum 6 months from travel return date.
+                        </p>
+                      </div>
+                    </div>
+
+                    <div className="flex items-start gap-3 bg-gradient-to-br from-sky-50/70 to-white border border-sky-100 p-4 rounded-2xl shadow-xs">
+                      <span className="text-2xl shrink-0 mt-0.5">🪪</span>
+                      <div>
+                        <h4 className="text-xs font-bold text-[#0a1628] uppercase tracking-wider mb-1">Citizenship Scan</h4>
+                        <p className="text-xs sm:text-sm text-[#475569] leading-relaxed">
+                          Clear scan of Citizenship certificate (both sides). In case of a minor, an official government Birth Certificate is required.
+                        </p>
+                      </div>
+                    </div>
+
+                    <div className="flex items-start gap-3 bg-gradient-to-br from-sky-50/70 to-white border border-sky-100 p-4 rounded-2xl shadow-xs">
+                      <span className="text-2xl shrink-0 mt-0.5">💰</span>
+                      <div>
+                        <h4 className="text-xs font-bold text-[#0a1628] uppercase tracking-wider mb-1">
+                          {pkg.destination?.includes("Vietnam") || pkg.country?.includes("Vietnam") ? "4 Months Bank Statement" : "3 Months Bank Statement"}
+                        </h4>
+                        <p className="text-xs sm:text-sm text-[#475569] leading-relaxed">
+                          {pkg.destination?.includes("Vietnam") || pkg.country?.includes("Vietnam")
+                            ? "Four (4) months bank statement with a minimum closing balance of NPR 100,000 per person. If you prefer to show one bank account for a family/couple, you must provide a marriage or relationship certificate in English."
+                            : `3 months (90 days) bank statement with minimum closing balance of ${
+                                pkg.id === "malaysia-singapore-6d" || pkg.destination?.includes("Singapore") || pkg.destination?.includes("Malaysia") || pkg.country === "Philippines" || pkg.id === "philippines-6d"
+                                  ? "120K (NPR 120,000)"
+                                  : "100K (NPR 100,000)"
+                              } per person. If you prefer to show one bank account for a family/couple, you must provide a marriage or relationship certificate in English.`}
+                        </p>
+                      </div>
+                    </div>
+
+                    <div className="flex items-start gap-3 bg-gradient-to-br from-sky-50/70 to-white border border-sky-100 p-4 rounded-2xl shadow-xs">
+                      <span className="text-2xl shrink-0 mt-0.5">📸</span>
+                      <div>
+                        <h4 className="text-xs font-bold text-[#0a1628] uppercase tracking-wider mb-1">Studio Passport Photo</h4>
+                        <p className="text-xs sm:text-sm text-[#475569] leading-relaxed">
+                          Soft copy of passport size photo clicked in studio with plain white background, 35mm x 45mm (teeth must not be visible).
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              {/* Step-by-Step Documents for Visa Checklist */}
+              <div className="bg-[#f8fafc] rounded-2xl p-5 sm:p-6 border border-[#e2e8f0] mb-6 space-y-3">
+                <h3 className="text-xs font-extrabold text-[#0a1628] uppercase tracking-wider flex items-center gap-2">
+                  <CheckCircle2 size={16} className="text-emerald-500" />
+                  <span>{pkg.country === "Maldives" ? "Documents Required for Maldives Entry" : "Documents Required for Visa Submission"}</span>
+                </h3>
+                {pkg.country === "Maldives" ? (
+                  <div className="space-y-2.5 text-xs sm:text-sm">
+                    <div className="flex items-start gap-3 bg-white p-3.5 rounded-xl border border-[#e2e8f0]">
+                      <span className="w-6 h-6 rounded-full bg-[#0a1628] text-white text-xs font-bold flex items-center justify-center shrink-0 mt-0.5">
+                        1
+                      </span>
+                      <div>
+                        <strong className="text-[#0a1628]">Passport:</strong> Original passport with minimum 6 months validity from arrival date.
+                      </div>
+                    </div>
+
+                    <div className="flex items-start gap-3 bg-white p-3.5 rounded-xl border border-[#e2e8f0]">
+                      <span className="w-6 h-6 rounded-full bg-[#0a1628] text-white text-xs font-bold flex items-center justify-center shrink-0 mt-0.5">
+                        2
+                      </span>
+                      <div>
+                        <strong className="text-[#0a1628]">Air Ticket:</strong> Confirmed round-trip flight ticket Kathmandu ⇄ Malé (provided by SkyWalk).
+                      </div>
+                    </div>
+
+                    <div className="flex items-start gap-3 bg-white p-3.5 rounded-xl border border-[#e2e8f0]">
+                      <span className="w-6 h-6 rounded-full bg-[#0a1628] text-white text-xs font-bold flex items-center justify-center shrink-0 mt-0.5">
+                        3
+                      </span>
+                      <div>
+                        <strong className="text-[#0a1628]">Hotel Booking:</strong> Confirmed 3-star Hulhumalé hotel reservation voucher (provided by SkyWalk).
+                      </div>
+                    </div>
+
+                    <div className="flex items-start gap-3 bg-white p-3.5 rounded-xl border border-[#e2e8f0]">
+                      <span className="w-6 h-6 rounded-full bg-[#0a1628] text-white text-xs font-bold flex items-center justify-center shrink-0 mt-0.5">
+                        4
+                      </span>
+                      <div>
+                        <strong className="text-[#0a1628]">IMUGA Form &amp; Personal Funds:</strong> Online declaration submitted at imuga.immigration.gov.mv within 96 hours + personal travel funds.
+                      </div>
+                    </div>
+                  </div>
+                ) : (
+                  <div className="space-y-2.5 text-xs sm:text-sm">
+                    <div className="flex items-start gap-3 bg-white p-3.5 rounded-xl border border-[#e2e8f0]">
+                      <span className="w-6 h-6 rounded-full bg-[#0a1628] text-white text-xs font-bold flex items-center justify-center shrink-0 mt-0.5">
+                        1
+                      </span>
+                      <div>
+                        <strong className="text-[#0a1628]">Passport:</strong> Information and address page (both front &amp; back pages if old passport). Minimum 6 months validity.
+                      </div>
+                    </div>
+
+                    <div className="flex items-start gap-3 bg-white p-3.5 rounded-xl border border-[#e2e8f0]">
+                      <span className="w-6 h-6 rounded-full bg-[#0a1628] text-white text-xs font-bold flex items-center justify-center shrink-0 mt-0.5">
+                        2
+                      </span>
+                      <div>
+                        <strong className="text-[#0a1628]">Photo:</strong> Studio-clicked soft copy (plain white background, neutral face, teeth not visible).
+                      </div>
+                    </div>
+
+                    <div className="flex items-start gap-3 bg-white p-3.5 rounded-xl border border-[#e2e8f0]">
+                      <span className="w-6 h-6 rounded-full bg-[#0a1628] text-white text-xs font-bold flex items-center justify-center shrink-0 mt-0.5">
+                        3
+                      </span>
+                      <div>
+                        <strong className="text-[#0a1628]">Citizenship:</strong> Clear color scan of both sides / In case of minor, government Birth Certificate.
+                      </div>
+                    </div>
+
+                    <div className="flex items-start gap-3 bg-white p-3.5 rounded-xl border border-[#e2e8f0]">
+                      <span className="w-6 h-6 rounded-full bg-[#0a1628] text-white text-xs font-bold flex items-center justify-center shrink-0 mt-0.5">
+                        4
+                      </span>
+                      <div>
+                        <strong className="text-[#0a1628]">Bank Statement:</strong>{" "}
+                        {pkg.destination?.includes("Vietnam") || pkg.country?.includes("Vietnam")
+                          ? "4 months (120 days) bank statement with NPR 100,000 closing balance per person. If showing one account for a couple/family, provide a marriage/relationship certificate."
+                          : `3 months (90 days) bank statement with ${
+                              pkg.id === "malaysia-singapore-6d" || pkg.destination?.includes("Singapore") || pkg.destination?.includes("Malaysia") || pkg.country === "Philippines" || pkg.id === "philippines-6d"
+                                ? "120K (NPR 120,000)"
+                                : "1 Lakh (NPR 100,000)"
+                            } closing balance per person. If you prefer to show one single bank account for a family/couple, you must provide a Marriage or Relationship Certificate in English.`}
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              {/* Embassy & Immigration Terms Alert */}
+              <div className="bg-[#fff7ed] border border-[#fed7aa] rounded-2xl p-5 space-y-3">
+                <div className="flex items-center gap-2 text-xs font-extrabold text-[#c2410c] uppercase tracking-wider">
+                  <AlertCircle size={16} />
+                  <span>Important Terms &amp; Visa / Immigration Notes</span>
+                </div>
+                {pkg.country === "Maldives" ? (
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs text-[#7c2d12] leading-relaxed">
+                    <div className="flex items-start gap-2 bg-white/70 p-3 rounded-xl border border-[#ffedd5]">
+                      <span className="text-[#f97316] font-bold">1.</span>
+                      <span><strong>Visa on Arrival:</strong> Free 30-day tourist visa on arrival for Nepali passport holders. No advance embassy application or fee needed.</span>
+                    </div>
+                    <div className="flex items-start gap-2 bg-white/70 p-3 rounded-xl border border-[#ffedd5]">
+                      <span className="text-[#f97316] font-bold">2.</span>
+                      <span><strong>Transfers:</strong> Airport meet-and-greet pickup and departure drop are private; in-destination boat and excursion transfers run on shared (SIC) basis.</span>
+                    </div>
+                    <div className="flex items-start gap-2 bg-white/70 p-3 rounded-xl border border-[#ffedd5]">
+                      <span className="text-[#f97316] font-bold">3.</span>
+                      <span><strong>Cancellation Policy:</strong> First-night hotel booking cost is non-refundable once booked. Remaining balance will be refunded. Flight tickets per airline policy.</span>
+                    </div>
+                    <div className="flex items-start gap-2 bg-white/70 p-3 rounded-xl border border-[#ffedd5]">
+                      <span className="text-[#f97316] font-bold">4.</span>
+                      <span><strong>SkyWalk Support Desk:</strong> Pepsicola, Kathmandu • ☎ 014544343, 9801237798, 9709104784 • 📧 skywalktoursandtravels32@gmail.com</span>
+                    </div>
+                  </div>
+                ) : (
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs text-[#7c2d12] leading-relaxed">
+                    <div className="flex items-start gap-2 bg-white/70 p-3 rounded-xl border border-[#ffedd5]">
+                      <span className="text-[#f97316] font-bold">1.</span>
+                      <span><strong>Embassy Decision:</strong> Visa approval depends entirely on Embassy decision. Sky Walk Tours is not responsible for visa rejection. Visa fee is non-refundable after application.</span>
+                    </div>
+                    <div className="flex items-start gap-2 bg-white/70 p-3 rounded-xl border border-[#ffedd5]">
+                      <span className="text-[#f97316] font-bold">2.</span>
+                      <span><strong>Immigration Authority &amp; Forex:</strong> Immigration officer has final authority for entry or denial. The company is not responsible if entry is denied by immigration. Travelers must carry original passport, tickets, vouchers, and sufficient USD cash or passport currency endorsement stamp.</span>
+                    </div>
+                    <div className="flex items-start gap-2 bg-white/70 p-3 rounded-xl border border-[#ffedd5]">
+                      <span className="text-[#f97316] font-bold">3.</span>
+                      <span><strong>Additional Airline Terms:</strong> Airline ticket refunds are subject to airline policy. Package fares and taxes subject to seat availability.</span>
+                    </div>
+                    <div className="flex items-start gap-2 bg-white/70 p-3 rounded-xl border border-[#ffedd5]">
+                      <span className="text-[#f97316] font-bold">4.</span>
+                      <span><strong>SkyWalk Support Desk:</strong> Pepsicola, Kathmandu • ☎ 014544343, 9714491103, 9801237798, 9709104784 • 📧 skywalktoursandtravels32@gmail.com</span>
+                    </div>
+                    {(pkg.destination?.includes("Malaysia") || pkg.country?.includes("Malaysia")) && (
+                      <div className="flex items-start gap-2 bg-white/70 p-3 rounded-xl border border-[#ffedd5] sm:col-span-2">
+                        <span className="text-[#f97316] font-bold">5.</span>
+                        <span><strong>Malaysia Tourism Tax:</strong> A mandatory tourism tax of MYR 10 per room per night is payable directly to hotel reception upon check-in.</span>
+                      </div>
+                    )}
+                    {(pkg.destination?.includes("Vietnam") || pkg.country?.includes("Vietnam")) && (
+                      <div className="flex items-start gap-2 bg-white/70 p-3 rounded-xl border border-[#ffedd5] sm:col-span-2">
+                        <span className="text-[#f97316] font-bold">5.</span>
+                        <span><strong>Package Cancellation Charges:</strong> More than 30 days before departure: 0% cancellation charge • 30–15 days: 40% charge • 14–10 days: 60% charge • Within 3 days: 100% charge. Guaranteed price packages stand at 100% cancellation fee.</span>
+                      </div>
+                    )}
+                  </div>
+                )}
+              </div>
+            </section>
+
+            {/* 6. Packing List & Travel Essentials Section */}
+            <div id="equipment" className="scroll-mt-24" />
+            <section id="packing-list" className="bg-white rounded-3xl p-6 md:p-8 border border-[#e2e8f0] shadow-sm scroll-mt-24">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6 pb-4 border-b border-[#e2e8f0]">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-2xl bg-amber-50 text-amber-600 flex items-center justify-center font-bold">
+                    <Briefcase size={22} />
+                  </div>
+                  <div>
+                    <h2 className="text-xl sm:text-2xl font-extrabold text-[#0a1628]">
+                      Packing List &amp; Travel Essentials
+                    </h2>
+                    <p className="text-xs text-[#64748b] mt-0.5">
+                      Expertly curated packing recommendations for clothing, temple visits, beach days, and essential travel gear
+                    </p>
+                  </div>
+                </div>
+                <span className="text-xs font-semibold text-[#0ea5e9] bg-[#e0f2fe] px-3.5 py-1.5 rounded-full shrink-0">
+                  Ready-to-Pack Guide
+                </span>
               </div>
 
               <div className="space-y-6">
-                {pkg.equipment?.map((eqCat: any, idx: number) => (
-                  <div key={idx} className="bg-[#f8fafc] rounded-2xl p-5 border border-[#e2e8f0]">
-                    <h3 className="text-sm font-extrabold text-[#0a1628] uppercase tracking-wider mb-3 flex items-center gap-2">
+                {(pkg.equipment && pkg.equipment.length > 0 ? pkg.equipment : [
+                  {
+                    category: "Tropical Beach & Island Wear",
+                    items: [
+                      "Comfortable cotton clothing, t-shirts, summer dresses & shorts",
+                      "Swimwear, rash guard, and flip-flops for Coral Island / Phi Phi / Krabi",
+                      "Light jacket or cardigan for air-conditioned flights, vans, and shopping malls",
+                      "Comfortable walking sneakers for shopping at Chatuchak & Pratunam",
+                    ],
+                  },
+                  {
+                    category: "Temple Etiquette Attire (Wat Pho & Wat Traimitr)",
+                    items: [
+                      "Modest clothing covering shoulders and knees (strictly enforced at Thai temples)",
+                      "Slip-on shoes or comfortable walking sandals (easy to take off before shrine halls)",
+                      "Light scarf or wrap-around sarong",
+                    ],
+                  },
+                  {
+                    category: "Mandatory Documents & Currency Checklist",
+                    items: [
+                      "Original passport with 6+ months validity from date of return",
+                      "Printed flight e-tickets, hotel booking voucher & itinerary (provided by SkyWalk)",
+                      "$500 USD cash stamp/endorsement in passport as per Thai immigration guidelines",
+                      "Thai Baht (THB) cash & international debit/credit/forex card",
+                    ],
+                  },
+                  {
+                    category: "Sun, Beach & Boat Excursion Gear",
+                    items: [
+                      "Sunscreen SPF 50+, polarized sunglasses, and wide-brim sun hat",
+                      "Waterproof dry-bag and waterproof phone pouch for speedboat tours",
+                      "Quick-dry microfiber beach towel",
+                    ],
+                  },
+                  {
+                    category: "Electronics, Health & Personal Toiletries",
+                    items: [
+                      "Universal travel power adapter (Thai two-pin flat/round plug, 220V)",
+                      "Power bank (under 20,000 mAh allowed on cabin luggage)",
+                      "Motion sickness / sea-sickness tablets for speedboats",
+                      "Personal toiletries, mosquito repellent spray & travel first-aid kit",
+                    ],
+                  },
+                ]).map((eqCat: any, idx: number) => (
+                  <div key={idx} className="bg-[#f8fafc] rounded-2xl p-5 sm:p-6 border border-[#e2e8f0]">
+                    <h3 className="text-sm font-extrabold text-[#0a1628] uppercase tracking-wider mb-3.5 flex items-center gap-2">
                       <Luggage size={16} className="text-[#0ea5e9]" />
                       {eqCat.category}
                     </h3>
-                    <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs sm:text-sm text-[#334155]">
+                    <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 text-xs sm:text-sm text-[#334155]">
                       {eqCat.items.map((itemStr: string, iIdx: number) => (
-                        <li key={iIdx} className="flex items-start gap-2 bg-white p-2.5 rounded-xl border border-[#e2e8f0]">
-                          <span className="w-1.5 h-1.5 rounded-full bg-[#0ea5e9] mt-2 shrink-0" />
-                          <span>{itemStr}</span>
+                        <li key={iIdx} className="flex items-start gap-2.5 bg-white p-3 rounded-xl border border-[#e2e8f0] shadow-xs">
+                          <CheckCircle2 size={16} className="text-emerald-500 shrink-0 mt-0.5" />
+                          <span className="leading-relaxed">{itemStr}</span>
                         </li>
                       ))}
                     </ul>
@@ -1186,6 +836,47 @@ export default async function PackageDetailPage({
                 <Hotel className="text-[#0ea5e9]" size={24} />
                 Hotel &amp; Accommodation Details
               </h2>
+
+              {/* Multi-Hotel Accommodation Breakdown Table */}
+              {pkg.hotelAccommodation && pkg.hotelAccommodation.length > 0 && (
+                <div className="mb-6 overflow-hidden rounded-2xl border border-[#e2e8f0] shadow-xs">
+                  <div className="bg-gradient-to-r from-[#0a1628] to-[#1e293b] text-white p-4">
+                    <h3 className="text-sm font-bold uppercase tracking-wider flex items-center gap-2">
+                      <span>🏨</span>
+                      Official 4-Star Hotel &amp; Cruise Accommodations
+                    </h3>
+                    <p className="text-[11px] text-slate-300 mt-0.5">
+                      Hotels may be changed depending on availability when booking is confirmed (same or higher category).
+                    </p>
+                  </div>
+                  <div className="overflow-x-auto bg-white">
+                    <table className="w-full text-left text-xs sm:text-sm">
+                      <thead className="bg-slate-50 text-slate-600 font-bold border-b border-slate-200">
+                        <tr>
+                          <th className="py-3 px-4">Destination</th>
+                          <th className="py-3 px-4">Hotel / Cruise</th>
+                          <th className="py-3 px-4">Room Type</th>
+                          <th className="py-3 px-4">Category</th>
+                        </tr>
+                      </thead>
+                      <tbody className="divide-y divide-slate-100">
+                        {pkg.hotelAccommodation.map((h: any, hIdx: number) => (
+                          <tr key={hIdx} className="hover:bg-slate-50/80 transition-colors">
+                            <td className="py-3.5 px-4 font-bold text-[#0a1628]">{h.destination}</td>
+                            <td className="py-3.5 px-4 font-semibold text-[#0ea5e9]">{h.hotel}</td>
+                            <td className="py-3.5 px-4 text-[#334155]">{h.roomType}</td>
+                            <td className="py-3.5 px-4">
+                              <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-amber-50 text-amber-700 border border-amber-200">
+                                {h.category}
+                              </span>
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              )}
 
               <div className="bg-[#f8fafc] rounded-2xl p-6 border border-[#e2e8f0]">
                 <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 mb-4 pb-4 border-b border-[#e2e8f0]">
@@ -1220,6 +911,73 @@ export default async function PackageDetailPage({
               </div>
             </section>
 
+            {/* Cancellation Policy & Official Booking Terms */}
+            {pkg.cancellationPolicySchedule && (
+              <section id="cancellation-policy" className="bg-white rounded-3xl p-6 md:p-8 border border-[#e2e8f0] shadow-sm scroll-mt-24 space-y-6">
+                <div className="flex items-center gap-3 pb-4 border-b border-[#e2e8f0]">
+                  <div className="w-10 h-10 rounded-2xl bg-rose-50 text-rose-600 flex items-center justify-center font-bold">
+                    <ShieldCheck size={22} />
+                  </div>
+                  <div>
+                    <h2 className="text-xl sm:text-2xl font-extrabold text-[#0a1628]">
+                      Cancellation &amp; Amendment Policy
+                    </h2>
+                    <p className="text-xs text-[#64748b] mt-0.5">
+                      Clear and transparent booking terms per SkyWalk Holidays standard operating policy.
+                    </p>
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  {/* Category A: Land & Hotel */}
+                  <div className="bg-[#f8fafc] border border-[#e2e8f0] rounded-2xl p-5 shadow-xs">
+                    <h3 className="text-xs font-bold text-[#0a1628] uppercase tracking-wider mb-1 flex items-center gap-2">
+                      <span className="w-2 h-2 rounded-full bg-rose-500"></span>
+                      A. Package Including Land &amp; Hotel
+                    </h3>
+                    <p className="text-[11px] text-[#64748b] mb-3">Cancellation fee structure:</p>
+                    <div className="space-y-2 text-xs">
+                      {pkg.cancellationPolicySchedule.landAndHotel.map((item: any, idx: number) => (
+                        <div key={idx} className="flex items-center justify-between bg-white p-2.5 rounded-xl border border-slate-200">
+                          <span className="text-slate-700 font-medium">{item.period}</span>
+                          <span className="font-bold text-rose-600 shrink-0 ml-2">{item.charge}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Category B: Land-Only */}
+                  <div className="bg-[#f8fafc] border border-[#e2e8f0] rounded-2xl p-5 shadow-xs">
+                    <h3 className="text-xs font-bold text-[#0a1628] uppercase tracking-wider mb-1 flex items-center gap-2">
+                      <span className="w-2 h-2 rounded-full bg-amber-500"></span>
+                      B. Land-Only Package
+                    </h3>
+                    <p className="text-[11px] text-[#64748b] mb-3">Cancellation fee structure:</p>
+                    <div className="space-y-2 text-xs">
+                      {pkg.cancellationPolicySchedule.landOnly.map((item: any, idx: number) => (
+                        <div key={idx} className="flex items-center justify-between bg-white p-2.5 rounded-xl border border-slate-200">
+                          <span className="text-slate-700 font-medium">{item.period}</span>
+                          <span className="font-bold text-amber-600 shrink-0 ml-2">{item.charge}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+
+                {/* Terms and Force Majeure Rules */}
+                <div className="bg-slate-50 border border-slate-200 rounded-2xl p-5 text-xs text-slate-700 space-y-2">
+                  <h4 className="font-bold text-[#0a1628] uppercase tracking-wider text-[11px]">
+                    Terms, Amendments &amp; Force Majeure
+                  </h4>
+                  <ul className="space-y-1.5 list-disc list-inside text-[#475569] leading-relaxed">
+                    {pkg.cancellationPolicySchedule.rules.map((r: string, rIdx: number) => (
+                      <li key={rIdx}>{r}</li>
+                    ))}
+                  </ul>
+                </div>
+              </section>
+            )}
+
             {/* FAQs */}
             <section id="faq" className="bg-white rounded-3xl p-6 md:p-8 border border-[#e2e8f0] shadow-sm">
               <h2 className="text-2xl font-extrabold text-[#0a1628] mb-6 flex items-center gap-2">
@@ -1244,7 +1002,7 @@ export default async function PackageDetailPage({
           </div>
 
           {/* Right Column: Sticky Inquiry Sidebar */}
-          <div className="lg:col-span-1 sticky top-20 self-start z-20">
+          <div className="lg:col-span-1 sticky top-36 self-start z-20">
             <PackageInquirySidebar
               packageTitle={pkg.title}
               packagePrice={pkg.price}

@@ -2,7 +2,9 @@
 
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
-import { Calendar, MapPin, Users, Sparkles, MessageSquare, Clock, ArrowRight, ShieldCheck } from "lucide-react";
+import Link from "next/link";
+import { motion } from "framer-motion";
+import { Calendar, MapPin, Users, Sparkles, MessageSquare, Clock, ArrowRight, ShieldCheck, Eye } from "lucide-react";
 import SectionHeader from "@/components/common/SectionHeader";
 import { buildWhatsAppLink } from "@/lib/whatsapp";
 import { Button } from "@/components/ui/button";
@@ -77,16 +79,24 @@ export default function UpcomingHolidaysSection() {
 
         {/* Departure Cards Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {departures.map((dep) => {
+          {departures.map((dep, idx) => {
             const seatsPercent = Math.round(((dep.totalSeats - dep.availableSeats) / dep.totalSeats) * 100);
             return (
-              <div
+              <motion.div
                 key={dep.id}
-                className="bg-[#0f2040] rounded-3xl overflow-hidden border border-[#163058] shadow-xl hover:border-[#0ea5e9]/60 transition-all duration-300 hover:-translate-y-1.5 flex flex-col justify-between group"
+                initial={{ opacity: 0, y: 32 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-40px" }}
+                transition={{ duration: 0.5, delay: idx * 0.08, ease: "easeOut" }}
+                whileHover={{ y: -8, transition: { duration: 0.25 } }}
+                className="bg-[#0f2040] rounded-3xl overflow-hidden border border-[#163058] shadow-xl hover:border-[#0ea5e9]/60 transition-all duration-300 flex flex-col justify-between group"
               >
                 <div>
                   {/* Image & Date Badge */}
-                  <div className="relative h-52 w-full overflow-hidden">
+                  <Link
+                    href={`/departures/${dep.id}`}
+                    className="relative h-52 w-full overflow-hidden block"
+                  >
                     <Image
                       src={dep.image}
                       alt={dep.title}
@@ -108,6 +118,13 @@ export default function UpcomingHolidaysSection() {
                       </div>
                     )}
 
+                    {/* Hover Hint */}
+                    <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity bg-black/40 backdrop-blur-[2px]">
+                      <span className="inline-flex items-center gap-1.5 bg-[#0ea5e9] text-white text-xs font-bold px-3.5 py-1.5 rounded-full shadow-lg transform -translate-y-2 group-hover:translate-y-0 transition-transform">
+                        <Eye size={13} /> View Full Itinerary & Details
+                      </span>
+                    </div>
+
                     {/* Fixed Date Chip */}
                     <div className="absolute bottom-3 left-3 right-3 flex items-center gap-1.5 bg-[#0a1628]/95 backdrop-blur-md px-2.5 py-1.5 rounded-xl border border-white/10 text-[11px] sm:text-xs font-bold text-[#38bdf8] overflow-hidden">
                       <Calendar size={13} className="text-[#f97316] shrink-0" />
@@ -115,7 +132,7 @@ export default function UpcomingHolidaysSection() {
                         {formatDateString(dep.startDate)} – {formatDateString(dep.endDate)}
                       </span>
                     </div>
-                  </div>
+                  </Link>
 
                   {/* Card Content */}
                   <div className="p-4 sm:p-5 space-y-3">
@@ -124,9 +141,11 @@ export default function UpcomingHolidaysSection() {
                       <span className="truncate">{dep.destination}</span>
                     </div>
 
-                    <h3 className="font-bold text-white text-sm sm:text-base leading-snug group-hover:text-[#38bdf8] transition-colors line-clamp-2">
-                      {dep.title}
-                    </h3>
+                    <Link href={`/departures/${dep.id}`}>
+                      <h3 className="font-bold text-white text-sm sm:text-base leading-snug group-hover:text-[#38bdf8] transition-colors line-clamp-2">
+                        {dep.title}
+                      </h3>
+                    </Link>
 
                     {/* Seat Progress Bar */}
                     <div className="space-y-1.5 pt-1">
@@ -163,17 +182,27 @@ export default function UpcomingHolidaysSection() {
                     <span className="text-[10px] sm:text-[11px] text-[#38bdf8] font-bold self-end">All Inclusive</span>
                   </div>
 
-                  <a
-                    href={generateWhatsAppLink(dep)}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="w-full inline-flex items-center justify-center gap-2 bg-[#f97316] hover:bg-[#ea580c] text-white font-extrabold py-3 px-3 rounded-xl shadow-lg transition-all text-xs min-h-[44px]"
-                  >
-                    <MessageSquare size={15} className="shrink-0" />
-                    <span>Reserve Seat on WhatsApp</span>
-                  </a>
+                  <div className="grid grid-cols-2 gap-2 mt-1">
+                    <Link
+                      href={`/departures/${dep.id}`}
+                      className="inline-flex items-center justify-center gap-1.5 bg-[#0e2444] hover:bg-[#163660] text-[#38bdf8] hover:text-white border border-[#38bdf8]/35 font-bold py-2.5 px-2 rounded-xl transition-all text-xs"
+                    >
+                      <Eye size={13} className="shrink-0" />
+                      <span>View Details</span>
+                    </Link>
+
+                    <a
+                      href={generateWhatsAppLink(dep)}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center justify-center gap-1.5 bg-[#f97316] hover:bg-[#ea580c] text-white font-extrabold py-2.5 px-2 rounded-xl shadow-lg transition-all text-xs"
+                    >
+                      <MessageSquare size={13} className="shrink-0" />
+                      <span>Reserve</span>
+                    </a>
+                  </div>
                 </div>
-              </div>
+              </motion.div>
             );
           })}
         </div>

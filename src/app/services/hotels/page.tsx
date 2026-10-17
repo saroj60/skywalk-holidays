@@ -10,16 +10,16 @@ import HotelInquiryForm from "@/components/forms/HotelInquiryForm";
 
 export const metadata: Metadata = {
   title: "Find Your Perfect Stay | Hotel Booking — Skywalks Holidays",
-  description: "Book handpicked hotels in Dubai, Bangkok, Singapore, Kathmandu, Pokhara, Bali and worldwide.",
+  description: "Book handpicked hotels in Kuala Lumpur, Bangkok, Singapore, Kathmandu, Pokhara, Bali and worldwide.",
 };
 
 const POPULAR_DESTINATIONS = [
   {
-    name: "Dubai",
-    country: "United Arab Emirates",
-    image: "https://images.unsplash.com/photo-1512453979798-5ea266f8880c?w=800&q=80",
-    hotelsCount: "250+ Hotels",
-    startingFrom: "NPR 8,500",
+    name: "Kuala Lumpur",
+    country: "Malaysia",
+    image: "/images/gallery/malaysia-petronas-towers-flag-night.png",
+    hotelsCount: "210+ Hotels",
+    startingFrom: "NPR 5,500",
   },
   {
     name: "Bangkok",
@@ -71,14 +71,14 @@ const RECOMMENDED_HOTELS = [
     amenities: ["Spa", "Pool", "Free Wi-Fi", "Airport Transfer"],
   },
   {
-    name: "Atlantis The Palm",
-    location: "Palm Jumeirah, Dubai",
+    name: "Marina Bay Sands Hotel",
+    location: "Marina Bay, Singapore",
     rating: 4.9,
     reviews: 512,
     price: 45000,
     category: "5-Star Luxury Resort",
-    image: "https://images.unsplash.com/photo-1582719508461-905c673771fd?w=800&q=80",
-    amenities: ["Waterpark", "Beach Access", "Fine Dining", "Spa"],
+    image: "https://images.unsplash.com/photo-1565967511849-76a60a516170?w=800&q=80",
+    amenities: ["Infinity Pool", "SkyPark", "Fine Dining", "Casino"],
   },
   {
     name: "Fishtail Lodge Pokhara",

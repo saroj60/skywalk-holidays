@@ -16,7 +16,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/contact",
     "/gallery",
     "/vlogs",
-    "/packages/dubai-6d",
+    "/packages/bangkok-pattaya-6d",
     "/packages/thailand-5d",
     "/packages/bali-7d",
     "/packages/europe-11d",

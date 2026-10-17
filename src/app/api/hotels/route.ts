@@ -28,14 +28,14 @@ let HOTELS: HotelRecord[] = [
   },
   {
     id: "HTL-2",
-    name: "Atlantis The Palm",
-    location: "Palm Jumeirah, Dubai",
+    name: "Mandarin Oriental Bangkok",
+    location: "Chao Phraya River, Bangkok, Thailand",
     rating: 4.9,
     reviews: 512,
-    price: 45000,
+    price: 36000,
     category: "5-Star Luxury Resort",
     image: "https://images.unsplash.com/photo-1582719508461-905c673771fd?w=800&q=80",
-    amenities: ["Waterpark", "Beach Access", "Fine Dining", "Spa"],
+    amenities: ["River Cruise", "Pool", "Fine Dining", "Spa"],
     status: "ACTIVE",
   },
   {

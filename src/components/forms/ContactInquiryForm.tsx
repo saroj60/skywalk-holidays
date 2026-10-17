@@ -199,7 +199,7 @@ export default function ContactInquiryForm() {
             Travel Destination (Optional)
           </label>
           <Input
-            placeholder="e.g. Dubai, Bali, Europe, Mustang, Pokhara"
+            placeholder="e.g. Thailand, Bali, Europe, Mustang, Pokhara"
             value={formData.destination}
             onChange={(e) => handleChange("destination", e.target.value)}
           />

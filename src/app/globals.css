@@ -64,7 +64,7 @@
   box-sizing: border-box;
 }
 
-html {
+html[data-scroll-behavior="smooth"] {
   scroll-behavior: smooth;
 }
 
@@ -110,6 +110,7 @@ body {
 /* ─── Scrollbar ─────────────────────────────────────── */
 ::-webkit-scrollbar {
   width: 6px;
+  height: 6px;
 }
 ::-webkit-scrollbar-track {
   background: var(--slate-100);
@@ -117,6 +118,15 @@ body {
 ::-webkit-scrollbar-thumb {
   background: var(--sky-500);
   border-radius: 3px;
+}
+
+/* Hide scrollbar utility */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 
 /* ─── Animations ────────────────────────────────────── */
@@ -132,6 +142,18 @@ body {
   0%   { background-position: -200% 0; }
   100% { background-position: 200% 0; }
 }
+@keyframes cloudDrift {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(calc(100vw + 600px));
+  }
+}
+@keyframes pulseGlow {
+  0%, 100% { opacity: 0.35; transform: scale(1); }
+  50% { opacity: 0.55; transform: scale(1.05); }
+}
 
 .animate-fade-up {
   animation: fadeUp 0.6s ease forwards;
@@ -143,3 +165,34 @@ body {
 .animate-delay-200 { animation-delay: 0.2s; }
 .animate-delay-300 { animation-delay: 0.3s; }
 .animate-delay-400 { animation-delay: 0.4s; }
+
+.animate-cloud-drift-slow {
+  animation: cloudDrift 95s linear infinite;
+  will-change: transform;
+}
+.animate-cloud-drift-medium {
+  animation: cloudDrift 65s linear infinite;
+  animation-delay: -25s;
+  will-change: transform;
+}
+.animate-cloud-drift-fast {
+  animation: cloudDrift 45s linear infinite;
+  animation-delay: -12s;
+  will-change: transform;
+}
+.animate-pulse-glow {
+  animation: pulseGlow 6s ease-in-out infinite;
+}
+
+/* ─── Sky Atmosphere Utilities ─────────────────────── */
+.bg-sky-canvas {
+  background: radial-gradient(circle at 50% 0%, rgba(224, 242, 254, 0.45) 0%, rgba(248, 250, 252, 0.7) 60%, rgba(255, 255, 255, 0.9) 100%);
+}
+
+.sky-glass-card {
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(224, 242, 254, 0.8);
+  box-shadow: 0 10px 30px -10px rgba(14, 165, 233, 0.08), 0 4px 6px -4px rgba(15, 23, 42, 0.04);
+}

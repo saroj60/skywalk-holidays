@@ -4,6 +4,7 @@ import "./globals.css";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import WhatsAppFloatingButton from "@/components/common/WhatsAppFloatingButton";
+import SkyBackground from "@/components/common/SkyBackground";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -25,7 +26,7 @@ export const metadata: Metadata = {
     "nepal tour agency",
     "thamel travel agency",
     "pokhara holiday packages",
-    "dubai tour package from nepal",
+    "vietnam tour package from nepal",
     "thailand visa for nepali",
   ],
   authors: [{ name: "Skywalks Holidays" }],
@@ -132,7 +133,8 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </head>
-      <body className={inter.className} suppressHydrationWarning>
+      <body className={`${inter.className} relative min-h-screen bg-[#f8fbff] text-[#0a1628]`} suppressHydrationWarning>
+        <SkyBackground />
         <Navbar />
         <main>{children}</main>
         <Footer />

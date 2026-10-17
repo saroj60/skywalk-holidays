@@ -1,6 +1,5 @@
 import HeroSection from "@/components/sections/HeroSection";
 import ServicesSection from "@/components/sections/ServicesSection";
-import FeaturedPackages from "@/components/sections/FeaturedPackages";
 import UpcomingHolidaysSection from "@/components/sections/UpcomingHolidaysSection";
 import WhyChooseUs from "@/components/sections/WhyChooseUs";
 import Destinations from "@/components/sections/Destinations";
@@ -28,7 +27,7 @@ export default function HomePage() {
         "name": "Does Skywalks Holidays provide visa assistance for Nepali citizens?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Yes, we provide certified document review, VFS appointment scheduling, and application guidance for Dubai, Schengen, USA, UK, Australia, Japan, South Korea, Canada, Thailand, and Malaysia."
+          "text": "Yes, we provide certified document review, VFS appointment scheduling, and application guidance for Schengen, USA, UK, Australia, Japan, South Korea, Canada, Thailand, and Malaysia."
         }
       },
       {
@@ -36,7 +35,7 @@ export default function HomePage() {
         "name": "What upcoming fixed departure holiday packages are available?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "We offer upcoming fixed departure tour packages for Dashain, Tihar, and New Year 2027 to Dubai, Thailand, Bali, Europe, and Singapore with live seat tracking and instant WhatsApp reservation."
+          "text": "We offer upcoming fixed departure tour packages for Dashain, Tihar, and New Year 2027 to Vietnam, Thailand, Bali, Europe, and Singapore with live seat tracking and instant WhatsApp reservation."
         }
       }
     ]
@@ -53,7 +52,6 @@ export default function HomePage() {
       <UpcomingHolidaysSection />
       <ServicesSection />
       <StatsCounter />
-      <FeaturedPackages />
       <Destinations />
       <VideoGuidesSection />
       <WhyChooseUs />

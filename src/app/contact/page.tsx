@@ -1,6 +1,7 @@
 import React from "react";
 import { Metadata } from "next";
-import { Phone, Mail, MapPin, Clock, MessageSquare, Headset, ExternalLink, ShieldCheck } from "lucide-react";
+import Image from "next/image";
+import { Phone, Mail, MapPin, Clock, MessageSquare, Headset, ExternalLink, ShieldCheck, CheckCircle2 } from "lucide-react";
 import SectionHeader from "@/components/common/SectionHeader";
 import CTABanner from "@/components/common/CTABanner";
 import ContactInquiryForm from "@/components/forms/ContactInquiryForm";
@@ -8,8 +9,49 @@ import { COMPANY } from "@/lib/constants";
 
 export const metadata: Metadata = {
   title: "Contact Us | Skywalks Holidays — Nepal's Premium Travel Agency",
-  description: "Get in touch with Skywalks Holidays in Thamel, Kathmandu. Call +977-98XXXXXXXX, WhatsApp, or send an inquiry for flights, hotels, tours & visas.",
+  description: "Get in touch with Skywalks Holidays in Kathmandu. Call +977-971-4491103, WhatsApp, or send an inquiry for flights, hotels, tours & visas.",
 };
+
+const CONTACT_CHANNELS = [
+  {
+    icon: Phone,
+    title: "Call Now",
+    value: "971-4491103",
+    subtitle: "+977 971-4491103",
+    desc: "Instant telephone bookings",
+    href: `tel:${COMPANY.mobile}`,
+    color: "bg-[#e0f2fe] text-[#0ea5e9]",
+  },
+  {
+    icon: MessageSquare,
+    title: "WhatsApp Chat",
+    value: "Chat Online",
+    subtitle: "+977 971-4491103",
+    desc: "Fast quotes & customized tours",
+    href: "https://wa.me/9779714491103",
+    color: "bg-[#f0fdf4] text-emerald-600",
+    isExternal: true,
+  },
+  {
+    icon: MapPin,
+    title: "Visit Office",
+    value: "Pepsicola",
+    subtitle: "Kathmandu, Nepal",
+    desc: "Open Mon-Sat 10:00 AM - 6:00 PM",
+    href: "https://maps.app.goo.gl/cSd8z1m3BnbegeSY6",
+    color: "bg-[#fff7ed] text-[#f97316]",
+    isExternal: true,
+  },
+  {
+    icon: Mail,
+    title: "Official Email",
+    value: "Send Email",
+    subtitle: "skywalktoursandtravels32@...",
+    desc: "Response within 2 hours",
+    href: `mailto:${COMPANY.email}`,
+    color: "bg-[#faf5ff] text-purple-600",
+  },
+];
 
 /* Social Media SVGs */
 const FacebookIcon = () => (
@@ -46,41 +88,101 @@ const SOCIAL_LINKS = [
 export default function ContactPage() {
   return (
     <>
-      {/* Hero Section */}
-      <section className="bg-gradient-to-br from-[#0a1628] via-[#163058] to-[#0ea5e9] py-20 md:py-28 text-white relative overflow-hidden">
-        <div
-          className="absolute inset-0 opacity-10"
-          style={{
-            backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
-          }}
-        />
+      {/* Hero Section (Proportionally matching About Page hero) */}
+      <section className="relative w-full overflow-hidden bg-[#0a1628]">
+        <div className="relative w-full min-h-[320px] sm:min-h-[380px] md:min-h-[440px] lg:min-h-[480px] flex items-center justify-center">
+          {/* Background Travel Collage Banner Image */}
+          <Image
+            src="/images/contact-hero-banner.png"
+            alt="Contact Skywalks Holidays — 24/7 Travel Assistance"
+            fill
+            priority
+            className="object-cover object-center"
+            sizes="100vw"
+          />
+          {/* Multi-layer atmospheric gradients ensuring high contrast and landmark illumination */}
+          <div className="absolute inset-0 bg-gradient-to-r from-[#0a1628]/92 via-[#0a1628]/70 to-[#0a1628]/85" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#0a1628]/90 via-transparent to-[#0a1628]/50" />
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-sky-400/15 via-transparent to-transparent" />
 
-        <div className="container-custom relative z-10 text-center max-w-4xl mx-auto">
-          {/* Badge */}
-          <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-md border border-white/20 rounded-full px-4 py-2 mb-6">
-            <MessageSquare size={16} className="text-[#0ea5e9]" />
-            <span className="text-white text-xs font-semibold tracking-wider uppercase">
-              24/7 Travel Assistance &amp; Booking Support
-            </span>
+          <div className="container-custom relative z-10 text-center max-w-4xl mx-auto py-12 sm:py-16 pb-20 sm:pb-28">
+            {/* Pill Badge */}
+            <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-md border border-white/20 rounded-full px-4 py-1.5 mb-4 sm:mb-5 shadow-lg">
+              <Headset size={15} className="text-[#0ea5e9]" />
+              <span className="text-white text-xs font-bold tracking-wider uppercase">
+                24/7 Travel Assistance &amp; Booking Support
+              </span>
+            </div>
+
+            {/* Hero Title */}
+            <h1 className="text-3xl sm:text-5xl md:text-6xl font-black tracking-tight mb-3 sm:mb-4 leading-tight drop-shadow-md text-white">
+              Get In Touch{" "}
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#0ea5e9] via-[#38bdf8] to-white">
+                With Us.
+              </span>
+            </h1>
+
+            {/* Hero Subtitle */}
+            <p className="text-white/90 text-xs sm:text-base md:text-lg leading-relaxed max-w-2xl mx-auto font-medium drop-shadow mb-5 sm:mb-6 px-2">
+              Have a question or ready to plan your next dream vacation? Our travel specialists in Kathmandu are here to assist you every step of the way.
+            </p>
+
+            {/* Micro Trust Pills */}
+            <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-6 text-xs sm:text-sm font-semibold text-slate-200">
+              <span className="flex items-center gap-1.5">
+                <CheckCircle2 size={16} className="text-[#0ea5e9]" />
+                Instant WhatsApp Quote
+              </span>
+              <span className="flex items-center gap-1.5">
+                <CheckCircle2 size={16} className="text-emerald-400" />
+                Free Vacation Advice
+              </span>
+              <span className="flex items-center gap-1.5">
+                <CheckCircle2 size={16} className="text-[#f97316]" />
+                24/7 Emergency Support
+              </span>
+            </div>
           </div>
+        </div>
+      </section>
 
-          {/* Hero Title */}
-          <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight mb-6 leading-tight">
-            Get In Touch{" "}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#0ea5e9] via-[#38bdf8] to-white">
-              With Us.
-            </span>
-          </h1>
-
-          {/* Hero Subtitle */}
-          <p className="text-white/80 text-base sm:text-xl leading-relaxed max-w-2xl mx-auto font-normal">
-            Have a question or ready to plan your next dream vacation? Our travel specialists in Kathmandu are here to assist you.
-          </p>
+      {/* Floating 4-Card Contact Channels Strip (Mirroring About Page 4-card structure) */}
+      <section className="relative z-20 -mt-10 sm:-mt-14 md:-mt-16 pb-8 px-4">
+        <div className="container-custom">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
+            {CONTACT_CHANNELS.map((item) => {
+              const Icon = item.icon;
+              return (
+                <a
+                  key={item.title}
+                  href={item.href}
+                  target={item.isExternal ? "_blank" : undefined}
+                  rel={item.isExternal ? "noopener noreferrer" : undefined}
+                  className="bg-white rounded-3xl p-5 sm:p-6 border border-[#e2e8f0] shadow-xl text-center group hover:border-[#0ea5e9] hover:-translate-y-1 hover:shadow-2xl transition-all duration-300 flex flex-col items-center justify-between cursor-pointer"
+                >
+                  <div
+                    className={`w-11 h-11 rounded-2xl ${item.color} flex items-center justify-center mb-3 shadow-sm group-hover:scale-110 transition-transform duration-300`}
+                  >
+                    <Icon size={20} />
+                  </div>
+                  <div className="text-lg sm:text-xl md:text-2xl font-black text-[#0a1628] group-hover:text-[#0ea5e9] transition-colors mb-0.5 tracking-tight">
+                    {item.title}
+                  </div>
+                  <div className="text-xs sm:text-sm font-bold text-[#334155] mb-1 truncate max-w-full">
+                    {item.subtitle}
+                  </div>
+                  <div className="text-[11px] text-[#94a3b8] line-clamp-1">
+                    {item.desc}
+                  </div>
+                </a>
+              );
+            })}
+          </div>
         </div>
       </section>
 
       {/* Main 2-Column Contact Section */}
-      <section className="section-padding bg-[#f8fafc]">
+      <section className="section-padding pt-6 md:pt-10 bg-[#f8fafc]">
         <div className="container-custom">
           <SectionHeader
             eyebrow="Contact &amp; Inquiry"

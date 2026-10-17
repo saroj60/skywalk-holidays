@@ -66,6 +66,11 @@ export default function VisaInquiryForm() {
       });
       setWhatsappUrl(waLink);
       setSubmitted(true);
+
+      // Automatically launch WhatsApp with pre-filled inquiry details
+      if (typeof window !== "undefined") {
+        window.open(waLink, "_blank");
+      }
     } catch (err: any) {
       setErrorMsg(err.message || "An error occurred while submitting visa application.");
     } finally {
@@ -208,7 +213,6 @@ export default function VisaInquiryForm() {
               <option value="Canada">Canada</option>
               <option value="United Kingdom">United Kingdom</option>
               <option value="USA">USA</option>
-              <option value="Dubai / UAE">Dubai / UAE</option>
               <option value="Schengen Europe">Schengen Europe</option>
               <option value="Thailand">Thailand</option>
               <option value="Malaysia">Malaysia</option>

@@ -1,4 +1,7 @@
+"use client";
+
 import React from "react";
+import { motion } from "framer-motion";
 import { Star, Quote } from "lucide-react";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 
@@ -11,6 +14,7 @@ interface TestimonialCardProps {
   content?: string;
   avatar: string;
   package: string;
+  index?: number;
 }
 
 export default function TestimonialCard({
@@ -22,6 +26,7 @@ export default function TestimonialCard({
   content,
   avatar,
   package: pkg,
+  index = 0,
 }: TestimonialCardProps) {
   const displayLocation = location || role || "Traveler";
   const displayText = text || content || "";
@@ -32,9 +37,16 @@ export default function TestimonialCard({
     .slice(0, 2);
 
   return (
-    <div className="bg-white rounded-2xl p-6 border border-[#e2e8f0] shadow-sm hover:shadow-lg transition-all duration-300 flex flex-col h-full text-left">
+    <motion.div
+      initial={{ opacity: 0, y: 28 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-40px" }}
+      transition={{ duration: 0.5, delay: index * 0.08, ease: "easeOut" }}
+      whileHover={{ y: -6, transition: { duration: 0.25 } }}
+      className="bg-white rounded-2xl p-6 border border-[#e2e8f0] shadow-sm hover:shadow-xl hover:border-sky-300/60 transition-all duration-300 flex flex-col h-full text-left group"
+    >
       {/* Quote icon */}
-      <div className="w-10 h-10 rounded-xl bg-[#e0f2fe] flex items-center justify-center mb-5">
+      <div className="w-10 h-10 rounded-xl bg-[#e0f2fe] flex items-center justify-center mb-5 group-hover:scale-110 transition-transform duration-300 shadow-sm">
         <Quote size={18} className="text-[#0ea5e9]" />
       </div>
 
@@ -67,16 +79,16 @@ export default function TestimonialCard({
 
       {/* Author */}
       <div className="flex items-center gap-3 pt-4 border-t border-[#f1f5f9]">
-        <Avatar className="w-10 h-10">
+        <Avatar className="w-10 h-10 ring-2 ring-sky-100">
           <AvatarFallback className="bg-[#0ea5e9] text-white font-bold text-sm">
             {initials}
           </AvatarFallback>
         </Avatar>
         <div>
-          <p className="font-semibold text-[#0a1628] text-sm">{name}</p>
+          <p className="font-semibold text-[#0a1628] text-sm group-hover:text-[#0ea5e9] transition-colors">{name}</p>
           <p className="text-xs text-[#94a3b8]">{displayLocation}</p>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 }

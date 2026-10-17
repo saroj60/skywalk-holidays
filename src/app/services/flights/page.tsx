@@ -16,7 +16,7 @@ const AIRLINES = [
   },
   {
     name: "Emirates",
-    routes: "Kathmandu → Dubai, Europe & USA",
+    routes: "Kathmandu → International Hubs, Europe & USA",
     code: "EK",
     logo: "https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?w=200&q=80",
   },
@@ -34,7 +34,7 @@ const AIRLINES = [
   },
   {
     name: "Nepal Airlines",
-    routes: "Kathmandu → Narita, Dubai, Kuala Lumpur & Domestic",
+    routes: "Kathmandu → Narita, Bangkok, Kuala Lumpur & Domestic",
     code: "RA",
     logo: "https://images.unsplash.com/photo-1517649763962-0c623266010b?w=200&q=80",
   },
@@ -51,9 +51,9 @@ const AIRLINES = [
     logo: "https://images.unsplash.com/photo-1499856871958-5b9627545d1a?w=200&q=80",
   },
   {
-    name: "FlyDubai",
-    routes: "Kathmandu → Dubai & GCC Network",
-    code: "FZ",
+    name: "Singapore Airlines",
+    routes: "Kathmandu → Singapore, Australia & Pacific",
+    code: "SQ",
     logo: "https://images.unsplash.com/photo-1524592714635-d77511a4834d?w=200&q=80",
   },
   {

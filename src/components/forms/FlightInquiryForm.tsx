@@ -98,6 +98,11 @@ export default function FlightInquiryForm() {
 
       setWhatsappUrl(waLink);
       setSubmitted(true);
+
+      // Automatically launch WhatsApp with pre-filled inquiry details
+      if (typeof window !== "undefined") {
+        window.open(waLink, "_blank");
+      }
     } catch (err: any) {
       setErrorMsg(err.message || "An unexpected error occurred while submitting.");
     } finally {
@@ -249,7 +254,7 @@ export default function FlightInquiryForm() {
               To Airport *
             </label>
             <Input
-              placeholder="e.g. Dubai (DXB), Bangkok (BKK), Pokhara (PKR)"
+              placeholder="e.g. Bangkok (BKK), Kuala Lumpur (KUL), Pokhara (PKR)"
               value={formData.toAirport}
               onChange={(e) => handleInputChange("toAirport", e.target.value)}
               required

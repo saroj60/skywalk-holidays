@@ -81,6 +81,11 @@ export default function HotelInquiryForm() {
 
       setWhatsappUrl(waLink);
       setSubmitted(true);
+
+      // Automatically launch WhatsApp with pre-filled inquiry details
+      if (typeof window !== "undefined") {
+        window.open(waLink, "_blank");
+      }
     } catch (err: any) {
       setErrorMsg(err.message || "An error occurred while submitting hotel inquiry.");
     } finally {
@@ -186,7 +191,7 @@ export default function HotelInquiryForm() {
               Destination City / Hotel *
             </label>
             <Input
-              placeholder="e.g. Dubai, Pokhara, Bangkok, Singapore"
+              placeholder="e.g. Bali, Pokhara, Bangkok, Singapore"
               value={formData.destination}
               onChange={(e) => handleChange("destination", e.target.value)}
               required

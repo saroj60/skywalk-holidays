@@ -17,6 +17,10 @@ import {
   FileCheck,
   Shield,
   Sparkles,
+  Users,
+  MessageSquare,
+  Phone,
+  Mail,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import SectionHeader from "@/components/common/SectionHeader";
@@ -25,14 +29,14 @@ import { COMPANY } from "@/lib/constants";
 
 export const metadata: Metadata = {
   title: "About Us | Skywalks Holidays — Nepal's Premier Travel Agency",
-  description: "Discover Skywalks Holidays. 15+ years of experience delivering flight booking, hotel stays, international holidays & visa assistance from Kathmandu.",
+  description: "Discover Skywalks Holidays. 2+ years of experience delivering flight booking, hotel stays, international holidays & visa assistance from Kathmandu.",
 };
 
 const STATS_CARDS = [
-  { value: "15+", label: "Years of Experience", desc: "Serving travelers since 2010" },
-  { value: "50K+", label: "Happy Travelers", desc: "Trusted by thousands annually" },
-  { value: "80+", label: "Destinations Covered", desc: "Across Asia, Europe & Americas" },
-  { value: "8", label: "Travel Services", desc: "Complete end-to-end solutions" },
+  { value: "2+", label: "Years of Experience", desc: "Dedicated travel service in Nepal", icon: Award, color: "bg-[#e0f2fe] text-[#0ea5e9]" },
+  { value: "1500+", label: "Happy Travelers", desc: "Trusted by travelers worldwide", icon: Users, color: "bg-[#f0fdf4] text-emerald-600" },
+  { value: "14+", label: "Destinations Covered", desc: "Across Asia & Worldwide", icon: Globe, color: "bg-[#fff7ed] text-[#f97316]" },
+  { value: "8", label: "Travel Services", desc: "Complete end-to-end travel solutions", icon: ShieldCheck, color: "bg-[#faf5ff] text-purple-600" },
 ];
 
 const SERVICES_GRID = [
@@ -48,7 +52,7 @@ const SERVICES_GRID = [
 const WHY_CHOOSE_US_PILLARS = [
   {
     icon: Award,
-    title: "15+ Years Industry Experience",
+    title: "2+ Years Dedicated Experience",
     description: "Deep-rooted local knowledge in Nepal combined with international airline and hotel contracts.",
     color: "bg-[#e0f2fe] text-[#0ea5e9]",
   },
@@ -72,45 +76,86 @@ const WHY_CHOOSE_US_PILLARS = [
   },
 ];
 
+const TEAM_MEMBERS = [
+  {
+    name: "Mr. Sudesh Karki",
+    role: "Ticketing and Package Operative",
+    department: "Ticketing & Packages",
+    image: "/images/team/sudesh-karki.jpg",
+    bio: "Dedicated travel specialist at Skywalks Holidays managing international and domestic air ticketing, custom holiday packages, and complex flight itineraries. Known for prompt responsiveness, route optimization, and personalized client support.",
+    specialties: [
+      "International Flight Ticketing",
+      "Holiday Package Operations",
+      "Fare Optimization & Routing",
+      "Client Booking Assistance",
+    ],
+    whatsapp: "9779714491103",
+    phone: COMPANY.phone,
+    email: COMPANY.email,
+  },
+  {
+    name: "Mr. Johnson Yadav",
+    role: "Sales Officer",
+    department: "Sales & Client Relations",
+    image: "/images/team/johnson-yadav.png",
+    bio: "Customer-centric Sales Officer at Skywalks Holidays dedicated to helping travelers discover ideal holiday packages, flight solutions, and visa arrangements. Focused on transparent pricing, tailored travel advice, and delivering prompt consultations.",
+    specialties: [
+      "Holiday Package Sales",
+      "Client Consultation",
+      "Custom Travel Quotations",
+      "Customer Relationship Management",
+    ],
+    whatsapp: "9779714491103",
+    phone: COMPANY.phone,
+    email: COMPANY.email,
+  },
+];
+
 export default function AboutPage() {
   return (
     <>
-      {/* Hero Banner Section */}
-      <section className="bg-[#0a1628] py-3 sm:py-5 overflow-hidden">
-        <div className="container-custom">
-          <div className="relative w-full h-[180px] sm:h-[250px] md:h-[300px] lg:h-[340px] rounded-2xl sm:rounded-3xl overflow-hidden shadow-2xl border border-white/10">
-            <Image
-              src="/images/about-hero-banner.png"
-              alt="About Skywalks Holidays — Your Trusted Travel Partner"
-              fill
-              priority
-              className="object-cover object-center"
-              sizes="(max-width: 1280px) 100vw, 1280px"
-            />
-          </div>
+      {/* Hero Banner Section (Full Width, No Black Gaps) */}
+      <section className="relative w-full overflow-hidden bg-[#0a1628]">
+        <div className="relative w-full h-[240px] sm:h-[320px] md:h-[380px] lg:h-[440px] xl:h-[480px]">
+          <Image
+            src="/images/about-hero-banner.png"
+            alt="About Skywalks Holidays — Your Trusted Travel Partner"
+            fill
+            priority
+            className="object-cover object-center"
+            sizes="100vw"
+          />
         </div>
       </section>
 
-      {/* Statistics Cards Strip */}
-      <section className="relative z-20 -mt-6 sm:-mt-8 pb-12 px-4">
+      {/* Statistics Cards Strip (Elevated floating cards) */}
+      <section className="relative z-20 -mt-10 sm:-mt-14 md:-mt-16 pb-12 px-4">
         <div className="container-custom">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
-            {STATS_CARDS.map((stat) => (
-              <div
-                key={stat.label}
-                className="bg-white rounded-3xl p-6 border border-[#e2e8f0] shadow-xl text-center group hover:border-[#0ea5e9] transition-all"
-              >
-                <div className="text-3xl md:text-4xl font-extrabold text-[#0a1628] group-hover:text-[#0ea5e9] transition-colors mb-1">
-                  {stat.value}
+            {STATS_CARDS.map((stat) => {
+              const Icon = stat.icon;
+              return (
+                <div
+                  key={stat.label}
+                  className="bg-white rounded-3xl p-5 sm:p-6 border border-[#e2e8f0] shadow-xl text-center group hover:border-[#0ea5e9] hover:-translate-y-1 hover:shadow-2xl transition-all duration-300 flex flex-col items-center justify-between"
+                >
+                  <div
+                    className={`w-11 h-11 rounded-2xl ${stat.color} flex items-center justify-center mb-3 shadow-sm group-hover:scale-110 transition-transform duration-300`}
+                  >
+                    <Icon size={20} />
+                  </div>
+                  <div className="text-2xl sm:text-3xl md:text-4xl font-black text-[#0a1628] group-hover:text-[#0ea5e9] transition-colors mb-1 tracking-tight">
+                    {stat.value}
+                  </div>
+                  <div className="text-xs sm:text-sm font-bold text-[#334155] mb-1">
+                    {stat.label}
+                  </div>
+                  <div className="text-[11px] text-[#94a3b8] line-clamp-1">
+                    {stat.desc}
+                  </div>
                 </div>
-                <div className="text-xs md:text-sm font-bold text-[#334155] mb-1">
-                  {stat.label}
-                </div>
-                <div className="text-[11px] text-[#94a3b8]">
-                  {stat.desc}
-                </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       </section>
@@ -119,22 +164,44 @@ export default function AboutPage() {
       <section id="introduction" className="section-padding bg-white">
         <div className="container-custom">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-            {/* Image */}
-            <div className="relative h-80 sm:h-96 md:h-[450px] w-full rounded-3xl overflow-hidden shadow-2xl border border-[#e2e8f0]">
-              <Image
-                src="https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?w=1200&q=85"
-                alt="Skywalks Holidays Travel Agency — Kathmandu Team"
-                fill
-                className="object-cover"
-                sizes="(max-width: 1024px) 100vw, 50vw"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#0a1628]/70 via-transparent to-transparent" />
-              <div className="absolute bottom-6 left-6 right-6 text-white">
-                <span className="text-xs font-bold uppercase tracking-widest text-[#38bdf8] bg-white/10 backdrop-blur-md px-3 py-1 rounded-full">
-                  Headquartered in Thamel, Kathmandu
+            {/* Official Logo Brand Card */}
+            <div className="relative h-80 sm:h-96 md:h-[450px] w-full rounded-3xl overflow-hidden shadow-2xl border border-[#e2e8f0] bg-gradient-to-b from-white via-sky-50/40 to-slate-100 flex flex-col justify-between p-6 sm:p-8">
+              {/* Ambient radial sky glow */}
+              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-72 h-72 bg-sky-200/40 rounded-full blur-3xl pointer-events-none" />
+
+              {/* Top Trust Badges */}
+              <div className="relative z-10 flex items-center justify-between">
+                <span className="inline-flex items-center gap-1.5 text-[11px] sm:text-xs font-bold uppercase tracking-wider text-[#0a1628] bg-white/90 backdrop-blur-md px-3 py-1 rounded-full shadow-sm border border-slate-200/80">
+                  <ShieldCheck size={14} className="text-emerald-500" />
+                  Government Registered Agency
                 </span>
-                <p className="text-sm font-medium text-white/90 mt-2">
-                  Serving over 50,000 travelers across 80+ global destinations.
+                <span className="text-xs font-bold text-[#0ea5e9] bg-[#e0f2fe] px-2.5 py-1 rounded-full">
+                  Since {COMPANY.founded}
+                </span>
+              </div>
+
+              {/* Central Official Logo Showcase */}
+              <div className="relative z-10 w-full flex-1 flex items-center justify-center py-4 my-auto">
+                <div className="relative w-full max-w-[280px] sm:max-w-[340px] md:max-w-[380px] h-48 sm:h-56 md:h-64 transition-transform duration-500 hover:scale-105">
+                  <Image
+                    src="/images/logo-transparent.png"
+                    alt="SkyWalk Tours & Travels Official Logo"
+                    fill
+                    priority
+                    className="object-contain drop-shadow-md"
+                    sizes="(max-width: 1024px) 100vw, 50vw"
+                  />
+                </div>
+              </div>
+
+              {/* Bottom Headquarters & Travelers Info */}
+              <div className="relative z-10 bg-white/95 backdrop-blur-md rounded-2xl p-4 border border-slate-200/80 shadow-md">
+                <div className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-[#0ea5e9]">
+                  <MapPin size={13} className="text-[#f97316] shrink-0" />
+                  <span>Headquartered in Thamel, Kathmandu</span>
+                </div>
+                <p className="text-xs sm:text-sm font-semibold text-[#0a1628] mt-1">
+                  Serving over 1500+ happy travelers across 14+ global destinations.
                 </p>
               </div>
             </div>
@@ -288,13 +355,109 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* 6. Customer Trust & Accreditations */}
-      <section id="trust" className="section-padding bg-white">
+      {/* 6. Meet Our Team */}
+      <section id="our-team" className="section-padding bg-white border-t border-slate-100">
+        <div className="container-custom">
+          <SectionHeader
+            eyebrow="Our Dedicated Professionals"
+            title="Meet Our Team"
+            subtitle="The experienced travel professionals behind every seamless journey and unforgettable holiday."
+          />
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+            {TEAM_MEMBERS.map((member) => (
+              <div
+                key={member.name}
+                className="w-full bg-white rounded-3xl p-5 sm:p-6 border border-[#e2e8f0] shadow-xl hover:shadow-2xl hover:border-[#0ea5e9]/50 transition-all duration-300 group flex flex-col justify-between"
+              >
+                <div>
+                  {/* Portrait Image with Badges */}
+                  <div className="relative w-full aspect-[4/5] sm:aspect-[3/4] overflow-hidden rounded-2xl bg-slate-100 mb-5 shadow-sm">
+                    <Image
+                      src={member.image}
+                      alt={`${member.name} - ${member.role} at Skywalks Holidays`}
+                      fill
+                      className="object-cover object-top brightness-[1.06] contrast-[1.02] group-hover:scale-105 transition-all duration-500"
+                      sizes="(max-width: 768px) 100vw, 420px"
+                    />
+                    <div className="absolute bottom-0 inset-x-0 h-28 bg-gradient-to-t from-slate-950/90 via-slate-950/40 to-transparent" />
+
+                    {/* Top Department Badge */}
+                    <div className="absolute top-3.5 left-3.5 z-10">
+                      <span className="inline-flex items-center gap-1.5 text-[11px] font-bold text-white bg-slate-900/80 backdrop-blur-md px-3 py-1 rounded-full border border-white/20 shadow-sm">
+                        <Sparkles size={12} className="text-[#0ea5e9]" />
+                        {member.department}
+                      </span>
+                    </div>
+
+                    {/* Bottom Overlay Info */}
+                    <div className="absolute bottom-4 left-4 right-4 text-white z-10 text-left">
+                      <h3 className="text-2xl font-black leading-tight text-white drop-shadow-sm">
+                        {member.name}
+                      </h3>
+                      <p className="text-xs sm:text-sm font-bold text-sky-300 mt-1">
+                        {member.role}
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Bio */}
+                  <p className="text-xs sm:text-sm text-[#475569] leading-relaxed mb-4 text-left">
+                    {member.bio}
+                  </p>
+
+                  {/* Specialties Pills */}
+                  <div className="mb-5 text-left">
+                    <div className="text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-2">
+                      Core Expertise
+                    </div>
+                    <div className="flex flex-wrap gap-1.5">
+                      {member.specialties.map((spec) => (
+                        <span
+                          key={spec}
+                          className="text-[11px] font-semibold bg-sky-50 text-sky-800 border border-sky-100 px-2.5 py-1 rounded-lg"
+                        >
+                          ✓ {spec}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+
+                {/* Direct Connect Buttons */}
+                <div className="pt-4 border-t border-slate-100 grid grid-cols-2 gap-2">
+                  <a
+                    href={`https://wa.me/${member.whatsapp}?text=${encodeURIComponent(
+                      `Namaste ${member.name}! I would like to inquire about flight tickets and holiday packages.`
+                    )}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-xl bg-emerald-500 hover:bg-emerald-600 text-white font-bold text-xs transition-colors shadow-sm shadow-emerald-500/20"
+                  >
+                    <MessageSquare size={13} />
+                    <span>WhatsApp</span>
+                  </a>
+                  <a
+                    href={`tel:${member.phone}`}
+                    className="inline-flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-xl bg-slate-900 hover:bg-[#0ea5e9] text-white font-bold text-xs transition-colors"
+                  >
+                    <Phone size={13} />
+                    <span>Call Desk</span>
+                  </a>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* 7. Customer Trust & Accreditations */}
+      <section id="trust" className="section-padding bg-slate-50/60">
         <div className="container-custom">
           <SectionHeader
             eyebrow="Customer Trust &amp; Credentials"
             title="Certified, Accredited &amp; Rated 4.9/5"
-            subtitle="Recognized by tourism authorities and trusted by over 50,000 satisfied travelers."
+            subtitle="Recognized by tourism authorities and trusted by over 1500+ happy travelers."
           />
 
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 md:gap-6 max-w-4xl mx-auto">

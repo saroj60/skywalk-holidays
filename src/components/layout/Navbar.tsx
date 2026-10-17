@@ -3,12 +3,14 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 import { Menu, X, ChevronDown, Phone, Mail, Plane } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { NAV_LINKS, COMPANY } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 
 export default function Navbar() {
+  const pathname = usePathname();
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [servicesOpen, setServicesOpen] = useState(false);
@@ -18,6 +20,10 @@ export default function Navbar() {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  if (pathname?.startsWith("/admin")) {
+    return null;
+  }
 
   const servicesLink = NAV_LINKS.find((l) => l.label === "Services");
 
@@ -45,29 +51,29 @@ export default function Navbar() {
         className={cn(
           "sticky top-0 z-50 w-full transition-all duration-300",
           isScrolled
-            ? "bg-white/95 backdrop-blur-md shadow-lg border-b border-[#e2e8f0]"
+            ? "bg-white shadow-md border-b border-[#e2e8f0]"
             : "bg-white border-b border-[#e2e8f0]"
         )}
       >
         <div className="container-custom flex h-16 items-center justify-between">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2.5 group py-1">
-            <div className="relative w-10 h-10 sm:w-11 sm:h-11 rounded-full overflow-hidden shadow-md border border-[#0ea5e9]/30 group-hover:scale-105 group-hover:border-[#0ea5e9] transition-all shrink-0 bg-[#0a1628]">
+            <div className="relative w-11 h-11 sm:w-12 sm:h-12 rounded-xl overflow-hidden shadow-sm border border-slate-200/90 group-hover:scale-105 group-hover:border-[#0ea5e9] transition-all shrink-0 bg-white p-0.5">
               <Image
                 src="/images/logo.png"
-                alt="Skywalks Holidays Logo"
+                alt="SkyWalk Tours & Travels Logo"
                 fill
-                className="object-cover"
-                sizes="44px"
+                className="object-contain"
+                sizes="48px"
                 priority
               />
             </div>
             <div>
-              <span className="font-extrabold text-[#0a1628] text-lg leading-none block group-hover:text-[#0ea5e9] transition-colors">
-                Skywalks
+              <span className="font-extrabold text-[#0a1628] text-lg leading-tight block group-hover:text-[#0ea5e9] transition-colors">
+                SkyWalk
               </span>
-              <span className="text-[#0ea5e9] text-[11px] font-bold tracking-widest uppercase leading-none block mt-0.5">
-                Holidays
+              <span className="text-[#0ea5e9] text-[10px] font-extrabold tracking-widest uppercase leading-none block mt-0.5">
+                Tours &amp; Travels
               </span>
             </div>
           </Link>
@@ -82,7 +88,11 @@ export default function Navbar() {
                   onMouseEnter={() => setServicesOpen(true)}
                   onMouseLeave={() => setServicesOpen(false)}
                 >
-                  <button className="flex items-center gap-1 px-4 py-2 text-sm font-medium text-[#334155] hover:text-[#0ea5e9] rounded-lg hover:bg-[#f1f5f9] transition-colors">
+                  <button
+                    type="button"
+                    suppressHydrationWarning
+                    className="flex items-center gap-1 px-4 py-2 text-sm font-medium text-[#334155] hover:text-[#0ea5e9] rounded-lg hover:bg-[#f1f5f9] transition-colors"
+                  >
                     {link.label}
                     <ChevronDown size={14} className="transition-transform group-hover:rotate-180" />
                   </button>
@@ -114,7 +124,12 @@ export default function Navbar() {
                   key={link.label}
                   href={link.href}
                   prefetch={true}
-                  className="px-4 py-2 text-sm font-medium text-[#334155] hover:text-[#0ea5e9] rounded-lg hover:bg-[#f1f5f9] transition-colors"
+                  className={cn(
+                    "px-4 py-2 text-sm font-medium rounded-lg transition-colors",
+                    pathname === link.href
+                      ? "text-[#0ea5e9] font-bold bg-sky-50"
+                      : "text-[#334155] hover:text-[#0ea5e9] hover:bg-[#f1f5f9]"
+                  )}
                 >
                   {link.label}
                 </Link>
@@ -134,6 +149,8 @@ export default function Navbar() {
 
           {/* Mobile Toggle */}
           <button
+            type="button"
+            suppressHydrationWarning
             className="lg:hidden p-2 rounded-lg text-[#334155] hover:bg-[#f1f5f9] transition-colors"
             onClick={() => setMobileOpen(!mobileOpen)}
             aria-label="Toggle menu"
@@ -161,6 +178,8 @@ export default function Navbar() {
             {/* Mobile Services accordion */}
             <div>
               <button
+                type="button"
+                suppressHydrationWarning
                 className="flex items-center justify-between w-full px-4 py-2.5 rounded-lg text-sm font-medium text-[#334155] hover:bg-[#f1f5f9]"
                 onClick={() => setServicesOpen(!servicesOpen)}
               >

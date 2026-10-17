@@ -10,40 +10,46 @@ import { Button } from "@/components/ui/button";
 
 const FEATURED_VIDEOS = [
   {
-    id: "vlog-1",
-    title: "6 Days Dubai Tour Experience — Full Travel Vlog & Itinerary",
-    destination: "Dubai, UAE",
+    id: "vlog-thailand-malaysia-singapore",
+    title: "Thailand, Malaysia & Singapore Tour — Official Guide & Travel Highlights",
+    destination: "Thailand, Malaysia & Singapore",
+    categoryLabel: "Official Tour Guide",
+    thumbnail: "/images/gallery/thailand-malaysia-singapore-trio.jpg",
+    videoEmbedUrl: "https://www.youtube-nocookie.com/embed/S3-Mrb6BSyc?autoplay=1&rel=0",
+    duration: "0:58",
+    views: "Official Reel",
+    host: "SkyWalk Holiday Official",
+    isShort: true,
+    packageLink: "/packages/thailand-malaysia-singapore-9d",
+    description: "Official tour walkthrough of our 8 Nights / 9 Days package: Pattaya Coral Island, Bangkok sacred temples, Singapore Sentosa cable car & Malaysia Genting Highlands.",
+  },
+  {
+    id: "vlog-bangkok-pattaya",
+    title: "Bangkok & Pattaya 5N/6D Holiday Tour Package — Visual Travel Guide",
+    destination: "Bangkok & Pattaya, Thailand",
+    categoryLabel: "Official Tour Guide",
+    thumbnail: "/images/gallery/coral-island-tropical-lagoon-view.png",
+    videoEmbedUrl: "https://www.youtube-nocookie.com/embed/uef3bmZmiZk?autoplay=1&rel=0",
+    duration: "0:59",
+    views: "Official Reel",
+    host: "SkyWalk Holiday Official",
+    isShort: true,
+    packageLink: "/packages/bangkok-pattaya-6d",
+    description: "Coral Island speedboat adventure, Indian buffet lunch, Wat Traimitr & Wat Pho temple tours, and vibrant Bangkok shopping.",
+  },
+  {
+    id: "vlog-vietnam-guide",
+    title: "Vietnam 4K Tour Experience — Hanoi, Ha Long Bay & Da Nang Highlights",
+    destination: "Vietnam (Hanoi, Ha Long, Da Nang)",
     categoryLabel: "Destination Guide",
-    thumbnail: "https://images.unsplash.com/photo-1512453979798-5ea266f8880c?w=1200&q=85",
-    videoEmbedUrl: "https://www.youtube-nocookie.com/embed/dQw4w9WgXcQ?autoplay=1",
-    duration: "12:45",
-    views: "24.5K views",
-    host: "Aayush & Family",
-    description: "Explore Downtown Dubai, desert dhow cruises, Museum of the Future & dune bashing with our Nepalese travelers.",
-  },
-  {
-    id: "vlog-4",
-    title: "Schengen Visa from Nepal — Documents & Approval Guide",
-    destination: "Europe / Nepal",
-    categoryLabel: "Visa Tutorial",
-    thumbnail: "https://images.unsplash.com/photo-1502602898657-3e91760cbb34?w=1200&q=85",
-    videoEmbedUrl: "https://www.youtube-nocookie.com/embed/dQw4w9WgXcQ?autoplay=1",
-    duration: "18:30",
-    views: "42.8K views",
-    host: "Skywalk Visa Desk",
-    description: "Complete guide on VFS appointments, document preparation, bank statements, and cover letters from Kathmandu.",
-  },
-  {
-    id: "vlog-2",
-    title: "Inside Our Luxury Seminyak Villa — Bali Honeymoon Vlog",
-    destination: "Bali, Indonesia",
-    categoryLabel: "Customer Experience",
-    thumbnail: "https://images.unsplash.com/photo-1537996194471-e657df975ab4?w=1200&q=85",
-    videoEmbedUrl: "https://www.youtube-nocookie.com/embed/dQw4w9WgXcQ?autoplay=1",
-    duration: "09:15",
-    views: "31.8K views",
-    host: "Rohan & Sneha Karki",
-    description: "Touring private pool villas, flower baths, and Ubud jungle swings with Rohan & Sneha.",
+    thumbnail: "/images/gallery/vietnam-highlights-collage-card.jpg",
+    videoEmbedUrl: "https://www.youtube-nocookie.com/embed/MgbupV25I60?autoplay=1&rel=0",
+    duration: "22:15",
+    views: "52K views",
+    host: "SkyWalk Travel Desk",
+    isShort: false,
+    packageLink: "/packages/vietnam-8d",
+    description: "Hanoi Old Quarter, overnight luxury cruise through limestone karsts in Ha Long Bay, Sung Sot Cave, and Da Nang Golden Bridge.",
   },
 ];
 
@@ -68,7 +74,13 @@ export default function VideoGuidesSection() {
         {/* Video Grid Layout */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-10">
           {/* Main Hero Featured Video (Spans 2 cols on lg) */}
-          <div className="lg:col-span-2 relative group rounded-3xl overflow-hidden shadow-2xl border border-white/10 bg-slate-900 aspect-[16/9] sm:aspect-[2.1/1] flex flex-col justify-end">
+          <motion.div
+            initial={{ opacity: 0, y: 32 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-40px" }}
+            transition={{ duration: 0.6, ease: "easeOut" }}
+            className="lg:col-span-2 relative group rounded-3xl overflow-hidden shadow-2xl border border-white/10 bg-slate-900 aspect-[16/9] sm:aspect-[2.1/1] flex flex-col justify-end"
+          >
             <Image
               src={FEATURED_VIDEOS[0].thumbnail}
               alt={FEATURED_VIDEOS[0].title}
@@ -111,13 +123,18 @@ export default function VideoGuidesSection() {
                 {FEATURED_VIDEOS[0].description}
               </p>
             </div>
-          </div>
+          </motion.div>
 
           {/* Secondary Video Cards Column */}
           <div className="flex flex-col gap-6 justify-between">
-            {FEATURED_VIDEOS.slice(1).map((vlog) => (
-              <div
+            {FEATURED_VIDEOS.slice(1).map((vlog, idx) => (
+              <motion.div
                 key={vlog.id}
+                initial={{ opacity: 0, x: 25 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true, margin: "-40px" }}
+                transition={{ duration: 0.5, delay: idx * 0.12, ease: "easeOut" }}
+                whileHover={{ scale: 1.02, x: 4, transition: { duration: 0.2 } }}
                 onClick={() => setActiveVideo(vlog)}
                 className="bg-white/5 border border-white/10 hover:border-[#0ea5e9]/50 rounded-2xl p-4 flex gap-4 items-center group cursor-pointer transition-all duration-300 hover:bg-white/10 shadow-lg"
               >
@@ -154,11 +171,17 @@ export default function VideoGuidesSection() {
                     <span>{vlog.views}</span>
                   </div>
                 </div>
-              </div>
+              </motion.div>
             ))}
 
             {/* View All Vlogs Banner Card */}
-            <div className="bg-gradient-to-r from-[#0ea5e9]/20 to-[#163058] border border-[#0ea5e9]/30 rounded-2xl p-5 flex items-center justify-between gap-4">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.3 }}
+              className="bg-gradient-to-r from-[#0ea5e9]/20 to-[#163058] border border-[#0ea5e9]/30 rounded-2xl p-5 flex items-center justify-between gap-4 shadow-lg hover:border-[#0ea5e9]/60 transition-colors"
+            >
               <div>
                 <h4 className="font-bold text-white text-sm mb-0.5">Looking for More Travel Videos?</h4>
                 <p className="text-xs text-white/70">Browse our complete collection of 50+ video guides.</p>
@@ -169,7 +192,7 @@ export default function VideoGuidesSection() {
                   <ArrowRight size={14} />
                 </Button>
               </Link>
-            </div>
+            </motion.div>
           </div>
         </div>
       </div>
@@ -188,7 +211,7 @@ export default function VideoGuidesSection() {
               initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.9, opacity: 0 }}
-              className="relative w-full max-w-4xl bg-[#0a1628] rounded-3xl overflow-hidden shadow-2xl border border-white/20"
+              className={`relative w-full ${activeVideo.isShort ? "max-w-md sm:max-w-lg" : "max-w-4xl"} bg-[#0a1628] rounded-3xl overflow-hidden shadow-2xl border border-white/20`}
               onClick={(e) => e.stopPropagation()}
             >
               {/* Modal Header Bar */}
@@ -209,7 +232,7 @@ export default function VideoGuidesSection() {
               </div>
 
               {/* Video Player Frame */}
-              <div className="relative w-full aspect-video bg-black">
+              <div className={`relative w-full ${activeVideo.isShort ? "aspect-[9/16] max-h-[70vh] mx-auto bg-black" : "aspect-video bg-black"}`}>
                 <iframe
                   src={activeVideo.videoEmbedUrl}
                   title={activeVideo.title}
@@ -220,16 +243,25 @@ export default function VideoGuidesSection() {
               </div>
 
               {/* Modal Footer Description */}
-              <div className="p-5 sm:p-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 bg-slate-900">
-                <div>
-                  <h3 className="text-base sm:text-lg font-bold text-white mb-1">{activeVideo.title}</h3>
-                  <p className="text-xs text-white/70">{activeVideo.description}</p>
+              <div className="p-4 sm:p-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 bg-slate-900">
+                <div className="min-w-0 flex-1">
+                  <h3 className="text-sm sm:text-base font-bold text-white mb-0.5">{activeVideo.title}</h3>
+                  <p className="text-xs text-white/70 line-clamp-2">{activeVideo.description}</p>
                 </div>
-                <Link href="/vlogs" onClick={() => setActiveVideo(null)}>
-                  <Button className="bg-[#0ea5e9] hover:bg-[#0284c7] text-white text-xs font-bold shrink-0">
-                    Explore More Guides
-                  </Button>
-                </Link>
+                <div className="flex items-center gap-2 shrink-0 w-full sm:w-auto">
+                  {activeVideo.packageLink && (
+                    <Link href={activeVideo.packageLink} onClick={() => setActiveVideo(null)} className="flex-1 sm:flex-none">
+                      <Button className="bg-[#f97316] hover:bg-[#ea580c] text-white text-xs font-bold w-full">
+                        View Package
+                      </Button>
+                    </Link>
+                  )}
+                  <Link href="/vlogs" onClick={() => setActiveVideo(null)} className="flex-1 sm:flex-none">
+                    <Button variant="outline" className="border-white/20 text-white hover:bg-white/10 text-xs font-bold w-full">
+                      All Videos
+                    </Button>
+                  </Link>
+                </div>
               </div>
             </motion.div>
           </motion.div>

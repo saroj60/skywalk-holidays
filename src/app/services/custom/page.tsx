@@ -1,5 +1,6 @@
 import React from "react";
 import { Metadata } from "next";
+import Image from "next/image";
 import { Sparkles, MessageSquare, Map, CheckCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -28,13 +29,30 @@ export default function CustomToursPage() {
   return (
     <>
       {/* Hero */}
-      <section className="bg-gradient-to-br from-[#0a1628] to-[#163058] py-20 text-white">
-        <div className="container-custom text-center">
-          <div className="inline-flex items-center justify-center w-14 h-14 rounded-xl bg-white/10 mb-6">
+      <section className="relative py-20 md:py-28 text-white overflow-hidden bg-[#0a1628]">
+        {/* Background Travel Banner Image */}
+        <div className="absolute inset-0 z-0">
+          <Image
+            src="/images/custom-tours-hero-banner.png"
+            alt="Customized Tour Packages — Skywalk Holidays"
+            fill
+            priority
+            className="object-cover object-center"
+            sizes="100vw"
+          />
+          {/* Multi-layer gradient overlays ensuring high contrast, readability, and landmark visibility */}
+          <div className="absolute inset-0 bg-gradient-to-r from-[#0a1628]/90 via-[#0a1628]/65 to-[#0a1628]/85" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#0a1628] via-transparent to-[#0a1628]/60" />
+        </div>
+
+        <div className="container-custom relative z-10 text-center">
+          <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 mb-6 shadow-lg">
             <Sparkles size={28} className="text-[#f97316]" />
           </div>
-          <h1 className="text-4xl md:text-5xl font-bold mb-4">Customized Tour Packages</h1>
-          <p className="text-white/70 text-lg max-w-xl mx-auto">
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight mb-4 drop-shadow-md">
+            Customized Tour Packages
+          </h1>
+          <p className="text-white/90 text-lg md:text-xl max-w-2xl mx-auto leading-relaxed drop-shadow font-medium">
             Your dream trip, your way. Tell us your vision and our experts will make it a reality.
           </p>
         </div>

@@ -1,15 +1,16 @@
 import React from "react";
 import { Metadata } from "next";
 import Image from "next/image";
-import { FileCheck, ShieldCheck, Clock, ArrowRight, ShieldAlert, CheckCircle2 } from "lucide-react";
+import { FileCheck, ShieldCheck, Clock, ArrowRight, ShieldAlert, CheckCircle2, GraduationCap } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import SectionHeader from "@/components/common/SectionHeader";
 import CTABanner from "@/components/common/CTABanner";
 import VisaInquiryForm from "@/components/forms/VisaInquiryForm";
+import IatsVisaGuideBook from "@/components/visa/IatsVisaGuideBook";
 
 export const metadata: Metadata = {
   title: "Visa Assistance Made Simple | Skywalks Holidays",
-  description: "Expert guidance for your international travel documentation. Australia, Japan, South Korea, Canada, UK, USA, Dubai, Schengen, Thailand, Malaysia.",
+  description: "Expert guidance for your international travel documentation. Australia, Japan, South Korea, Canada, UK, USA, Schengen, Thailand, Malaysia.",
 };
 
 const VISA_CATEGORIES = [
@@ -76,13 +77,13 @@ const VISA_COUNTRIES = [
     assistanceInfo: "Includes 1-on-1 mock interview preparation session.",
   },
   {
-    name: "Dubai / UAE",
-    flag: "🇦🇪",
-    image: "https://images.unsplash.com/photo-1512453979798-5ea266f8880c?w=800&q=80",
-    visaType: "30 Days / 60 Days Tourist & Business eVisa",
+    name: "Singapore",
+    flag: "🇸🇬",
+    image: "/images/gallery/singapore-merlion-park-marina-bay.jpg",
+    visaType: "Tourist & Business Entry Visa",
     processingTime: "3 – 5 Business Days",
-    description: "Direct GDRFA/ICP immigration portal processing. No embassy visit required for Nepali passport holders.",
-    assistanceInfo: "Fast 24-hour express visa processing option available.",
+    description: "ICA portal submission, invitation document verification, and complete SG arrival card guidance.",
+    assistanceInfo: "High approval rate with authorized submission channel.",
   },
   {
     name: "Schengen Europe",
@@ -117,13 +118,21 @@ export default function VisaPage() {
   return (
     <>
       {/* 1. Hero Section */}
-      <section className="bg-gradient-to-br from-[#0a1628] via-[#163058] to-[#0ea5e9] py-20 md:py-28 text-white relative overflow-hidden">
-        <div
-          className="absolute inset-0 opacity-10"
-          style={{
-            backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
-          }}
-        />
+      <section className="relative py-20 md:py-28 text-white overflow-hidden bg-[#0a1628]">
+        {/* Background Travel Banner Image */}
+        <div className="absolute inset-0 z-0">
+          <Image
+            src="/images/visa-hero-banner.png"
+            alt="Visa Assistance & Worldwide Travel - Skywalk Holidays"
+            fill
+            priority
+            className="object-cover object-center"
+            sizes="100vw"
+          />
+          {/* Multi-layer gradient overlays ensuring high contrast, readability, and seamless landmark visibility */}
+          <div className="absolute inset-0 bg-gradient-to-r from-[#0a1628]/90 via-[#0a1628]/70 to-[#0a1628]/85" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#0a1628] via-transparent to-[#0a1628]/60" />
+        </div>
 
         <div className="container-custom relative z-10 text-center max-w-4xl mx-auto">
           {/* Badge */}
@@ -155,6 +164,22 @@ export default function VisaPage() {
               </span>
             ))}
           </div>
+
+          <div className="mt-8 flex flex-wrap justify-center gap-4">
+            <a
+              href="#iats-visa-guidebook"
+              className="inline-flex items-center gap-2 bg-[#f97316] hover:bg-[#ea580c] text-white font-bold px-6 py-3 rounded-2xl text-xs sm:text-sm shadow-xl transition-transform hover:scale-105"
+            >
+              <GraduationCap size={18} />
+              Open IATS 2026 Tourist Visa Guide Book (17 Countries)
+            </a>
+            <a
+              href="#visa-form"
+              className="inline-flex items-center gap-2 bg-white/10 hover:bg-white/20 text-white font-bold px-6 py-3 rounded-2xl text-xs sm:text-sm border border-white/20 backdrop-blur-md transition-colors"
+            >
+              Book 1-on-1 Visa Consultation
+            </a>
+          </div>
         </div>
       </section>
 
@@ -177,7 +202,10 @@ export default function VisaPage() {
         </div>
       </section>
 
-      {/* 2. Country-Based Visa Service Cards */}
+      {/* 2. Institute for Aviation and Tourism Skills (IATS) 2026 Tourist Visa Guide Book */}
+      <IatsVisaGuideBook />
+
+      {/* 3. Country-Based Visa Service Cards */}
       <section className="section-padding bg-[#f8fafc]">
         <div className="container-custom">
           <SectionHeader

@@ -257,7 +257,7 @@ export default function CountryManager() {
                 Country Name *
               </label>
               <Input
-                placeholder="e.g. Vietnam, Thailand, Dubai, UAE"
+                placeholder="e.g. Vietnam, Thailand, Malaysia, Japan"
                 value={editingCountry.name || ""}
                 onChange={(e) => setEditingCountry({ ...editingCountry, name: e.target.value })}
               />

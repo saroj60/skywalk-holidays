@@ -1,4 +1,7 @@
+"use client";
+
 import React from "react";
+import { motion } from "framer-motion";
 import {
   ShieldCheck,
   Headphones,
@@ -56,8 +59,10 @@ const FEATURES = [
 
 export default function WhyChooseUs() {
   return (
-    <section className="section-padding">
-      <div className="container-custom">
+    <section className="section-padding relative overflow-hidden">
+      {/* Ambient sky glow */}
+      <div className="absolute bottom-0 left-1/3 w-[550px] h-[550px] bg-sky-200/35 rounded-full blur-[140px] pointer-events-none" />
+      <div className="container-custom relative z-10">
         <SectionHeader
           eyebrow="Why Skywalks Holidays"
           title="Travel Smart, Travel with Confidence"
@@ -65,15 +70,20 @@ export default function WhyChooseUs() {
         />
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {FEATURES.map((feature) => {
+          {FEATURES.map((feature, index) => {
             const Icon = feature.icon;
             return (
-              <div
+              <motion.div
                 key={feature.title}
-                className="flex gap-5 p-6 rounded-2xl bg-white border border-[#f1f5f9] hover:shadow-lg hover:border-[#e2e8f0] transition-all duration-300 group"
+                initial={{ opacity: 0, y: 28 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-40px" }}
+                transition={{ duration: 0.5, delay: index * 0.08, ease: "easeOut" }}
+                whileHover={{ y: -6, scale: 1.015, transition: { duration: 0.25 } }}
+                className="flex gap-5 p-6 rounded-2xl bg-white border border-[#f1f5f9] hover:shadow-xl hover:border-sky-300/60 transition-all duration-300 group"
               >
                 <div
-                  className={`w-12 h-12 rounded-xl flex items-center justify-center shrink-0 ${feature.color} transition-transform group-hover:scale-110`}
+                  className={`w-12 h-12 rounded-xl flex items-center justify-center shrink-0 ${feature.color} transition-transform duration-300 group-hover:scale-110 group-hover:rotate-6 shadow-sm`}
                 >
                   <Icon size={22} />
                 </div>
@@ -85,7 +95,7 @@ export default function WhyChooseUs() {
                     {feature.description}
                   </p>
                 </div>
-              </div>
+              </motion.div>
             );
           })}
         </div>

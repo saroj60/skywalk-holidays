@@ -25,7 +25,7 @@ export default function PackageGallerySection({
       const defaultCaptions = [
         "Iconic Destination Skyline & Attractions",
         "Thrilling Desert Safari Dune Bashing & Sunset",
-        "Dubai Marina Luxury Dhow Dinner Cruise",
+        "Marina Luxury Sunset Dinner Cruise",
         "4-Star Deluxe Resort Accommodations",
         "Cultural Sightseeing & Heritage Exploration",
       ];
@@ -54,35 +54,35 @@ export default function PackageGallerySection({
         </span>
       </div>
 
-      {/* Responsive Gallery Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+      {/* Responsive Gallery Grid (2 columns on mobile, 3 on large screens) */}
+      <div className="grid grid-cols-2 lg:grid-cols-3 gap-2.5 sm:gap-4">
         {formattedGallery.map((img, idx) => (
           <div
             key={idx}
             onClick={() => setSelectedImage(img.url)}
-            className="group relative h-56 rounded-2xl overflow-hidden bg-[#0a1628] cursor-pointer border border-[#e2e8f0] shadow-sm hover:shadow-xl transition-all duration-300"
+            className="group relative h-40 sm:h-56 rounded-xl sm:rounded-2xl overflow-hidden bg-[#0a1628] cursor-pointer border border-[#e2e8f0] shadow-sm hover:shadow-xl transition-all duration-300"
           >
             <Image
               src={img.url}
               alt={`${packageTitle} photo ${idx + 1}`}
               fill
               className="object-cover transition-transform duration-700 group-hover:scale-110"
-              sizes="(max-width: 768px) 100vw, 33vw"
+              sizes="(max-width: 640px) 50vw, (max-width: 1024px) 50vw, 33vw"
             />
             {/* Gradient Overlay */}
-            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-80 group-hover:opacity-95 transition-opacity" />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-transparent opacity-85 group-hover:opacity-95 transition-opacity" />
 
             {/* Hover Expand Icon */}
-            <div className="absolute top-3 right-3 w-8 h-8 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center text-white opacity-0 group-hover:opacity-100 transition-opacity">
-              <Maximize2 size={14} />
+            <div className="absolute top-2 right-2 sm:top-3 sm:right-3 w-6 h-6 sm:w-8 sm:h-8 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center text-white opacity-0 group-hover:opacity-100 transition-opacity">
+              <Maximize2 size={12} className="sm:w-3.5 sm:h-3.5" />
             </div>
 
             {/* Caption Overlay */}
-            <div className="absolute bottom-0 left-0 right-0 p-4">
-              <span className="text-[10px] font-extrabold text-[#38bdf8] uppercase tracking-wider block mb-0.5">
+            <div className="absolute bottom-0 left-0 right-0 p-2.5 sm:p-4">
+              <span className="text-[9px] sm:text-[10px] font-extrabold text-[#38bdf8] uppercase tracking-wider block mb-0.5">
                 Highlight #{idx + 1}
               </span>
-              <p className="text-xs font-bold text-white leading-snug drop-shadow-sm">
+              <p className="text-[11px] sm:text-xs font-bold text-white leading-tight sm:leading-snug drop-shadow-sm line-clamp-2">
                 {img.caption}
               </p>
             </div>
@@ -98,6 +98,8 @@ export default function PackageGallerySection({
         >
           <div className="relative max-w-5xl w-full max-h-[90vh] flex flex-col items-center">
             <button
+              type="button"
+              suppressHydrationWarning
               onClick={() => setSelectedImage(null)}
               className="absolute -top-12 right-0 text-white hover:text-[#0ea5e9] p-2 bg-white/10 rounded-full backdrop-blur-md"
             >
@@ -108,6 +110,7 @@ export default function PackageGallerySection({
                 src={selectedImage}
                 alt="Enlarged photo view"
                 fill
+                sizes="100vw"
                 className="object-contain"
               />
             </div>

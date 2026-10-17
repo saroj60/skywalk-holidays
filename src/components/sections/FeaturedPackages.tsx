@@ -7,6 +7,10 @@ import PackageCard from "@/components/common/PackageCard";
 import SectionHeader from "@/components/common/SectionHeader";
 
 export default function FeaturedPackages() {
+  if (!FEATURED_PACKAGES || FEATURED_PACKAGES.length === 0) {
+    return null;
+  }
+
   return (
     <section className="section-padding">
       <div className="container-custom">
@@ -18,8 +22,8 @@ export default function FeaturedPackages() {
 
         {/* Package Cards Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-          {FEATURED_PACKAGES.map((pkg) => (
-            <PackageCard key={pkg.id} {...pkg} />
+          {FEATURED_PACKAGES.map((pkg, index) => (
+            <PackageCard key={pkg.id} index={index} {...pkg} />
           ))}
         </div>
 
