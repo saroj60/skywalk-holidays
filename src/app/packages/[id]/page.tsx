@@ -31,7 +31,6 @@ import PackageSubNav from "@/components/packages/PackageSubNav";
 import PackagePdfButton from "@/components/packages/PackagePdfButton";
 
 import { PACKAGES_DICTIONARY } from "@/lib/packagesData";
-export { PACKAGES_DICTIONARY };
 export async function generateMetadata({
   params,
 }: {

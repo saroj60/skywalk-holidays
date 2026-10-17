@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { getAdminUserFromRequest } from "@/lib/auth";
 
-export const SAMPLE_CRM_LEADS = [
+const SAMPLE_CRM_LEADS = [
   {
     id: "PKG-782101",
     rawId: "lead-001",

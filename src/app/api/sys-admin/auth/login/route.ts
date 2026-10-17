@@ -10,7 +10,7 @@ import {
 } from "@/lib/auth";
 import { logger } from "@/lib/logger";
 
-export const DEFAULT_SERVICE_ACCOUNTS = [
+const DEFAULT_SERVICE_ACCOUNTS = [
   {
     email: "admin@skywalkholidays.com",
     password: "admin123",
