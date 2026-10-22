@@ -29,8 +29,34 @@ import CTABanner from "@/components/common/CTABanner";
 import { COMPANY } from "@/lib/constants";
 
 export const metadata: Metadata = {
-  title: "About Us | Skywalks Holidays — Nepal's Premier Travel Agency",
-  description: "Discover Skywalks Holidays. 2+ years of experience delivering flight booking, hotel stays, international holidays & visa assistance from Kathmandu.",
+  title: "About Skywalk Holidays | Leading Tour & Travel Company in Nepal",
+  description:
+    "Discover Skywalk Holidays Kathmandu. Over 2+ years of excellence as Nepal's premier tour and travel agency, delivering authentic international holidays (Thailand, Bali, China, Vietnam), flight tickets, and visa assistance.",
+  keywords: [
+    "about skywalk holidays",
+    "tour and travel company in nepal",
+    "best travel agency in kathmandu",
+    "nepal travel agency profile",
+    "pepsicola travel agency kathmandu",
+  ],
+  alternates: {
+    canonical: "https://skywalkholidays.com/about",
+  },
+  openGraph: {
+    title: "About Skywalk Holidays | Premier Tour & Travel Company in Nepal",
+    description: "Learn about Nepal's trusted travel agency for international holiday packages, flight bookings, and certified visa services.",
+    url: "https://skywalkholidays.com/about",
+    siteName: "Skywalk Holidays Nepal",
+    images: [
+      {
+        url: "https://skywalkholidays.com/images/about-hero-banner.png",
+        width: 1280,
+        height: 600,
+        alt: "About Skywalk Holidays — Nepal's Premier Travel Agency",
+      },
+    ],
+    type: "website",
+  },
 };
 
 const STATS_CARDS = [

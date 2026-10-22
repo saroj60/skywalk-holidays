@@ -8,8 +8,34 @@ import ContactInquiryForm from "@/components/forms/ContactInquiryForm";
 import { COMPANY } from "@/lib/constants";
 
 export const metadata: Metadata = {
-  title: "Contact Us | Skywalks Holidays — Nepal's Premium Travel Agency",
-  description: "Get in touch with Skywalks Holidays in Kathmandu. Call +977-971-4491103, WhatsApp, or send an inquiry for flights, hotels, tours & visas.",
+  title: "Contact Skywalk Holidays | Travel Agency in Pepsicola, Kathmandu, Nepal",
+  description:
+    "Get in touch with Skywalk Holidays Kathmandu. Call +977 971-4491103, chat on WhatsApp, or visit our office in Pepsicola, Kathmandu for international tour packages, flight bookings & visa assistance.",
+  keywords: [
+    "contact skywalk holidays",
+    "travel agency in pepsicola kathmandu",
+    "tour and travel company in nepal contact number",
+    "kathmandu travel agency phone number",
+    "skywalk tours and travels contact",
+  ],
+  alternates: {
+    canonical: "https://skywalkholidays.com/contact",
+  },
+  openGraph: {
+    title: "Contact Skywalk Holidays | Premier Tour & Travel Company in Nepal",
+    description: "Visit our office in Pepsicola, Kathmandu or call +977 971-4491103 for instant tour, flight & visa consultations.",
+    url: "https://skywalkholidays.com/contact",
+    siteName: "Skywalk Holidays Nepal",
+    images: [
+      {
+        url: "https://skywalkholidays.com/images/contact-hero-banner.png",
+        width: 1280,
+        height: 600,
+        alt: "Contact Skywalk Holidays Kathmandu",
+      },
+    ],
+    type: "website",
+  },
 };
 
 const CONTACT_CHANNELS = [

@@ -181,6 +181,29 @@ const DESTINATIONS_DIRECTORY: DestinationMeta[] = [
     keywords: ["vietnam", "hanoi", "danang", "halong", "hoi-an"],
   },
   {
+    id: "china",
+    name: "China (Beijing & Shanghai)",
+    country: "China",
+    flag: "🇨🇳",
+    badge: "Wonders of the World",
+    image: "https://images.unsplash.com/photo-1508804185872-d7badad00f7d?w=1920&q=80",
+    subtitle: "Great Wall of China, Forbidden City & Shanghai Skyline",
+    description:
+      "Journey from ancient imperial dynasties to futuristic megacities on our signature China holiday tour from Nepal. Hike the legendary Great Wall at Mutianyu, explore the Forbidden City and Tiananmen Square, ride the 300 km/h high-speed bullet train, and cruise past Shanghai's The Bund with complete China visa assistance in Kathmandu.",
+    bestTimeToVisit: "April – May (Spring) & September – November (Autumn)",
+    flightDuration: "Approx. 5h direct or via Chengdu/Kunming from Kathmandu",
+    visaGuidance: "Complete China Tourist Visa documentation, invitation support & biometrics appointment in Kathmandu.",
+    visaLink: "/services/visa",
+    startingPrice: 135000,
+    highlights: [
+      "Mutianyu Great Wall excursion with scenic round-trip cable car tickets",
+      "Forbidden City, Tiananmen Square & Summer Palace imperial gardens",
+      "High-speed modern bullet train journey from Beijing to Shanghai (300 km/h)",
+      "Shanghai Bund modern skyline, Yu Garden & Huangpu River evening cruise",
+    ],
+    keywords: ["china", "beijing", "shanghai", "great-wall", "china-visa-nepal", "china-tour-from-nepal"],
+  },
+  {
     id: "philippines",
     name: "Philippines",
     country: "Philippines",
@@ -319,6 +342,21 @@ const ALL_PACKAGES: any[] = [
     inclusions: ["All Int'l & Domestic Flights", "Phi Phi Islands Tour with Lunch", "Bangkok Reclining & Golden Buddha", "Thailand Visa Included"],
     badge: "Island & City Escape",
     destinationIds: ["thailand"],
+  },
+  {
+    id: "bali-7d",
+    title: "Bali Island Paradise & Nusa Penida - 06 Nights and 07 Days",
+    image: "/images/bali-kelingking.jpg",
+    destination: "Bali & Nusa Penida, Indonesia",
+    country: "Indonesia",
+    duration: "06 Nights and 07 Days",
+    price: 62000,
+    originalPrice: 75000,
+    rating: 4.9,
+    reviews: 148,
+    inclusions: ["Round-trip Flights", "Nusa Penida Kelingking Beach", "Ubud Rice Terraces & Swing", "Tanah Lot Sunset Tour"],
+    badge: "Tropical Paradise",
+    destinationIds: ["bali"],
   },
   {
     id: "bali-malaysia-7d",
@@ -470,6 +508,21 @@ const ALL_PACKAGES: any[] = [
     badge: "Ultra Luxury",
     destinationIds: ["maldives"],
   },
+  {
+    id: "china-beijing-shanghai-8d",
+    title: "China Highlights (Beijing & Shanghai) - 07 Nights and 08 Days",
+    image: "https://images.unsplash.com/photo-1508804185872-d7badad00f7d?w=800&q=80",
+    destination: "Beijing & Shanghai, China",
+    country: "China",
+    duration: "07 Nights and 08 Days",
+    price: 135000,
+    originalPrice: 158000,
+    rating: 4.9,
+    reviews: 116,
+    inclusions: ["Mutianyu Great Wall Cable Car", "Forbidden City & Tiananmen", "High-Speed Bullet Train", "The Bund & Huangpu Cruise"],
+    badge: "Wonders of the World",
+    destinationIds: ["china"],
+  },
 ];
 
 function findDestinationBySlug(rawSlug: string): DestinationMeta | undefined {
@@ -507,6 +560,10 @@ function findDestinationBySlug(rawSlug: string): DestinationMeta | undefined {
   return maxScore > 0 ? bestMatch : undefined;
 }
 
+export async function generateStaticParams() {
+  return DESTINATIONS_DIRECTORY.map((d) => ({ slug: d.id }));
+}
+
 export async function generateMetadata({
   params,
 }: {
@@ -517,14 +574,54 @@ export async function generateMetadata({
 
   if (!destination) {
     return {
-      title: "Popular Travel Destinations & Packages | Skywalks Holidays",
-      description: "Explore all-inclusive holiday tour packages from Kathmandu with Skywalks Holidays.",
+      title: "Popular Travel Destinations & Packages | Skywalk Holidays",
+      description: "Explore all-inclusive holiday tour packages from Kathmandu with Skywalk Holidays.",
     };
   }
 
+  const title = `${destination.name} Tour Packages from Nepal | Skywalk Holidays`;
+  const description = `Book handpicked ${destination.name} holiday tour packages from Kathmandu with Skywalk Holidays. ${destination.subtitle}. Flight bookings, hotels, visa assistance & guided excursions. Starting from NPR ${destination.startingPrice.toLocaleString("en-US")}.`;
+  const canonicalUrl = `https://skywalkholidays.com/destinations/${destination.id}`;
+  const imageUrl = destination.image.startsWith("http")
+    ? destination.image
+    : `https://skywalkholidays.com${destination.image}`;
+
   return {
-    title: `${destination.name} Tour Packages | Skywalks Holidays`,
-    description: `Book handpicked ${destination.name} holiday tour packages from Kathmandu. ${destination.subtitle}. Starting from NPR ${destination.startingPrice.toLocaleString("en-US")}.`,
+    title,
+    description,
+    keywords: [
+      `${destination.country.toLowerCase()} tour package from nepal`,
+      `${destination.name.toLowerCase()} holiday from kathmandu`,
+      ...destination.keywords,
+      "best travel agency in nepal",
+      "tour and travel company in nepal",
+      "skywalk holidays packages",
+    ],
+    alternates: {
+      canonical: canonicalUrl,
+    },
+    openGraph: {
+      title,
+      description,
+      url: canonicalUrl,
+      siteName: "Skywalk Holidays",
+      images: [
+        {
+          url: imageUrl,
+          width: 1200,
+          height: 630,
+          alt: `${destination.name} Tour Packages from Nepal`,
+        },
+      ],
+      locale: "en_NP",
+      type: "website",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+      images: [imageUrl],
+    },
   };
 }
 
@@ -550,11 +647,96 @@ export default async function DestinationPage({
 
   const displayPackages = matchedPackages.length > 0 ? matchedPackages : ALL_PACKAGES.slice(0, 4);
 
-  const whatsappMessage = `Hello Skywalks Holidays! I am interested in booking a holiday package for ${destination.name}. Please share available departure dates and pricing.`;
+  const whatsappMessage = `Hello Skywalk Holidays! I am interested in booking a holiday package for ${destination.name}. Please share available departure dates and pricing.`;
   const whatsappUrl = buildCustomWhatsAppLink(whatsappMessage);
+
+  const canonicalUrl = `https://skywalkholidays.com/destinations/${destination.id}`;
+  const imageUrl = destination.image.startsWith("http")
+    ? destination.image
+    : `https://skywalkholidays.com${destination.image}`;
+
+  const destinationSchema = {
+    "@context": "https://schema.org",
+    "@type": "TouristDestination",
+    name: destination.name,
+    description: destination.description,
+    image: imageUrl,
+    url: canonicalUrl,
+    touristType: ["Adventure Tourism", "Cultural Tourism", "Family Tourism", "Honeymoon"],
+    includesAttraction: destination.highlights.map((h) => ({
+      "@type": "TouristAttraction",
+      name: h,
+    })),
+    aggregateRating: {
+      "@type": "AggregateRating",
+      ratingValue: "4.9",
+      bestRating: "5.0",
+      reviewCount: "380",
+    },
+  };
+
+  const breadcrumbsSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      {
+        "@type": "ListItem",
+        position: 1,
+        name: "Home",
+        item: "https://skywalkholidays.com",
+      },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: "International Packages",
+        item: "https://skywalkholidays.com/services/packages/international",
+      },
+      {
+        "@type": "ListItem",
+        position: 3,
+        name: destination.name,
+        item: canonicalUrl,
+      },
+    ],
+  };
+
+  const packagesItemListSchema = {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    name: `${destination.name} Holiday Packages from Nepal`,
+    itemListElement: displayPackages.map((pkg, index) => ({
+      "@type": "ListItem",
+      position: index + 1,
+      item: {
+        "@type": "TouristTrip",
+        name: pkg.title,
+        description: `${pkg.duration} holiday in ${pkg.destination} offered by Skywalk Holidays Nepal.`,
+        url: `https://skywalkholidays.com/packages/${pkg.id}`,
+        offers: {
+          "@type": "Offer",
+          price: pkg.price,
+          priceCurrency: "NPR",
+          availability: "https://schema.org/InStock",
+        },
+      },
+    })),
+  };
 
   return (
     <div className="bg-[#f8fafc] min-h-screen">
+      {/* Schema.org Structured Data */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(destinationSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbsSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(packagesItemListSchema) }}
+      />
       {/* 1. Destination Hero Banner */}
       <section className="relative min-h-[420px] sm:min-h-[480px] md:min-h-[520px] flex items-center overflow-hidden bg-[#0a1628] text-white">
         {/* Background Image */}

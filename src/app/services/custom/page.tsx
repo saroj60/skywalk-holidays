@@ -8,8 +8,19 @@ import SectionHeader from "@/components/common/SectionHeader";
 import CTABanner from "@/components/common/CTABanner";
 
 export const metadata: Metadata = {
-  title: "Customized Tour Packages",
-  description: "Tell us your dream trip — we'll build the perfect custom itinerary just for you.",
+  title: "Tailor-Made & Custom Holiday Tour Packages from Nepal | Skywalk Holidays",
+  description:
+    "Design your dream international or domestic holiday with Skywalk Holidays Kathmandu. Personalized itineraries for Thailand, Bali Indonesia, China, Europe & Nepal tailored to your budget and travel dates.",
+  keywords: [
+    "custom tour package from nepal",
+    "tailor made holiday packages kathmandu",
+    "personalized tour and travel company in nepal",
+    "customized thailand tour package from nepal",
+    "customized bali honeymoon tour nepal",
+  ],
+  alternates: {
+    canonical: "https://skywalkholidays.com/services/custom",
+  },
 };
 
 const STEPS = [

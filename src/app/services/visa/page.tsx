@@ -9,8 +9,45 @@ import VisaInquiryForm from "@/components/forms/VisaInquiryForm";
 import IatsVisaGuideBook from "@/components/visa/IatsVisaGuideBook";
 
 export const metadata: Metadata = {
-  title: "Visa Assistance Made Simple | Skywalks Holidays",
-  description: "Expert guidance for your international travel documentation. Australia, Japan, South Korea, Canada, UK, USA, Schengen, Thailand, Malaysia.",
+  title: "Visa Assistance in Nepal | Tourist & Student Visa Services — Skywalk Holidays",
+  description:
+    "Certified visa processing and documentation assistance in Kathmandu, Nepal. Complete support for Australia, Japan, South Korea, China, Schengen, UK, USA, Canada, Thailand & Malaysia visas.",
+  keywords: [
+    "visa assistance in nepal",
+    "visa processing travel agency kathmandu",
+    "thailand visa for nepali",
+    "china visa assistance in nepal",
+    "japan tourist visa nepal",
+    "australia tourist visa nepal",
+    "schengen visa assistance kathmandu",
+    "vfs appointment nepal",
+    "best travel agency for visa in nepal",
+  ],
+  alternates: {
+    canonical: "https://skywalkholidays.com/services/visa",
+  },
+  openGraph: {
+    title: "Visa Assistance in Nepal | Certified Travel Agency — Skywalk Holidays",
+    description:
+      "Expert visa assistance for Nepali passport holders: Australia, Japan, China, Schengen, UK, USA, Thailand & Malaysia. High approval guidance in Kathmandu.",
+    url: "https://skywalkholidays.com/services/visa",
+    siteName: "Skywalk Holidays Nepal",
+    images: [
+      {
+        url: "https://skywalkholidays.com/images/visa-hero-banner.png",
+        width: 1280,
+        height: 600,
+        alt: "Visa Assistance Services — Skywalk Holidays Nepal",
+      },
+    ],
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Visa Assistance in Nepal — Skywalk Holidays",
+    description: "Expert visa processing & documentation assistance in Kathmandu for Australia, Japan, China, Schengen & more.",
+    images: ["https://skywalkholidays.com/images/visa-hero-banner.png"],
+  },
 };
 
 const VISA_CATEGORIES = [

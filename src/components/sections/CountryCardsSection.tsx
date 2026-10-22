@@ -246,6 +246,21 @@ const COUNTRY_PACKAGES_MAP: Record<string, any[]> = {
       badge: "Extended Island Escape",
     },
   ],
+  china: [
+    {
+      id: "china-beijing-shanghai-8d",
+      title: "China Wonders: Beijing, Great Wall & Shanghai - 07 Nights and 08 Days",
+      image: "https://images.unsplash.com/photo-1508804185872-d7badad00f7d?w=800&q=80",
+      destination: "Beijing & Shanghai, China",
+      duration: "07 Nights and 08 Days",
+      price: 135000,
+      originalPrice: 155000,
+      rating: 4.9,
+      reviews: 128,
+      inclusions: ["Round-trip Flights from Kathmandu", "Great Wall Cable Car Tour", "Bullet Train Beijing to Shanghai", "China Visa Assistance"],
+      badge: "Wonders of the World",
+    },
+  ],
 };
 
 // Handpicked initial packages shown in the user's screenshot

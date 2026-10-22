@@ -8,8 +8,46 @@ import HolidayPackagesListing from "@/components/packages/HolidayPackagesListing
 import AutoScrollToPackages from "@/components/packages/AutoScrollToPackages";
 
 export const metadata: Metadata = {
-  title: "Explore Our Holiday Packages | Skywalks Holidays",
-  description: "Curated domestic Nepal tours and international holiday packages. Thailand, Bali, Vietnam, Pokhara, Mustang, Europe & more.",
+  title: "International Holiday Packages from Nepal | Thailand, Bali, China & Vietnam — Skywalk Holidays",
+  description:
+    "Explore premier international holiday tour packages from Nepal. All-inclusive tours to Bangkok & Pattaya Thailand, Bali Indonesia, China (Beijing & Shanghai), Vietnam, and Europe with flights, hotels, and visa assistance from Kathmandu.",
+  keywords: [
+    "international holiday packages from nepal",
+    "thailand tour package from nepal",
+    "bangkok pattaya tour package from nepal",
+    "bali indonesia tour package from nepal",
+    "bali honeymoon package from nepal",
+    "china tour packages from nepal",
+    "vietnam tour package from kathmandu",
+    "tour and travel company in nepal",
+    "best travel agency in kathmandu",
+    "cheap international tour packages nepal",
+  ],
+  alternates: {
+    canonical: "https://skywalkholidays.com/services/packages/international",
+  },
+  openGraph: {
+    title: "International Holiday Packages from Nepal — Skywalk Holidays",
+    description:
+      "All-inclusive holiday tour packages from Kathmandu to Thailand, Bali Indonesia, China, Vietnam & Europe. Flights, deluxe stays & visa included.",
+    url: "https://skywalkholidays.com/services/packages/international",
+    siteName: "Skywalk Holidays Nepal",
+    images: [
+      {
+        url: "https://skywalkholidays.com/uploads/Explore%20Holiday%20Packages.png",
+        width: 1200,
+        height: 630,
+        alt: "International Holiday Packages — Skywalk Holidays Nepal",
+      },
+    ],
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "International Holiday Packages from Nepal — Skywalk Holidays",
+    description: "All-inclusive tour packages to Thailand, Bali Indonesia, China & Vietnam from Kathmandu.",
+    images: ["https://skywalkholidays.com/uploads/Explore%20Holiday%20Packages.png"],
+  },
 };
 
 export default function HolidayPackagesPage() {

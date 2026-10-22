@@ -31,68 +31,150 @@ import PackageSubNav from "@/components/packages/PackageSubNav";
 import PackagePdfButton from "@/components/packages/PackagePdfButton";
 
 import { PACKAGES_DICTIONARY } from "@/lib/packagesData";
+function resolvePackage(id: string) {
+  let pkg = PACKAGES_DICTIONARY[id];
+  if (!pkg && (id === "1" || id === "bangkok-pattaya")) pkg = PACKAGES_DICTIONARY["bangkok-pattaya-6d"];
+  if (!pkg && (id === "2" || id === "bali-malaysia")) pkg = PACKAGES_DICTIONARY["bali-malaysia-7d"];
+  if (!pkg && (id === "3" || id === "bangkok-pattaya-8d" || id === "thailand-8d")) pkg = PACKAGES_DICTIONARY["bangkok-pattaya-8d"];
+  if (!pkg && (id === "4" || id === "bangkok-pattaya-phuket-8d" || id === "thailand-phuket-8d" || id === "phuket-8d")) pkg = PACKAGES_DICTIONARY["bangkok-pattaya-phuket-8d"];
+  if (!pkg && (id === "5" || id === "bangkok-pattaya-5d" || id === "thailand-5d")) pkg = PACKAGES_DICTIONARY["bangkok-pattaya-5d"];
+  if (!pkg && (id === "6" || id === "krabi-phuket-bangkok-8d" || id === "krabi-8d" || id === "thailand-krabi-8d")) pkg = PACKAGES_DICTIONARY["krabi-phuket-bangkok-8d"];
+  if (!pkg && (id === "7" || id === "malaysia-singapore-6d" || id === "singapore-malaysia-6d" || id === "malaysia-singapore" || id === "singapore-malaysia")) pkg = PACKAGES_DICTIONARY["malaysia-singapore-6d"];
+  if (!pkg && (id === "8" || id === "maldives-4d" || id === "maldives-3n4d" || id === "maldives")) pkg = PACKAGES_DICTIONARY["maldives-4d"];
+  if (!pkg && (id === "9" || id === "philippines-6d" || id === "philippines-5n6d" || id === "philippines")) pkg = PACKAGES_DICTIONARY["philippines-6d"];
+  if (!pkg && (id === "10" || id === "philippines-8d" || id === "philippines-7n8d")) pkg = PACKAGES_DICTIONARY["philippines-8d"];
+  if (!pkg && (id === "11" || id === "phuket-bangkok-6d" || id === "bangkok-phuket-6d" || id === "phuket-bangkok")) pkg = PACKAGES_DICTIONARY["phuket-bangkok-6d"];
+  if (!pkg && (id === "12" || id === "singapore-4d" || id === "singapore-3n4d" || id === "singapore")) pkg = PACKAGES_DICTIONARY["singapore-4d"];
+  if (!pkg && (id === "13" || id === "sri-lanka-thailand-7d" || id === "sri-lanka-thailand" || id === "thailand-sri-lanka-7d" || id === "thailand-sri-lanka")) pkg = PACKAGES_DICTIONARY["sri-lanka-thailand-7d"];
+  if (!pkg && (id === "14" || id === "thailand-vietnam-8d" || id === "thailand-vietnam" || id === "vietnam-thailand-8d" || id === "vietnam-thailand" || id === "hanoi-8d")) pkg = PACKAGES_DICTIONARY["thailand-vietnam-8d"];
+  if (!pkg && (id === "15" || id === "thailand-malaysia-singapore-9d" || id === "thailand-singapore-malaysia-9d" || id === "thailand-malaysia-singapore" || id === "thailand-singapore-malaysia" || id === "singapore-malaysia-thailand-9d")) pkg = PACKAGES_DICTIONARY["thailand-malaysia-singapore-9d"];
+  if (!pkg && (id === "16" || id === "vietnam-6d" || id === "vietnam-5n6d" || id === "vietnam-hanoi-halong-danang-6d" || id === "vietnam" || id === "hanoi-halong-danang-6d" || id === "danang-6d")) pkg = PACKAGES_DICTIONARY["vietnam-6d"];
+  if (!pkg && (id === "bali" || id === "bali-7d")) pkg = PACKAGES_DICTIONARY["bali-7d"];
+  if (!pkg && (id === "china" || id === "china-8d" || id === "china-beijing-shanghai")) pkg = PACKAGES_DICTIONARY["china-beijing-shanghai-8d"];
+  if (!pkg) return null;
+
+  const itinerary = (pkg.itinerary && pkg.itinerary.length > 0)
+    ? pkg.itinerary
+    : (pkg.outlineItinerary || []).map((out: any) => ({
+        day: out.day || "Day",
+        title: out.title || "",
+        description: out.description || out.desc || out.activity || out.title || "",
+        meals: out.meals || "",
+        stay: out.stay || "",
+      }));
+
+  const defaultHotelInfo = {
+    name: `${pkg.destination || "Handpicked"} Partner Hotels & Resorts`,
+    rating: "3-Star & 4-Star Certified Hospitality",
+    location: pkg.destination || "Destination City Center",
+    checkIn: "2:00 PM",
+    checkOut: "12:00 PM",
+    roomType: "Deluxe Twin/Double Room with Breakfast",
+    amenities: [
+      "Daily Buffet Breakfast",
+      "Free High-Speed Wi-Fi",
+      "Air Conditioning",
+      "En-suite Bathroom with Hot Water",
+      "24-Hour Reception & Travel Desk",
+    ],
+  };
+
+  const hotelInfo = pkg.hotelInfo && typeof pkg.hotelInfo === "object"
+    ? {
+        name: pkg.hotelInfo.name || defaultHotelInfo.name,
+        rating: pkg.hotelInfo.rating || defaultHotelInfo.rating,
+        location: pkg.hotelInfo.location || defaultHotelInfo.location,
+        checkIn: pkg.hotelInfo.checkIn || defaultHotelInfo.checkIn,
+        checkOut: pkg.hotelInfo.checkOut || defaultHotelInfo.checkOut,
+        roomType: pkg.hotelInfo.roomType || defaultHotelInfo.roomType,
+        amenities: Array.isArray(pkg.hotelInfo.amenities) && pkg.hotelInfo.amenities.length > 0
+          ? pkg.hotelInfo.amenities
+          : defaultHotelInfo.amenities,
+      }
+    : defaultHotelInfo;
+
+  const defaultFaqs = [
+    {
+      q: `What is included in this ${pkg.title || "holiday"} package?`,
+      a: "This package includes round-trip international flight arrangements, certified hotel stays with daily breakfast, private/SIC airport and sightseeing transfers, selected monument entrance tickets, and full visa guidance from Kathmandu.",
+    },
+    {
+      q: "Can this package itinerary be customized?",
+      a: "Yes! All packages by Skywalk Holidays can be tailored to your preferred dates, hotel categories (3-Star, 4-Star, 5-Star), group size, or private vehicle upgrades. Contact our team on WhatsApp for a custom quote.",
+    },
+    {
+      q: "How does the visa application process work for Nepali passport holders?",
+      a: "Skywalk Holidays provides complete visa assistance including document checklist, embassy appointment scheduling, flight itineraries, and hotel booking vouchers.",
+    },
+  ];
+
+  const faqs = Array.isArray(pkg.faqs) && pkg.faqs.length > 0 ? pkg.faqs : defaultFaqs;
+
+  return {
+    ...pkg,
+    itinerary,
+    hotelInfo,
+    faqs,
+  };
+}
+
 export async function generateMetadata({
   params,
 }: {
   params: Promise<{ id: string }>;
 }): Promise<Metadata> {
   const { id } = await params;
-  let pkg = PACKAGES_DICTIONARY[id];
-  if (!pkg && (id === "1" || id === "bangkok-pattaya")) {
-    pkg = PACKAGES_DICTIONARY["bangkok-pattaya-6d"];
-  }
-  if (!pkg && (id === "2" || id === "bali-malaysia")) {
-    pkg = PACKAGES_DICTIONARY["bali-malaysia-7d"];
-  }
-  if (!pkg && (id === "3" || id === "bangkok-pattaya-8d" || id === "thailand-8d")) {
-    pkg = PACKAGES_DICTIONARY["bangkok-pattaya-8d"];
-  }
-  if (!pkg && (id === "4" || id === "bangkok-pattaya-phuket-8d" || id === "thailand-phuket-8d" || id === "phuket-8d")) {
-    pkg = PACKAGES_DICTIONARY["bangkok-pattaya-phuket-8d"];
-  }
-  if (!pkg && (id === "5" || id === "bangkok-pattaya-5d" || id === "thailand-5d")) {
-    pkg = PACKAGES_DICTIONARY["bangkok-pattaya-5d"];
-  }
-  if (!pkg && (id === "6" || id === "krabi-phuket-bangkok-8d" || id === "krabi-8d" || id === "thailand-krabi-8d")) {
-    pkg = PACKAGES_DICTIONARY["krabi-phuket-bangkok-8d"];
-  }
-  if (!pkg && (id === "7" || id === "malaysia-singapore-6d" || id === "singapore-malaysia-6d" || id === "malaysia-singapore" || id === "singapore-malaysia")) {
-    pkg = PACKAGES_DICTIONARY["malaysia-singapore-6d"];
-  }
-  if (!pkg && (id === "8" || id === "maldives-4d" || id === "maldives-3n4d" || id === "maldives")) {
-    pkg = PACKAGES_DICTIONARY["maldives-4d"];
-  }
-  if (!pkg && (id === "9" || id === "philippines-6d" || id === "philippines-5n6d" || id === "philippines")) {
-    pkg = PACKAGES_DICTIONARY["philippines-6d"];
-  }
-  if (!pkg && (id === "10" || id === "philippines-8d" || id === "philippines-7n8d")) {
-    pkg = PACKAGES_DICTIONARY["philippines-8d"];
-  }
-  if (!pkg && (id === "11" || id === "phuket-bangkok-6d" || id === "bangkok-phuket-6d" || id === "phuket-bangkok")) {
-    pkg = PACKAGES_DICTIONARY["phuket-bangkok-6d"];
-  }
-  if (!pkg && (id === "12" || id === "singapore-4d" || id === "singapore-3n4d" || id === "singapore")) {
-    pkg = PACKAGES_DICTIONARY["singapore-4d"];
-  }
-  if (!pkg && (id === "13" || id === "sri-lanka-thailand-7d" || id === "sri-lanka-thailand" || id === "thailand-sri-lanka-7d" || id === "thailand-sri-lanka")) {
-    pkg = PACKAGES_DICTIONARY["sri-lanka-thailand-7d"];
-  }
-  if (!pkg && (id === "14" || id === "thailand-vietnam-8d" || id === "thailand-vietnam" || id === "vietnam-thailand-8d" || id === "vietnam-thailand" || id === "hanoi-8d")) {
-    pkg = PACKAGES_DICTIONARY["thailand-vietnam-8d"];
-  }
-  if (!pkg && (id === "15" || id === "thailand-malaysia-singapore-9d" || id === "thailand-singapore-malaysia-9d" || id === "thailand-malaysia-singapore" || id === "thailand-singapore-malaysia" || id === "singapore-malaysia-thailand-9d")) {
-    pkg = PACKAGES_DICTIONARY["thailand-malaysia-singapore-9d"];
-  }
-  if (!pkg && (id === "16" || id === "vietnam-6d" || id === "vietnam-5n6d" || id === "vietnam-hanoi-halong-danang-6d" || id === "vietnam" || id === "hanoi-halong-danang-6d" || id === "danang-6d")) {
-    pkg = PACKAGES_DICTIONARY["vietnam-6d"];
-  }
-  if (!pkg && (id === "17" || id === "vietnam-8d" || id === "vietnam-7n8d" || id === "vietnam-premium-8d" || id === "vietnam-danang-8d" || id === "hanoi-halong-danang-8d" || id === "danang-8d")) {
-    pkg = PACKAGES_DICTIONARY["vietnam-8d"];
+  const pkg = resolvePackage(id);
+
+  if (!pkg) {
+    return {
+      title: "Holiday Tour Package from Nepal | Skywalk Holidays",
+      description: "Explore curated international holiday packages from Nepal with Skywalk Holidays Kathmandu.",
+    };
   }
 
+  const destination = pkg.destination || "International";
+  const title = `${pkg.title} | ${destination} Tour from Nepal — Skywalk Holidays`;
+  const description = `${pkg.duration} holiday tour package to ${destination}. Starting from NPR ${pkg.price ? pkg.price.toLocaleString() : "48,000"}. Includes round-trip international flights from Kathmandu, deluxe hotel stays, guided sightseeing, and visa assistance.`;
+  const canonicalUrl = `https://skywalkholidays.com/packages/${id}`;
+  const rawImage = pkg.image || (pkg.gallery && pkg.gallery[0]?.url) || "/images/explore-holiday-packages.png";
+  const ogImageUrl = rawImage.startsWith("http") ? rawImage : `https://skywalkholidays.com${rawImage}`;
+
   return {
-    title: pkg ? `${pkg.title} (${pkg.duration}) | Skywalks Holidays` : "Holiday Package | Skywalks Holidays",
-    description: pkg ? pkg.overview : "Curated holiday packages by Skywalks Holidays.",
+    title,
+    description,
+    keywords: [
+      `${destination} tour package from nepal`,
+      `${pkg.title} nepal`,
+      `${destination} holiday from kathmandu`,
+      "tour and travel company in nepal",
+      "best travel agency in nepal",
+      "skywalk holidays",
+    ],
+    alternates: {
+      canonical: canonicalUrl,
+    },
+    openGraph: {
+      title,
+      description,
+      url: canonicalUrl,
+      siteName: "Skywalk Holidays Nepal",
+      images: [
+        {
+          url: ogImageUrl,
+          width: 1200,
+          height: 630,
+          alt: `${pkg.title} — Skywalk Holidays Nepal`,
+        },
+      ],
+      type: "website",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+      images: [ogImageUrl],
+    },
   };
 }
 
@@ -102,52 +184,7 @@ export default async function PackageDetailPage({
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
-  let pkg = PACKAGES_DICTIONARY[id];
-  if (!pkg && (id === "1" || id === "bangkok-pattaya")) {
-    pkg = PACKAGES_DICTIONARY["bangkok-pattaya-6d"];
-  }
-  if (!pkg && (id === "2" || id === "bali-malaysia")) {
-    pkg = PACKAGES_DICTIONARY["bali-malaysia-7d"];
-  }
-  if (!pkg && (id === "3" || id === "bangkok-pattaya-8d" || id === "thailand-8d")) {
-    pkg = PACKAGES_DICTIONARY["bangkok-pattaya-8d"];
-  }
-  if (!pkg && (id === "4" || id === "bangkok-pattaya-phuket-8d" || id === "thailand-phuket-8d" || id === "phuket-8d")) {
-    pkg = PACKAGES_DICTIONARY["bangkok-pattaya-phuket-8d"];
-  }
-  if (!pkg && (id === "5" || id === "bangkok-pattaya-5d" || id === "thailand-5d")) {
-    pkg = PACKAGES_DICTIONARY["bangkok-pattaya-5d"];
-  }
-  if (!pkg && (id === "6" || id === "krabi-phuket-bangkok-8d" || id === "krabi-8d" || id === "thailand-krabi-8d")) {
-    pkg = PACKAGES_DICTIONARY["krabi-phuket-bangkok-8d"];
-  }
-  if (!pkg && (id === "7" || id === "malaysia-singapore-6d" || id === "singapore-malaysia-6d" || id === "malaysia-singapore" || id === "singapore-malaysia")) {
-    pkg = PACKAGES_DICTIONARY["malaysia-singapore-6d"];
-  }
-  if (!pkg && (id === "8" || id === "maldives-4d" || id === "maldives-3n4d" || id === "maldives")) {
-    pkg = PACKAGES_DICTIONARY["maldives-4d"];
-  }
-  if (!pkg && (id === "9" || id === "philippines-6d" || id === "philippines-5n6d" || id === "philippines")) {
-    pkg = PACKAGES_DICTIONARY["philippines-6d"];
-  }
-  if (!pkg && (id === "10" || id === "philippines-8d" || id === "philippines-7n8d")) {
-    pkg = PACKAGES_DICTIONARY["philippines-8d"];
-  }
-  if (!pkg && (id === "11" || id === "phuket-bangkok-6d" || id === "bangkok-phuket-6d" || id === "phuket-bangkok")) {
-    pkg = PACKAGES_DICTIONARY["phuket-bangkok-6d"];
-  }
-  if (!pkg && (id === "12" || id === "singapore-4d" || id === "singapore-3n4d" || id === "singapore")) {
-    pkg = PACKAGES_DICTIONARY["singapore-4d"];
-  }
-  if (!pkg && (id === "13" || id === "sri-lanka-thailand-7d" || id === "sri-lanka-thailand" || id === "thailand-sri-lanka-7d" || id === "thailand-sri-lanka")) {
-    pkg = PACKAGES_DICTIONARY["sri-lanka-thailand-7d"];
-  }
-  if (!pkg && (id === "14" || id === "thailand-vietnam-8d" || id === "thailand-vietnam" || id === "vietnam-thailand-8d" || id === "vietnam-thailand" || id === "hanoi-8d")) {
-    pkg = PACKAGES_DICTIONARY["thailand-vietnam-8d"];
-  }
-  if (!pkg && (id === "15" || id === "thailand-malaysia-singapore-9d" || id === "thailand-singapore-malaysia-9d" || id === "thailand-malaysia-singapore" || id === "thailand-singapore-malaysia" || id === "singapore-malaysia-thailand-9d")) {
-    pkg = PACKAGES_DICTIONARY["thailand-malaysia-singapore-9d"];
-  }
+  const pkg = resolvePackage(id);
 
   if (!pkg) {
     return (
@@ -175,8 +212,77 @@ export default async function PackageDetailPage({
     );
   }
 
+  const rawImg = pkg.image || (pkg.gallery && pkg.gallery[0]?.url) || "/images/explore-holiday-packages.png";
+  const tripImageUrl = rawImg.startsWith("http") ? rawImg : `https://skywalkholidays.com${rawImg}`;
+
+  const packageJsonLd = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": ["TouristTrip", "Product"],
+        "@id": `https://skywalkholidays.com/packages/${id}#trip`,
+        "name": pkg.title,
+        "description": pkg.overview,
+        "touristType": ["Holiday Travelers", "Couples", "Families", "Tourists from Nepal"],
+        "image": tripImageUrl,
+        "offers": {
+          "@type": "Offer",
+          "price": pkg.price,
+          "priceCurrency": "NPR",
+          "availability": "https://schema.org/InStock",
+          "url": `https://skywalkholidays.com/packages/${id}`,
+          "priceValidUntil": "2027-12-31",
+          "seller": {
+            "@type": "TravelAgency",
+            "name": "Skywalks Holidays",
+            "telephone": "+977 971-4491103"
+          }
+        },
+        "provider": {
+          "@type": "TravelAgency",
+          "name": "Skywalks Holidays",
+          "url": "https://skywalkholidays.com"
+        },
+        "aggregateRating": {
+          "@type": "AggregateRating",
+          "ratingValue": pkg.rating || 4.9,
+          "reviewCount": pkg.reviewsCount || 150,
+          "bestRating": 5,
+          "worstRating": 1
+        }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://skywalkholidays.com"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Holiday Packages",
+            "item": "https://skywalkholidays.com/services/packages/international"
+          },
+          {
+            "@type": "ListItem",
+            "position": 3,
+            "name": pkg.title,
+            "item": `https://skywalkholidays.com/packages/${id}`
+          }
+        ]
+      }
+    ]
+  };
+
   return (
     <div className="bg-[#f8fafc] pb-20 font-sans">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(packageJsonLd) }}
+      />
       {/* Breadcrumb Bar */}
       <div className="bg-white border-b border-[#e2e8f0] py-3 text-xs text-[#64748b]">
         <div className="container-custom flex items-center gap-2">
@@ -380,7 +486,7 @@ export default async function PackageDetailPage({
               </h2>
 
               <div className="relative border-l-2 border-[#0ea5e9]/30 pl-6 sm:pl-8 space-y-8 ml-3">
-                {pkg.itinerary.map((dayItem: any, idx: number) => (
+                {pkg.itinerary?.map((dayItem: any, idx: number) => (
                   <div key={idx} className="relative">
                     {/* Circle Node */}
                     <div className="absolute -left-[31px] sm:-left-[39px] top-0 w-8 h-8 rounded-full bg-[#0a1628] text-white font-extrabold text-xs flex items-center justify-center border-4 border-white shadow-md">
@@ -877,37 +983,39 @@ export default async function PackageDetailPage({
                 </div>
               )}
 
-              <div className="bg-[#f8fafc] rounded-2xl p-6 border border-[#e2e8f0]">
-                <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 mb-4 pb-4 border-b border-[#e2e8f0]">
-                  <div>
-                    <h3 className="text-lg font-bold text-[#0a1628]">{pkg.hotelInfo.name}</h3>
-                    <p className="text-xs text-[#0ea5e9] font-semibold mt-0.5">{pkg.hotelInfo.rating}</p>
-                  </div>
-                  <span className="text-xs bg-[#0a1628] text-white px-3 py-1 rounded-full font-bold">
-                    {pkg.hotelInfo.roomType}
-                  </span>
-                </div>
-
-                <div className="grid grid-cols-2 gap-4 text-xs md:text-sm mb-5 text-[#475569]">
-                  <div>
-                    <strong className="text-[#0a1628]">Standard Check-in:</strong> {pkg.hotelInfo.checkIn}
-                  </div>
-                  <div>
-                    <strong className="text-[#0a1628]">Standard Check-out:</strong> {pkg.hotelInfo.checkOut}
-                  </div>
-                </div>
-
-                <h4 className="text-xs font-bold text-[#0a1628] uppercase tracking-wider mb-2">
-                  Hotel Amenities:
-                </h4>
-                <div className="flex flex-wrap gap-2">
-                  {pkg.hotelInfo.amenities.map((a: string) => (
-                    <span key={a} className="text-xs bg-white text-[#334155] border border-[#e2e8f0] px-3 py-1 rounded-full font-medium">
-                      {a}
+              {pkg.hotelInfo && (
+                <div className="bg-[#f8fafc] rounded-2xl p-6 border border-[#e2e8f0]">
+                  <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 mb-4 pb-4 border-b border-[#e2e8f0]">
+                    <div>
+                      <h3 className="text-lg font-bold text-[#0a1628]">{pkg.hotelInfo.name}</h3>
+                      <p className="text-xs text-[#0ea5e9] font-semibold mt-0.5">{pkg.hotelInfo.rating}</p>
+                    </div>
+                    <span className="text-xs bg-[#0a1628] text-white px-3 py-1 rounded-full font-bold">
+                      {pkg.hotelInfo.roomType}
                     </span>
-                  ))}
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-4 text-xs md:text-sm mb-5 text-[#475569]">
+                    <div>
+                      <strong className="text-[#0a1628]">Standard Check-in:</strong> {pkg.hotelInfo.checkIn}
+                    </div>
+                    <div>
+                      <strong className="text-[#0a1628]">Standard Check-out:</strong> {pkg.hotelInfo.checkOut}
+                    </div>
+                  </div>
+
+                  <h4 className="text-xs font-bold text-[#0a1628] uppercase tracking-wider mb-2">
+                    Hotel Amenities:
+                  </h4>
+                  <div className="flex flex-wrap gap-2">
+                    {(pkg.hotelInfo.amenities || []).map((a: string) => (
+                      <span key={a} className="text-xs bg-white text-[#334155] border border-[#e2e8f0] px-3 py-1 rounded-full font-medium">
+                        {a}
+                      </span>
+                    ))}
+                  </div>
                 </div>
-              </div>
+              )}
             </section>
 
             {/* Cancellation Policy & Official Booking Terms */}
@@ -985,7 +1093,7 @@ export default async function PackageDetailPage({
               </h2>
 
               <div className="space-y-4">
-                {pkg.faqs.map((faq: any, idx: number) => (
+                {(pkg.faqs || []).map((faq: any, idx: number) => (
                   <div key={idx} className="p-5 bg-[#f8fafc] rounded-2xl border border-[#e2e8f0]">
                     <h3 className="font-bold text-[#0a1628] text-sm md:text-base mb-2">
                       Q: {faq.q}

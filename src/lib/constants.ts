@@ -109,6 +109,12 @@ export const DESTINATIONS = [
     packages: 5,
   },
   {
+    name: "China (Beijing & Shanghai)",
+    image: "https://images.unsplash.com/photo-1508804185872-d7badad00f7d?w=800&q=80",
+    startingFrom: 135000,
+    packages: 3,
+  },
+  {
     name: "Maldives",
     image: "/images/gallery/maldives-overwater-bungalows-aerial-lagoon.png",
     startingFrom: 85000,
@@ -183,6 +189,17 @@ export const POPULAR_COUNTRIES = [
     image: "https://images.unsplash.com/photo-1528127269322-539801943592?w=800&q=80",
     badge: "Trending",
     href: "/services/packages/international?country=Vietnam",
+  },
+  {
+    id: "china",
+    name: "China",
+    flag: "🇨🇳",
+    subtitle: "Beijing, Great Wall & Shanghai",
+    packagesCount: 3,
+    startingPrice: 135000,
+    image: "https://images.unsplash.com/photo-1508804185872-d7badad00f7d?w=800&q=80",
+    badge: "Wonders of the World",
+    href: "/services/packages/international?country=China",
   },
   {
     id: "maldives",

@@ -9,8 +9,29 @@ import CTABanner from "@/components/common/CTABanner";
 import HotelInquiryForm from "@/components/forms/HotelInquiryForm";
 
 export const metadata: Metadata = {
-  title: "Find Your Perfect Stay | Hotel Booking — Skywalks Holidays",
-  description: "Book handpicked hotels in Kuala Lumpur, Bangkok, Singapore, Kathmandu, Pokhara, Bali and worldwide.",
+  title: "Hotel Booking in Nepal & Worldwide | Best Agency Rates — Skywalk Holidays",
+  description:
+    "Book handpicked 3-star, 4-star, and 5-star luxury hotels in Bangkok, Bali, Kuala Lumpur, Singapore, Kathmandu & Pokhara with Skywalk Holidays. Save up to 30% with exclusive agency contracted rates.",
+  keywords: [
+    "hotel booking in nepal",
+    "cheap hotels bangkok from nepal",
+    "bali hotel and villa booking kathmandu",
+    "singapore hotels travel agency nepal",
+    "kathmandu hotels booking",
+    "pokhara resort booking",
+    "best travel agency hotel booking nepal",
+  ],
+  alternates: {
+    canonical: "https://skywalkholidays.com/services/hotels",
+  },
+  openGraph: {
+    title: "Hotel Booking in Nepal & Worldwide — Skywalk Holidays",
+    description:
+      "Save up to 30% on verified hotels and luxury private pool villas worldwide with Skywalk Holidays Kathmandu.",
+    url: "https://skywalkholidays.com/services/hotels",
+    siteName: "Skywalk Holidays Nepal",
+    type: "website",
+  },
 };
 
 const POPULAR_DESTINATIONS = [
