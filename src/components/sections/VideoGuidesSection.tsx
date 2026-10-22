@@ -93,6 +93,8 @@ export default function VideoGuidesSection() {
 
             {/* Play Button Trigger */}
             <button
+              type="button"
+              suppressHydrationWarning
               onClick={() => setActiveVideo(FEATURED_VIDEOS[0])}
               className="absolute inset-0 m-auto w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-[#0ea5e9] hover:bg-[#38bdf8] text-white flex items-center justify-center shadow-2xl transition-all duration-300 group-hover:scale-110 border-4 border-white/30 cursor-pointer z-10"
               aria-label="Play Featured Video"
@@ -223,6 +225,8 @@ export default function VideoGuidesSection() {
                   <span className="text-white/70 text-xs font-semibold">{activeVideo.destination}</span>
                 </div>
                 <button
+                  type="button"
+                  suppressHydrationWarning
                   onClick={() => setActiveVideo(null)}
                   className="w-9 h-9 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-colors cursor-pointer"
                   aria-label="Close video player"

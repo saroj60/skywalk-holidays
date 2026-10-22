@@ -2,10 +2,21 @@
 
 import React, { useState } from "react";
 import Image from "next/image";
-import { Plane, Headset, Tag, RefreshCw, Globe2 } from "lucide-react";
+import {
+  Plane,
+  Headset,
+  Tag,
+  RefreshCw,
+  Globe2,
+  CheckCircle2,
+  Phone,
+  ArrowRight,
+  MapPin,
+} from "lucide-react";
 import SectionHeader from "@/components/common/SectionHeader";
 import CTABanner from "@/components/common/CTABanner";
 import FlightInquiryForm from "@/components/forms/FlightInquiryForm";
+import { COMPANY } from "@/lib/constants";
 
 const AIRLINES = [
   {
@@ -36,7 +47,7 @@ const AIRLINES = [
     name: "Nepal Airlines",
     routes: "Kathmandu → Narita, Bangkok, Kuala Lumpur & Domestic",
     code: "RA",
-    logo: "https://images.unsplash.com/photo-1517649763962-0c623266010b?w=200&q=80",
+    logo: "https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?w=200&q=80",
   },
   {
     name: "Buddha Air",
@@ -96,24 +107,104 @@ export default function FlightsPage() {
 
   return (
     <>
-      {/* 1. Hero Banner Section */}
-      <section className="bg-[#0a1628] py-3 sm:py-5 overflow-hidden">
-        <div className="container-custom">
-          <div className="relative w-full h-[180px] sm:h-[250px] md:h-[300px] lg:h-[340px] rounded-2xl sm:rounded-3xl overflow-hidden shadow-2xl border border-white/10">
+      {/* 1. Enhanced Hero Banner Section */}
+      <section className="bg-[#0a1628] pt-4 sm:pt-6 pb-20 sm:pb-24 overflow-hidden relative">
+        {/* Subtle background ambient lighting */}
+        <div className="absolute top-0 right-1/4 w-96 h-96 bg-[#0ea5e9]/10 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute bottom-10 left-10 w-80 h-80 bg-[#f97316]/10 rounded-full blur-3xl pointer-events-none" />
+
+        <div className="container-custom relative z-10">
+          <div className="relative w-full min-h-[420px] sm:min-h-[460px] md:min-h-[500px] rounded-3xl overflow-hidden shadow-2xl border border-white/15 bg-[#0a1628] flex flex-col justify-center">
+            {/* Background Image */}
             <Image
               src="/images/flights-hero-banner.png"
               alt="Flight Ticket Booking Assistance — Skywalks Holidays"
               fill
               priority
-              className="object-cover object-center"
+              className="object-cover object-[70%_center] md:object-center"
               sizes="(max-width: 1280px) 100vw, 1280px"
             />
+
+            {/* Gradient Overlay for exceptional contrast & depth */}
+            <div className="absolute inset-0 bg-gradient-to-r from-[#0a1628] via-[#0a1628]/90 sm:via-[#0a1628]/80 to-transparent z-10" />
+            <div className="absolute inset-0 bg-gradient-to-t from-[#0a1628]/80 via-transparent to-black/30 z-10 md:hidden" />
+
+            {/* Hero Content */}
+            <div className="relative z-20 p-6 sm:p-8 md:p-12 lg:p-14 max-w-2xl text-left flex flex-col items-start gap-4 sm:gap-5">
+              
+              {/* Pill Badge */}
+              <div className="inline-flex items-center gap-2 bg-sky-500/20 border border-sky-400/40 backdrop-blur-md px-3.5 py-1.5 rounded-full text-sky-200 text-xs font-bold tracking-wide uppercase shadow-lg shadow-sky-500/10">
+                <Plane size={14} className="text-[#38bdf8] animate-pulse" />
+                <span>Official IATA Air Ticketing Partner</span>
+              </div>
+
+              {/* Main Headline */}
+              <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black text-white tracking-tight leading-[1.18]">
+                Fly Anywhere with{" "}
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#38bdf8] via-[#0ea5e9] to-amber-300">
+                  Guaranteed Best Fares
+                </span>
+              </h1>
+
+              {/* Description */}
+              <p className="text-xs sm:text-sm md:text-base text-slate-200/95 leading-relaxed font-normal">
+                Compare live schedules and unpublished agency discounts across 40+ domestic &amp; international airlines. Seamless booking, quick date changes, and 24/7 flight desk support from Kathmandu.
+              </p>
+
+              {/* Value Highlights */}
+              <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-[11px] sm:text-xs font-medium text-white/90">
+                <span className="flex items-center gap-1.5">
+                  <CheckCircle2 size={14} className="text-emerald-400 shrink-0" /> Exclusive Agency Discounts
+                </span>
+                <span className="flex items-center gap-1.5">
+                  <CheckCircle2 size={14} className="text-emerald-400 shrink-0" /> Free Date Change Assistance
+                </span>
+                <span className="flex items-center gap-1.5">
+                  <CheckCircle2 size={14} className="text-emerald-400 shrink-0" /> 0% Hidden Fees
+                </span>
+              </div>
+
+              {/* Action Buttons */}
+              <div className="flex flex-wrap items-center gap-3 pt-1">
+                <a
+                  href="#flight-form"
+                  className="inline-flex items-center gap-2 bg-[#f97316] hover:bg-[#ea580c] text-white text-xs sm:text-sm font-bold py-2.5 px-5 rounded-full shadow-lg shadow-orange-500/30 transition-all hover:scale-105 cursor-pointer"
+                >
+                  <span>Request Flight Quote</span>
+                  <ArrowRight size={14} />
+                </a>
+
+                <a
+                  href={`tel:${COMPANY.mobile}`}
+                  className="inline-flex items-center gap-2 bg-white/10 hover:bg-white/20 border border-white/25 text-white text-xs sm:text-sm font-semibold py-2.5 px-4 rounded-full backdrop-blur-md transition-all hover:scale-105"
+                >
+                  <Phone size={13} className="text-[#38bdf8]" />
+                  <span>Call Desk: {COMPANY.mobile}</span>
+                </a>
+              </div>
+
+              {/* Popular Routes */}
+              <div className="flex flex-wrap items-center gap-1.5 text-[10px] sm:text-[11px] text-white/80 pt-1">
+                <span className="text-sky-300 font-semibold flex items-center gap-1">
+                  <MapPin size={11} className="text-[#38bdf8]" /> Popular Routes:
+                </span>
+                {["KTM ⇄ Bangkok", "KTM ⇄ Dubai", "KTM ⇄ Delhi", "KTM ⇄ Kuala Lumpur", "KTM ⇄ Singapore", "KTM ⇄ Pokhara"].map((route) => (
+                  <span
+                    key={route}
+                    className="px-2.5 py-0.5 rounded-full bg-black/50 border border-white/20 text-white/90 backdrop-blur-md hover:border-sky-400/60 transition-colors"
+                  >
+                    {route}
+                  </span>
+                ))}
+              </div>
+
+            </div>
           </div>
         </div>
       </section>
 
       {/* 2. Flight Inquiry Form Section */}
-      <section className="relative z-20 -mt-6 sm:-mt-8 pb-16 px-4">
+      <section id="flight-form" className="relative z-20 -mt-14 sm:-mt-16 pb-16 px-4">
         <div className="container-custom">
           <FlightInquiryForm />
         </div>

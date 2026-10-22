@@ -500,6 +500,8 @@ export default function CountryCardsSection() {
             {/* Quick Country Pill Switchers */}
             <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar w-full md:w-auto py-1">
               <button
+                type="button"
+                suppressHydrationWarning
                 onClick={() => setSelectedCountryId("all")}
                 className={`px-3.5 py-1.5 rounded-full text-xs font-bold shrink-0 transition-all cursor-pointer ${
                   selectedCountryId === "all"
@@ -514,6 +516,8 @@ export default function CountryCardsSection() {
                 return (
                   <button
                     key={c.id}
+                    type="button"
+                    suppressHydrationWarning
                     onClick={() => setSelectedCountryId(c.id)}
                     className={`px-3.5 py-1.5 rounded-full text-xs font-bold shrink-0 transition-all flex items-center gap-1.5 cursor-pointer ${
                       selectedCountryId === c.id

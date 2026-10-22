@@ -21,6 +21,7 @@ import {
   MessageSquare,
   Phone,
   Mail,
+  Crown,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import SectionHeader from "@/components/common/SectionHeader";
@@ -78,35 +79,33 @@ const WHY_CHOOSE_US_PILLARS = [
 
 const TEAM_MEMBERS = [
   {
+    name: "Mr. Nirdosh Sapkota",
+    role: "Travel Expert",
+    department: "Lead Travel Expert",
+    isLead: true,
+    image: "/images/team/nirdosh-sapkota.png",
+    whatsapp: "9779714491103",
+    phone: COMPANY.phone,
+    email: COMPANY.email,
+  },
+  {
     name: "Mr. Sudesh Karki",
     role: "Ticketing and Package Operative",
     department: "Ticketing & Packages",
+    isLead: false,
     image: "/images/team/sudesh-karki.jpg",
-    bio: "Dedicated travel specialist at Skywalks Holidays managing international and domestic air ticketing, custom holiday packages, and complex flight itineraries. Known for prompt responsiveness, route optimization, and personalized client support.",
-    specialties: [
-      "International Flight Ticketing",
-      "Holiday Package Operations",
-      "Fare Optimization & Routing",
-      "Client Booking Assistance",
-    ],
-    whatsapp: "9779714491103",
-    phone: COMPANY.phone,
+    whatsapp: "9779707054143",
+    phone: "+977 970-7054143",
     email: COMPANY.email,
   },
   {
     name: "Mr. Johnson Yadav",
     role: "Sales Officer",
     department: "Sales & Client Relations",
+    isLead: false,
     image: "/images/team/johnson-yadav.png",
-    bio: "Customer-centric Sales Officer at Skywalks Holidays dedicated to helping travelers discover ideal holiday packages, flight solutions, and visa arrangements. Focused on transparent pricing, tailored travel advice, and delivering prompt consultations.",
-    specialties: [
-      "Holiday Package Sales",
-      "Client Consultation",
-      "Custom Travel Quotations",
-      "Customer Relationship Management",
-    ],
-    whatsapp: "9779714491103",
-    phone: COMPANY.phone,
+    whatsapp: "9779707054144",
+    phone: "+977 970-7054144",
     email: COMPANY.email,
   },
 ];
@@ -364,11 +363,15 @@ export default function AboutPage() {
             subtitle="The experienced travel professionals behind every seamless journey and unforgettable holiday."
           />
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 max-w-6xl mx-auto">
             {TEAM_MEMBERS.map((member) => (
               <div
                 key={member.name}
-                className="w-full bg-white rounded-3xl p-5 sm:p-6 border border-[#e2e8f0] shadow-xl hover:shadow-2xl hover:border-[#0ea5e9]/50 transition-all duration-300 group flex flex-col justify-between"
+                className={`w-full bg-white rounded-3xl p-5 sm:p-6 border transition-all duration-300 group flex flex-col justify-between ${
+                  member.isLead
+                    ? "border-[#0ea5e9]/60 shadow-xl shadow-sky-500/10 ring-2 ring-[#0ea5e9]/25 hover:border-[#0ea5e9] hover:shadow-2xl"
+                    : "border-[#e2e8f0] shadow-md hover:shadow-xl hover:border-[#0ea5e9]/40"
+                }`}
               >
                 <div>
                   {/* Portrait Image with Badges */}
@@ -377,49 +380,37 @@ export default function AboutPage() {
                       src={member.image}
                       alt={`${member.name} - ${member.role} at Skywalks Holidays`}
                       fill
-                      className="object-cover object-top brightness-[1.06] contrast-[1.02] group-hover:scale-105 transition-all duration-500"
-                      sizes="(max-width: 768px) 100vw, 420px"
+                      className="object-cover object-top brightness-[1.04] contrast-[1.02] group-hover:scale-105 transition-all duration-500"
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 380px"
                     />
                     <div className="absolute bottom-0 inset-x-0 h-28 bg-gradient-to-t from-slate-950/90 via-slate-950/40 to-transparent" />
 
                     {/* Top Department Badge */}
                     <div className="absolute top-3.5 left-3.5 z-10">
-                      <span className="inline-flex items-center gap-1.5 text-[11px] font-bold text-white bg-slate-900/80 backdrop-blur-md px-3 py-1 rounded-full border border-white/20 shadow-sm">
-                        <Sparkles size={12} className="text-[#0ea5e9]" />
+                      <span
+                        className={`inline-flex items-center gap-1.5 text-[11px] font-bold px-3 py-1 rounded-full border backdrop-blur-md shadow-sm ${
+                          member.isLead
+                            ? "bg-slate-950/90 text-amber-300 border-amber-400/30"
+                            : "text-white bg-slate-900/80 border-white/20"
+                        }`}
+                      >
+                        {member.isLead ? (
+                          <Crown size={12} className="text-amber-400" />
+                        ) : (
+                          <Sparkles size={12} className="text-[#0ea5e9]" />
+                        )}
                         {member.department}
                       </span>
                     </div>
 
                     {/* Bottom Overlay Info */}
                     <div className="absolute bottom-4 left-4 right-4 text-white z-10 text-left">
-                      <h3 className="text-2xl font-black leading-tight text-white drop-shadow-sm">
+                      <h3 className="text-xl sm:text-2xl font-black leading-tight text-white drop-shadow-sm">
                         {member.name}
                       </h3>
                       <p className="text-xs sm:text-sm font-bold text-sky-300 mt-1">
                         {member.role}
                       </p>
-                    </div>
-                  </div>
-
-                  {/* Bio */}
-                  <p className="text-xs sm:text-sm text-[#475569] leading-relaxed mb-4 text-left">
-                    {member.bio}
-                  </p>
-
-                  {/* Specialties Pills */}
-                  <div className="mb-5 text-left">
-                    <div className="text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-2">
-                      Core Expertise
-                    </div>
-                    <div className="flex flex-wrap gap-1.5">
-                      {member.specialties.map((spec) => (
-                        <span
-                          key={spec}
-                          className="text-[11px] font-semibold bg-sky-50 text-sky-800 border border-sky-100 px-2.5 py-1 rounded-lg"
-                        >
-                          ✓ {spec}
-                        </span>
-                      ))}
                     </div>
                   </div>
                 </div>

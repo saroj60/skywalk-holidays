@@ -69,7 +69,7 @@ export default function HeroSection() {
           preload="auto"
           className="w-full h-full object-cover object-center"
         >
-          <source src="/uploads/gemini_generated_video_1c3c57b7.mp4" type="video/mp4" />
+          <source src="/gemini_generated_video_cb5c99e8.mp4" type="video/mp4" />
           Your browser does not support the video tag.
         </video>
 
