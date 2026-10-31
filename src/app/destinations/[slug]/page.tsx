@@ -22,6 +22,7 @@ import { Button } from "@/components/ui/button";
 import PackageCard from "@/components/common/PackageCard";
 import CTABanner from "@/components/common/CTABanner";
 import { buildCustomWhatsAppLink } from "@/lib/whatsapp";
+import { prisma } from "@/lib/prisma";
 
 interface DestinationMeta {
   id: string;
@@ -638,6 +639,16 @@ export default async function DestinationPage({
     notFound();
   }
 
+  // Fetch live packages from database if available
+  let liveDbPackages: any[] = [];
+  try {
+    liveDbPackages = await prisma.holidayPackage.findMany({
+      where: { status: "ACTIVE" },
+    });
+  } catch (e) {
+    console.error("Error reading live packages in destinations page:", e);
+  }
+
   // Filter packages for this destination
   const matchedPackages = ALL_PACKAGES.filter((pkg) => {
     if (pkg.destinationIds?.includes(destination.id)) return true;
@@ -645,7 +656,29 @@ export default async function DestinationPage({
     return destination.keywords.some((k) => destStr.includes(k));
   });
 
-  const displayPackages = matchedPackages.length > 0 ? matchedPackages : ALL_PACKAGES.slice(0, 4);
+  const baseDisplayPackages = matchedPackages.length > 0 ? matchedPackages : ALL_PACKAGES.slice(0, 4);
+
+  const displayPackages = baseDisplayPackages.map((pkg) => {
+    const match = liveDbPackages.find((lp) => {
+      if (String(lp.id) === String(pkg.id)) return true;
+      const lpTitle = (lp.title || "").toLowerCase().trim();
+      const pkgTitle = (pkg.title || "").toLowerCase().trim();
+      return (
+        lpTitle &&
+        pkgTitle &&
+        (lpTitle === pkgTitle || lpTitle.includes(pkgTitle) || pkgTitle.includes(lpTitle))
+      );
+    });
+
+    if (!match) return pkg;
+    return {
+      ...pkg,
+      price: Number(match.price) || pkg.price,
+      originalPrice: Number(match.originalPrice) || pkg.originalPrice,
+      duration: match.duration || pkg.duration,
+      badge: match.badge || pkg.badge,
+    };
+  });
 
   const whatsappMessage = `Hello Skywalk Holidays! I am interested in booking a holiday package for ${destination.name}. Please share available departure dates and pricing.`;
   const whatsappUrl = buildCustomWhatsAppLink(whatsappMessage);

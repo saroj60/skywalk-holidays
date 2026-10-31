@@ -3,6 +3,9 @@ import { prisma } from "@/lib/prisma";
 import { getAdminUserFromRequest } from "@/lib/auth";
 import { getPackagesAsAdminRecords } from "@/lib/packagesData";
 
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
 export async function GET(req: NextRequest) {
   try {
     const { searchParams } = new URL(req.url);

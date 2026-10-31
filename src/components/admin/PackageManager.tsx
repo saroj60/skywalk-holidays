@@ -119,6 +119,7 @@ export default function PackageManager({
     if (typeof window !== "undefined") {
       try {
         localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(newPackages));
+        window.dispatchEvent(new Event("skywalk-packages-updated"));
       } catch (e) {
         console.warn("Failed saving packages to localStorage", e);
       }

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useCallback, useMemo } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, Package, MapPin, Sparkles, Star, ChevronDown, CheckCircle2 } from "lucide-react";
@@ -322,7 +322,44 @@ const INITIAL_FEATURED_FOUR = [
 export default function CountryCardsSection() {
   const [countriesList, setCountriesList] = useState(POPULAR_COUNTRIES);
   const [selectedCountryId, setSelectedCountryId] = useState<string>("all");
+  const [livePackages, setLivePackages] = useState<any[]>(() => {
+    if (typeof window !== "undefined") {
+      try {
+        const stored = localStorage.getItem("skywalk_admin_packages_v1");
+        if (stored) {
+          const parsed = JSON.parse(stored);
+          if (Array.isArray(parsed) && parsed.length > 0) {
+            return parsed;
+          }
+        }
+      } catch (e) {}
+    }
+    return [];
+  });
   const packagesGridRef = useRef<HTMLDivElement>(null);
+
+  const loadLivePackages = useCallback(() => {
+    if (typeof window !== "undefined") {
+      try {
+        const stored = localStorage.getItem("skywalk_admin_packages_v1");
+        if (stored) {
+          const parsed = JSON.parse(stored);
+          if (Array.isArray(parsed) && parsed.length > 0) {
+            setLivePackages(parsed);
+          }
+        }
+      } catch (e) {}
+    }
+
+    fetch("/api/packages", { cache: "no-store" })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data && Array.isArray(data.packages) && data.packages.length > 0) {
+          setLivePackages(data.packages);
+        }
+      })
+      .catch(() => {});
+  }, []);
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -338,7 +375,21 @@ export default function CountryCardsSection() {
         } catch (e) {}
       }
     }
-  }, []);
+
+    loadLivePackages();
+
+    const handleUpdate = () => {
+      loadLivePackages();
+    };
+
+    window.addEventListener("skywalk-packages-updated", handleUpdate);
+    window.addEventListener("storage", handleUpdate);
+
+    return () => {
+      window.removeEventListener("skywalk-packages-updated", handleUpdate);
+      window.removeEventListener("storage", handleUpdate);
+    };
+  }, [loadLivePackages]);
 
   const handleSelectCountry = (countryId: string) => {
     setSelectedCountryId(countryId);
@@ -349,18 +400,69 @@ export default function CountryCardsSection() {
 
   const selectedCountry = countriesList.find((c) => c.id === selectedCountryId);
 
+  // Helper to merge live package data (from DB or Admin localStorage) onto static cards
+  const mergeWithLive = useCallback(
+    (pkg: any) => {
+      if (!livePackages || livePackages.length === 0) return pkg;
+
+      const match = livePackages.find((lp) => {
+        if (!lp) return false;
+        if (String(lp.id) === String(pkg.id)) return true;
+        if (lp.slug && (lp.slug === pkg.id || lp.slug === pkg.slug)) return true;
+        const lpTitle = (lp.title || "").toLowerCase().trim();
+        const pkgTitle = (pkg.title || "").toLowerCase().trim();
+        if (
+          lpTitle &&
+          pkgTitle &&
+          (lpTitle === pkgTitle || lpTitle.includes(pkgTitle) || pkgTitle.includes(lpTitle))
+        ) {
+          return true;
+        }
+        return false;
+      });
+
+      if (!match) return pkg;
+
+      return {
+        ...pkg,
+        title: match.title || pkg.title,
+        price: Number(match.price) || pkg.price,
+        originalPrice: Number(match.originalPrice) || pkg.originalPrice,
+        duration: match.duration || pkg.duration,
+        destination: match.destination || pkg.destination,
+        badge: match.badge || pkg.badge,
+        rating: Number(match.rating) || pkg.rating,
+        reviews: Number(match.reviews) || pkg.reviews,
+        image: match.coverImage || match.image || pkg.image,
+        inclusions:
+          Array.isArray(match.inclusions) && match.inclusions.length > 0
+            ? match.inclusions
+            : pkg.inclusions,
+      };
+    },
+    [livePackages]
+  );
+
   // Determine packages to show
-  const activePackages =
-    selectedCountryId === "all"
-      ? INITIAL_FEATURED_FOUR
-      : COUNTRY_PACKAGES_MAP[selectedCountryId] ||
-        FEATURED_PACKAGES.filter((p) => {
-          const target = (selectedCountry?.name || "").toLowerCase();
-          return (
-            (p.destination || "").toLowerCase().includes(target) ||
-            (p.title || "").toLowerCase().includes(target)
-          );
-        });
+  const rawPackages = useMemo(() => {
+    if (selectedCountryId === "all") {
+      return INITIAL_FEATURED_FOUR;
+    }
+    return (
+      COUNTRY_PACKAGES_MAP[selectedCountryId] ||
+      FEATURED_PACKAGES.filter((p) => {
+        const target = (selectedCountry?.name || "").toLowerCase();
+        return (
+          (p.destination || "").toLowerCase().includes(target) ||
+          (p.title || "").toLowerCase().includes(target)
+        );
+      })
+    );
+  }, [selectedCountryId, selectedCountry]);
+
+  const activePackages = useMemo(() => {
+    return rawPackages.map(mergeWithLive);
+  }, [rawPackages, mergeWithLive]);
 
   return (
     <section className="section-padding relative overflow-hidden bg-gradient-to-b from-transparent via-sky-50/35 to-transparent">
