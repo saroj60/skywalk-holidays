@@ -1,0 +1,90 @@
+[
+  {
+    "id": "thailand",
+    "name": "Thailand",
+    "flag": "🇹🇭",
+    "subtitle": "Bangkok, Pattaya, Phuket & Krabi",
+    "packagesCount": 6,
+    "startingPrice": 42000,
+    "image": "/images/gallery/bangkok-grand-palace.png",
+    "badge": "Top Pick",
+    "href": "/services/packages/international?country=Thailand"
+  },
+  {
+    "id": "bali",
+    "name": "Bali, Indonesia",
+    "flag": "🇮🇩",
+    "subtitle": "Tropical Villas & Beaches",
+    "packagesCount": 6,
+    "startingPrice": 52000,
+    "image": "/images/bali-kelingking.jpg",
+    "badge": "Honeymoon",
+    "href": "/services/packages/international?country=Bali"
+  },
+  {
+    "id": "singapore-malaysia",
+    "name": "Singapore & Malaysia",
+    "flag": "🇸🇬 🇲🇾",
+    "subtitle": "Universal Studios & Genting",
+    "packagesCount": 5,
+    "startingPrice": 72000,
+    "image": "https://images.unsplash.com/photo-1565967511849-76a60a516170?w=800&q=80",
+    "badge": "Family Favorite",
+    "href": "/services/packages/international?country=Singapore"
+  },
+  {
+    "id": "japan",
+    "name": "Japan",
+    "flag": "🇯🇵",
+    "subtitle": "Tokyo, Kyoto & Mt. Fuji",
+    "packagesCount": 4,
+    "startingPrice": 145000,
+    "image": "https://images.unsplash.com/photo-1503899036084-c55cdd92da26?w=800&q=80",
+    "badge": "Premium",
+    "href": "/services/packages/international?country=Japan"
+  },
+  {
+    "id": "vietnam",
+    "name": "Vietnam",
+    "flag": "🇻🇳",
+    "subtitle": "Ha Long Bay & Hanoi",
+    "packagesCount": 7,
+    "startingPrice": 45000,
+    "image": "https://images.unsplash.com/photo-1528127269322-539801943592?w=800&q=80",
+    "badge": "Trending",
+    "href": "/services/packages/international?country=Vietnam"
+  },
+  {
+    "id": "china",
+    "name": "China",
+    "flag": "🇨🇳",
+    "subtitle": "Beijing, Great Wall & Shanghai",
+    "packagesCount": 3,
+    "startingPrice": 135000,
+    "image": "https://images.unsplash.com/photo-1508804185872-d7badad00f7d?w=800&q=80",
+    "badge": "Wonders of the World",
+    "href": "/services/packages/international?country=China"
+  },
+  {
+    "id": "maldives",
+    "name": "Maldives",
+    "flag": "🇲🇻",
+    "subtitle": "Overwater Bungalows & Coral Reefs",
+    "packagesCount": 5,
+    "startingPrice": 85000,
+    "image": "/images/gallery/maldives-overwater-bungalows-aerial-lagoon.png",
+    "badge": "Luxury Escape",
+    "href": "/services/packages/international?country=Maldives"
+  },
+  {
+    "id": "philippines",
+    "name": "Philippines",
+    "flag": "🇵🇭",
+    "subtitle": "Manila & Boracay White Beach",
+    "packagesCount": 4,
+    "startingPrice": 89000,
+    "image": "/images/gallery/philippines-boracay-beach-bangka-boats.png",
+    "badge": "Island Hopping",
+    "href": "/services/packages/international?country=Philippines"
+  }
+]

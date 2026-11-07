@@ -114,6 +114,9 @@ export default function FlightManager() {
         setFlights([data.flight, ...flights]);
         setIsNewModalOpen(false);
         resetForm();
+        if (typeof window !== "undefined") {
+          window.dispatchEvent(new Event("skywalk-flights-updated"));
+        }
       }
     } catch (error) {
       alert("Failed to save flight deal");
@@ -137,6 +140,9 @@ export default function FlightManager() {
         );
         setEditingFlight(null);
         resetForm();
+        if (typeof window !== "undefined") {
+          window.dispatchEvent(new Event("skywalk-flights-updated"));
+        }
       }
     } catch (error) {
       alert("Failed to update flight deal");
@@ -149,6 +155,9 @@ export default function FlightManager() {
       const res = await fetch(`/api/flights/${id}`, { method: "DELETE" });
       if (res.ok) {
         setFlights((prev) => prev.filter((f) => f.id !== id));
+        if (typeof window !== "undefined") {
+          window.dispatchEvent(new Event("skywalk-flights-updated"));
+        }
       }
     } catch (error) {
       alert("Failed to delete flight deal");

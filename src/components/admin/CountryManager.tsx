@@ -49,10 +49,22 @@ export default function CountryManager({ onSwitchToPackages }: CountryManagerPro
   const [uploading, setUploading] = useState(false);
   const [savedSuccess, setSavedSuccess] = useState("");
 
-  // Load countries & packages from localStorage or defaults
+  // Load countries & packages from API, localStorage or defaults
   useEffect(() => {
+    // 1. Fetch live destinations from server
+    fetch("/api/destinations", { cache: "no-store" })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data && Array.isArray(data.destinations) && data.destinations.length > 0) {
+          setCountries(data.destinations);
+          if (typeof window !== "undefined") {
+            localStorage.setItem("skywalk_countries", JSON.stringify(data.destinations));
+          }
+        }
+      })
+      .catch(() => {});
+
     if (typeof window !== "undefined") {
-      // 1. Countries
       const storedCountries = localStorage.getItem("skywalk_countries");
       if (storedCountries) {
         try {
@@ -65,7 +77,7 @@ export default function CountryManager({ onSwitchToPackages }: CountryManagerPro
       }
 
       // 2. Packages
-      const storedPackages = localStorage.getItem("skywalk_packages");
+      const storedPackages = localStorage.getItem("skywalk_admin_packages_v1") || localStorage.getItem("skywalk_packages");
       if (storedPackages) {
         try {
           setPackages(JSON.parse(storedPackages));
@@ -78,12 +90,18 @@ export default function CountryManager({ onSwitchToPackages }: CountryManagerPro
     }
   }, []);
 
-  // Save countries state to localStorage
+  // Save countries state to localStorage and server API
   const saveCountriesState = (updatedCountries: CountryRecord[]) => {
     setCountries(updatedCountries);
     if (typeof window !== "undefined") {
       localStorage.setItem("skywalk_countries", JSON.stringify(updatedCountries));
+      window.dispatchEvent(new Event("skywalk-countries-updated"));
     }
+    fetch("/api/destinations", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(updatedCountries),
+    }).catch(() => {});
   };
 
   const handleOpenCreateCountry = () => {

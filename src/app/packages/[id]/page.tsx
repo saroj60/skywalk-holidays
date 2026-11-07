@@ -4,6 +4,7 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { prisma } from "@/lib/prisma";
 import { PACKAGES_DICTIONARY } from "@/lib/packagesData";
+import { getPackageByIdOrSlug } from "@/lib/server/packagesDataStore";
 import PackageDetailClient from "@/components/packages/PackageDetailClient";
 
 export const dynamic = "force-dynamic";
@@ -113,21 +114,13 @@ export async function generateMetadata({
 
   // Merge live price for metadata
   try {
-    const numId = Number(id);
-    const dbPkg = await prisma.holidayPackage.findFirst({
-      where: {
-        OR: [
-          ...(!isNaN(numId) ? [{ id: numId }] : []),
-          ...(pkg?.title ? [{ title: pkg.title }] : []),
-        ],
-      },
-    });
-    if (dbPkg) {
+    const livePkg = await getPackageByIdOrSlug(id);
+    if (livePkg) {
       pkg = {
         ...pkg,
-        price: dbPkg.price,
-        originalPrice: dbPkg.originalPrice,
-        title: dbPkg.title || pkg.title,
+        price: Number(livePkg.price) || pkg.price,
+        originalPrice: Number(livePkg.originalPrice) || pkg.originalPrice,
+        title: livePkg.title || pkg.title,
       };
     }
   } catch (e) {}
@@ -185,35 +178,44 @@ export default async function PackageDetailPage({
   const { id } = await params;
   let pkg = resolvePackage(id);
 
-  // Merge live database updates if available
+  // Merge live package updates from server store or database
   try {
-    const numId = Number(id);
-    const dbPkg = await prisma.holidayPackage.findFirst({
-      where: {
-        OR: [
-          ...(!isNaN(numId) ? [{ id: numId }] : []),
-          ...(pkg?.title ? [{ title: pkg.title }] : []),
-        ],
-      },
-    });
+    const livePkg = await getPackageByIdOrSlug(id);
+    if (livePkg) {
+      const liveItinerary = Array.isArray(livePkg.itinerary) && livePkg.itinerary.length > 0
+        ? livePkg.itinerary
+        : typeof livePkg.itinerary === "string"
+        ? JSON.parse(livePkg.itinerary || "[]")
+        : pkg?.itinerary;
 
-    if (dbPkg) {
+      const derivedOutline = (liveItinerary || []).map((day: any) => ({
+        day: day.day || "Day",
+        title: day.title || "",
+        activity: day.highlight || day.desc || day.description || day.activity || "",
+      }));
+
       pkg = {
         ...(pkg || {}),
-        title: dbPkg.title || pkg?.title,
-        price: Number(dbPkg.price),
-        originalPrice: Number(dbPkg.originalPrice),
-        destination: dbPkg.destination || pkg?.destination,
-        duration: dbPkg.duration || pkg?.duration,
-        overview: dbPkg.overview || pkg?.overview,
-        inclusions: dbPkg.inclusions ? (typeof dbPkg.inclusions === "string" ? JSON.parse(dbPkg.inclusions) : dbPkg.inclusions) : pkg?.inclusions,
-        exclusions: dbPkg.exclusions ? (typeof dbPkg.exclusions === "string" ? JSON.parse(dbPkg.exclusions) : dbPkg.exclusions) : pkg?.exclusions,
-        itinerary: dbPkg.itinerary ? (typeof dbPkg.itinerary === "string" ? JSON.parse(dbPkg.itinerary) : dbPkg.itinerary) : pkg?.itinerary,
-        gallery: dbPkg.gallery ? (typeof dbPkg.gallery === "string" ? JSON.parse(dbPkg.gallery) : dbPkg.gallery) : pkg?.gallery,
+        id: livePkg.id || pkg?.id,
+        title: livePkg.title || pkg?.title,
+        price: Number(livePkg.price) || pkg?.price,
+        originalPrice: Number(livePkg.originalPrice) || pkg?.originalPrice,
+        destination: livePkg.destination || pkg?.destination,
+        country: livePkg.country || pkg?.country,
+        duration: livePkg.duration || pkg?.duration,
+        overview: livePkg.overview !== undefined && livePkg.overview !== "" ? livePkg.overview : pkg?.overview,
+        highlights: Array.isArray(livePkg.highlights) && livePkg.highlights.length > 0 ? livePkg.highlights : pkg?.highlights,
+        inclusions: Array.isArray(livePkg.inclusions) && livePkg.inclusions.length > 0 ? livePkg.inclusions : (typeof livePkg.inclusions === "string" ? JSON.parse(livePkg.inclusions) : pkg?.inclusions),
+        exclusions: Array.isArray(livePkg.exclusions) && livePkg.exclusions.length > 0 ? livePkg.exclusions : (typeof livePkg.exclusions === "string" ? JSON.parse(livePkg.exclusions) : pkg?.exclusions),
+        itinerary: liveItinerary,
+        outlineItinerary: derivedOutline.length > 0 ? derivedOutline : pkg?.outlineItinerary,
+        gallery: Array.isArray(livePkg.gallery) && livePkg.gallery.length > 0 ? livePkg.gallery : (typeof livePkg.gallery === "string" ? JSON.parse(livePkg.gallery) : pkg?.gallery),
+        badge: livePkg.badge || pkg?.badge,
+        hotelInfo: livePkg.hotelInfo || pkg?.hotelInfo,
       } as any;
     }
   } catch (e) {
-    console.error("Error reading live package from DB:", e);
+    console.error("Error reading live package:", e);
   }
 
   if (!pkg) {

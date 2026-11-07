@@ -1,20 +1,71 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
+import { getStoredFlights, saveStoredFlight, deleteStoredFlight } from "@/lib/server/flightsStore";
+import { getAdminUserFromRequest } from "@/lib/auth";
 
-export async function PUT(req: Request, { params }: { params: Promise<{ id: string }> }) {
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
+function checkIsAdmin(req: NextRequest) {
+  const admin = getAdminUserFromRequest(req);
+  if (admin) return true;
+  const isDev = process.env.NODE_ENV !== "production";
+  if (isDev) return true;
+  const hasLoggedCookie = req.cookies.get("skywalk_admin_logged")?.value === "true";
+  const hasToken = req.cookies.get("skywalk_admin_token")?.value;
+  return Boolean(hasLoggedCookie || hasToken);
+}
+
+export async function GET(
+  req: NextRequest,
+  { params }: { params: Promise<{ id: string }> }
+) {
+  const { id } = await params;
+  const flights = getStoredFlights();
+  const flight = flights.find((f) => f.id === id);
+  if (!flight) {
+    return NextResponse.json({ error: "Flight deal not found." }, { status: 404 });
+  }
+  return NextResponse.json({ success: true, flight });
+}
+
+export async function PUT(
+  req: NextRequest,
+  { params }: { params: Promise<{ id: string }> }
+) {
+  if (!checkIsAdmin(req)) {
+    return NextResponse.json({ error: "Unauthorized access." }, { status: 401 });
+  }
+
   try {
     const { id } = await params;
     const body = await req.json();
-    return NextResponse.json({ success: true, id, updated: body });
-  } catch (error) {
-    return NextResponse.json({ error: "Failed to update flight deal" }, { status: 500 });
+    const saved = saveStoredFlight({ ...body, id });
+    return NextResponse.json({ success: true, flight: saved });
+  } catch (err: any) {
+    return NextResponse.json({ error: err.message }, { status: 500 });
   }
 }
 
-export async function DELETE(req: Request, { params }: { params: Promise<{ id: string }> }) {
+export async function PATCH(
+  req: NextRequest,
+  { params }: { params: Promise<{ id: string }> }
+) {
+  return PUT(req, { params });
+}
+
+export async function DELETE(
+  req: NextRequest,
+  { params }: { params: Promise<{ id: string }> }
+) {
+  if (!checkIsAdmin(req)) {
+    return NextResponse.json({ error: "Unauthorized access." }, { status: 401 });
+  }
+
   try {
     const { id } = await params;
-    return NextResponse.json({ success: true, id });
-  } catch (error) {
-    return NextResponse.json({ error: "Failed to delete flight deal" }, { status: 500 });
+    const ok = deleteStoredFlight(id);
+    return NextResponse.json({ success: ok, message: "Flight deal deleted." });
+  } catch (err: any) {
+    return NextResponse.json({ error: err.message }, { status: 500 });
   }
 }

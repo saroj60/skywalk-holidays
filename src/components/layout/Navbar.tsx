@@ -7,9 +7,11 @@ import { usePathname } from "next/navigation";
 import { Menu, X, ChevronDown, Phone, Mail, Plane } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { NAV_LINKS, COMPANY } from "@/lib/constants";
+import { useCompanySettings } from "@/hooks/useCompanySettings";
 import { cn } from "@/lib/utils";
 
 export default function Navbar() {
+  const company = useCompanySettings();
   const pathname = usePathname();
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -29,20 +31,27 @@ export default function Navbar() {
 
   return (
     <>
+      {/* Announcement Bar if enabled in Admin */}
+      {company.announcementActive && company.announcement && (
+        <div className="bg-gradient-to-r from-[#0ea5e9] to-[#0284c7] text-white text-xs font-semibold py-1.5 px-4 text-center">
+          <span>{company.announcement}</span>
+        </div>
+      )}
+
       {/* Top Bar */}
       <div className="hidden md:block bg-[#0a1628] text-white text-xs py-2">
         <div className="container-custom flex justify-between items-center">
           <div className="flex items-center gap-6">
-            <a href={`tel:${COMPANY.mobile}`} className="flex items-center gap-1.5 hover:text-[#0ea5e9] transition-colors">
+            <a href={`tel:${company.mobile || company.phone}`} className="flex items-center gap-1.5 hover:text-[#0ea5e9] transition-colors">
               <Phone size={12} />
-              {COMPANY.mobile}
+              {company.mobile || company.phone}
             </a>
-            <a href={`mailto:${COMPANY.email}`} className="flex items-center gap-1.5 hover:text-[#0ea5e9] transition-colors">
+            <a href={`mailto:${company.email}`} className="flex items-center gap-1.5 hover:text-[#0ea5e9] transition-colors">
               <Mail size={12} />
-              {COMPANY.email}
+              {company.email}
             </a>
           </div>
-          <div className="text-[#94a3b8]">{COMPANY.address}</div>
+          <div className="text-[#94a3b8]">{company.address}</div>
         </div>
       </div>
 

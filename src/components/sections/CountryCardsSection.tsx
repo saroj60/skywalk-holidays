@@ -361,35 +361,53 @@ export default function CountryCardsSection() {
       .catch(() => {});
   }, []);
 
-  useEffect(() => {
+  const loadLiveCountries = useCallback(() => {
     if (typeof window !== "undefined") {
       const stored = localStorage.getItem("skywalk_countries");
       if (stored) {
         try {
           const parsed = JSON.parse(stored);
           if (Array.isArray(parsed) && parsed.length > 0) {
-            setCountriesList(
-              parsed.filter((c: any) => c.featured !== false)
-            );
+            setCountriesList(parsed.filter((c: any) => c.featured !== false));
           }
         } catch (e) {}
       }
     }
 
+    fetch("/api/destinations", { cache: "no-store" })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data && Array.isArray(data.destinations) && data.destinations.length > 0) {
+          setCountriesList(data.destinations.filter((c: any) => c.featured !== false));
+        }
+      })
+      .catch(() => {});
+  }, []);
+
+  useEffect(() => {
+    loadLiveCountries();
     loadLivePackages();
 
     const handleUpdate = () => {
       loadLivePackages();
     };
 
+    const handleCountryUpdate = () => {
+      loadLiveCountries();
+    };
+
     window.addEventListener("skywalk-packages-updated", handleUpdate);
+    window.addEventListener("skywalk-countries-updated", handleCountryUpdate);
     window.addEventListener("storage", handleUpdate);
+    window.addEventListener("storage", handleCountryUpdate);
 
     return () => {
       window.removeEventListener("skywalk-packages-updated", handleUpdate);
+      window.removeEventListener("skywalk-countries-updated", handleCountryUpdate);
       window.removeEventListener("storage", handleUpdate);
+      window.removeEventListener("storage", handleCountryUpdate);
     };
-  }, [loadLivePackages]);
+  }, [loadLivePackages, loadLiveCountries]);
 
   const handleSelectCountry = (countryId: string) => {
     setSelectedCountryId(countryId);

@@ -20,7 +20,8 @@ export type AdminTab =
   | "flights"
   | "hotels"
   | "gallery"
-  | "staff";
+  | "staff"
+  | "settings";
 
 export interface RoleConfig {
   role: UserRole;
@@ -36,7 +37,7 @@ export const ROLE_CONFIGS: Record<UserRole, RoleConfig> = {
     role: "MASTER_ADMIN",
     label: "Master Administrator",
     badge: "Master Admin",
-    allowedTabs: ["crm", "packages", "countries", "departures", "flights", "hotels", "gallery", "staff"],
+    allowedTabs: ["crm", "packages", "countries", "departures", "flights", "hotels", "gallery", "settings", "staff"],
     description: "Full access across all modules, CRM leads, inventory, and staff accounts.",
   },
   TOURS_ADMIN: {

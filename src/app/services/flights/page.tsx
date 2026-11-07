@@ -104,6 +104,41 @@ const WHY_BOOK_WITH_US = [
 
 export default function FlightsPage() {
   const [failedLogos, setFailedLogos] = useState<Record<string, boolean>>({});
+  const [airlinesList, setAirlinesList] = useState<any[]>(AIRLINES);
+
+  const fetchAirlines = () => {
+    fetch("/api/flights", { cache: "no-store" })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data && Array.isArray(data.flights) && data.flights.length > 0) {
+          const active = data.flights.filter((f: any) => f.status !== "INACTIVE");
+          if (active.length > 0) {
+            setAirlinesList(
+              active.map((f: any) => ({
+                name: f.name,
+                code: f.code,
+                routes: f.routes,
+                logo: f.logo || "",
+                price: f.price,
+                category: f.category,
+              }))
+            );
+          }
+        }
+      })
+      .catch(() => {});
+  };
+
+  React.useEffect(() => {
+    fetchAirlines();
+    const handleUpdate = () => fetchAirlines();
+    window.addEventListener("skywalk-flights-updated", handleUpdate);
+    window.addEventListener("storage", handleUpdate);
+    return () => {
+      window.removeEventListener("skywalk-flights-updated", handleUpdate);
+      window.removeEventListener("storage", handleUpdate);
+    };
+  }, []);
 
   return (
     <>
@@ -255,7 +290,7 @@ export default function FlightsPage() {
           />
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-            {AIRLINES.map((airline) => {
+            {airlinesList.map((airline) => {
               const hasFailed = failedLogos[airline.name];
               return (
                 <div

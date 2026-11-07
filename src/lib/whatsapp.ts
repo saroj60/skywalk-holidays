@@ -47,7 +47,8 @@ export function buildWhatsAppLink(params: StandardInquiryParams): string {
 /**
  * Builds a direct general WhatsApp link with custom message
  */
-export function buildCustomWhatsAppLink(customMessage: string): string {
-  const cleanPhone = WHATSAPP_NUMBER.replace(/\D/g, "");
+export function buildCustomWhatsAppLink(customMessage: string, overrideNumber?: string): string {
+  const targetNumber = overrideNumber || WHATSAPP_NUMBER;
+  const cleanPhone = targetNumber.replace(/\D/g, "");
   return `https://wa.me/${cleanPhone}?text=${encodeURIComponent(customMessage)}`;
 }

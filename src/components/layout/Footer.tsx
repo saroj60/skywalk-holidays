@@ -6,6 +6,7 @@ import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { Plane, Phone, Mail, MapPin, Lock } from "lucide-react";
 import { COMPANY, FOOTER_LINKS } from "@/lib/constants";
+import { useCompanySettings } from "@/hooks/useCompanySettings";
 import { buildCustomWhatsAppLink } from "@/lib/whatsapp";
 
 /* Inline SVG social icons (lucide-react doesn't ship brand icons) */
@@ -39,6 +40,7 @@ const XIcon = () => (
 );
 
 export default function Footer() {
+  const company = useCompanySettings();
   const pathname = usePathname();
   if (pathname?.startsWith("/admin")) return null;
 
@@ -58,7 +60,7 @@ export default function Footer() {
             </div>
             <a
               href={buildCustomWhatsAppLink(
-                `Hello ${COMPANY.name}! I am contacting you from your website for travel booking and assistance.`
+                `Hello ${company.name}! I am contacting you from your website for travel booking and assistance.`
               )}
               target="_blank"
               rel="noopener noreferrer"
@@ -96,34 +98,34 @@ export default function Footer() {
               </div>
             </Link>
             <p className="text-[#94a3b8] text-sm leading-relaxed mb-5">
-              {COMPANY.description} We make travel seamless, memorable, and accessible for everyone.
+              {company.description} We make travel seamless, memorable, and accessible for everyone.
             </p>
             <div className="space-y-2">
               <a
-                href={`tel:${COMPANY.mobile}`}
+                href={`tel:${company.mobile || company.phone}`}
                 className="flex items-center gap-2 text-sm text-[#94a3b8] hover:text-[#0ea5e9] transition-colors"
               >
                 <Phone size={14} className="text-[#0ea5e9]" />
-                {COMPANY.mobile}
+                {company.mobile || company.phone}
               </a>
               <a
-                href={`mailto:${COMPANY.email}`}
+                href={`mailto:${company.email}`}
                 className="flex items-center gap-2 text-sm text-[#94a3b8] hover:text-[#0ea5e9] transition-colors"
               >
                 <Mail size={14} className="text-[#0ea5e9]" />
-                {COMPANY.email}
+                {company.email}
               </a>
               <div className="flex items-start gap-2 text-sm text-[#94a3b8]">
                 <MapPin size={14} className="text-[#0ea5e9] mt-0.5 shrink-0" />
-                {COMPANY.address}
+                {company.address}
               </div>
             </div>
 
             {/* Social Links */}
             <div className="flex gap-3 mt-6">
               {[
-                { icon: FacebookIcon, href: "https://www.facebook.com/p/SkyWalk-Holidays-61569789310239/", label: "Facebook" },
-                { icon: InstagramIcon, href: "https://www.instagram.com/sky.walkholidays/", label: "Instagram" },
+                { icon: FacebookIcon, href: company.facebook || "https://www.facebook.com/p/SkyWalk-Holidays-61569789310239/", label: "Facebook" },
+                { icon: InstagramIcon, href: company.instagram || "https://www.instagram.com/sky.walkholidays/", label: "Instagram" },
                 { icon: YoutubeIcon, href: "#", label: "YouTube" },
                 { icon: XIcon, href: "#", label: "X (Twitter)" },
               ].map(({ icon: Icon, href, label }) => (
@@ -224,7 +226,7 @@ export default function Footer() {
       <div className="border-t border-white/10">
         <div className="container-custom py-5 flex flex-col sm:flex-row items-center justify-between gap-3">
           <p className="text-xs text-[#64748b] text-center" suppressHydrationWarning>
-            © {new Date().getFullYear()} {COMPANY.name}. All rights reserved.
+            © {new Date().getFullYear()} {company.name}. All rights reserved.
           </p>
           <div className="flex items-center gap-3 text-xs text-[#64748b]">
             <Link

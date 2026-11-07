@@ -7,6 +7,8 @@ import { Button } from "@/components/ui/button";
 import SectionHeader from "@/components/common/SectionHeader";
 import CTABanner from "@/components/common/CTABanner";
 import HotelInquiryForm from "@/components/forms/HotelInquiryForm";
+import RecommendedHotelsClient from "@/components/hotels/RecommendedHotelsClient";
+import { getStoredHotels } from "@/lib/server/hotelsStore";
 
 export const metadata: Metadata = {
   title: "Hotel Booking in Nepal & Worldwide | Best Agency Rates — Skywalk Holidays",
@@ -151,6 +153,7 @@ const WHY_BOOK_HOTELS = [
 ];
 
 export default function HotelsPage() {
+  const initialHotels = getStoredHotels();
   return (
     <>
       {/* Hero Section */}
@@ -252,63 +255,7 @@ export default function HotelsPage() {
             subtitle="Top-rated accommodations handpicked for superior comfort, exceptional amenities, and prime location."
           />
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {RECOMMENDED_HOTELS.map((hotel) => (
-              <div
-                key={hotel.name}
-                className="bg-white rounded-3xl border border-[#e2e8f0] shadow-sm hover:shadow-2xl hover:border-[#0ea5e9]/40 transition-all duration-300 hover:-translate-y-1 flex flex-col justify-between overflow-hidden group"
-              >
-                <div>
-                  <div className="relative h-48 w-full overflow-hidden">
-                    <Image
-                      src={hotel.image}
-                      alt={hotel.name}
-                      fill
-                      className="object-cover group-hover:scale-105 transition-transform duration-500"
-                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
-                    />
-                    <div className="absolute top-3 left-3 bg-[#0a1628]/90 text-white text-[11px] font-bold px-2.5 py-1 rounded-full">
-                      {hotel.category}
-                    </div>
-                  </div>
-
-                  <div className="p-5">
-                    <div className="flex items-center gap-1 text-xs text-[#64748b] mb-1.5">
-                      <MapPin size={12} className="text-[#0ea5e9]" />
-                      {hotel.location}
-                    </div>
-                    <h3 className="font-bold text-[#0a1628] text-base mb-2 group-hover:text-[#0ea5e9] transition-colors leading-snug">
-                      {hotel.name}
-                    </h3>
-
-                    <div className="flex items-center gap-1 mb-4">
-                      <Star size={14} className="text-amber-400 fill-amber-400" />
-                      <span className="text-xs font-bold text-[#0a1628]">{hotel.rating}</span>
-                      <span className="text-xs text-[#94a3b8]">({hotel.reviews} reviews)</span>
-                    </div>
-
-                    <div className="flex flex-wrap gap-1.5 mb-4">
-                      {hotel.amenities.map((amenity) => (
-                        <span key={amenity} className="text-[11px] bg-[#f8fafc] text-[#475569] border border-[#e2e8f0] px-2 py-0.5 rounded-full">
-                          {amenity}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-
-                <div className="p-5 pt-0 border-t border-[#f1f5f9] mt-auto flex items-center justify-between">
-                  <div>
-                    <span className="text-xs text-[#94a3b8] block">From</span>
-                    <span className="text-base font-extrabold text-[#0a1628]">NPR {hotel.price.toLocaleString()}</span>
-                  </div>
-                  <Button size="sm" asChild className="bg-[#0ea5e9] hover:bg-[#0284c7]">
-                    <Link href="#hotel-inquiry">Inquire</Link>
-                  </Button>
-                </div>
-              </div>
-            ))}
-          </div>
+          <RecommendedHotelsClient initialHotels={initialHotels} />
         </div>
       </section>
 

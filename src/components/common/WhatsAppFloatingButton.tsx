@@ -3,14 +3,17 @@
 import React from "react";
 import { usePathname } from "next/navigation";
 import { COMPANY } from "@/lib/constants";
+import { useCompanySettings } from "@/hooks/useCompanySettings";
 import { buildCustomWhatsAppLink } from "@/lib/whatsapp";
 
 export default function WhatsAppFloatingButton() {
+  const company = useCompanySettings();
   const pathname = usePathname();
   if (pathname?.startsWith("/admin")) return null;
 
   const whatsappUrl = buildCustomWhatsAppLink(
-    `Hello ${COMPANY.name}! I am contacting you from your website for travel assistance.`
+    `Hello ${company.name}! I am contacting you from your website for travel assistance.`,
+    company.mobile || company.phone
   );
 
   return (

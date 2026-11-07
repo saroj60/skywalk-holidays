@@ -1,0 +1,103 @@
+[
+  {
+    "id": "HTL-1",
+    "name": "Grand Hyatt Kathmandu",
+    "location": "Kathmandu, Nepal",
+    "rating": 4.9,
+    "reviews": 240,
+    "price": 18500,
+    "category": "5-Star Luxury",
+    "image": "https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800&q=80",
+    "amenities": [
+      "Spa",
+      "Pool",
+      "Free Wi-Fi",
+      "Airport Transfer"
+    ],
+    "status": "ACTIVE"
+  },
+  {
+    "id": "HTL-2",
+    "name": "Mandarin Oriental Bangkok",
+    "location": "Chao Phraya River, Bangkok, Thailand",
+    "rating": 4.9,
+    "reviews": 512,
+    "price": 36000,
+    "category": "5-Star Luxury Resort",
+    "image": "https://images.unsplash.com/photo-1582719508461-905c673771fd?w=800&q=80",
+    "amenities": [
+      "River Cruise",
+      "Pool",
+      "Fine Dining",
+      "Spa"
+    ],
+    "status": "ACTIVE"
+  },
+  {
+    "id": "HTL-3",
+    "name": "Fishtail Lodge Pokhara",
+    "location": "Lakeside, Pokhara",
+    "rating": 4.8,
+    "reviews": 189,
+    "price": 12500,
+    "category": "Heritage Resort",
+    "image": "https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=800&q=80",
+    "amenities": [
+      "Lake View",
+      "Garden",
+      "Restaurant",
+      "Boating"
+    ],
+    "status": "ACTIVE"
+  },
+  {
+    "id": "HTL-4",
+    "name": "Marina Bay Luxury Suites",
+    "location": "Marina Bay, Singapore",
+    "rating": 4.9,
+    "reviews": 380,
+    "price": 38000,
+    "category": "5-Star Hotel",
+    "image": "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=800&q=80",
+    "amenities": [
+      "Infinity Pool",
+      "Rooftop Bar",
+      "Gym",
+      "Breakfast"
+    ],
+    "status": "ACTIVE"
+  },
+  {
+    "id": "HTL-5",
+    "name": "Ayana Resort & Spa Bali",
+    "location": "Jimbaran, Bali, Indonesia",
+    "rating": 4.9,
+    "reviews": 420,
+    "price": 29000,
+    "category": "Private Villa Resort",
+    "image": "https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=800&q=80",
+    "amenities": [
+      "Rock Bar Access",
+      "Private Pool",
+      "Ocean View",
+      "Spa"
+    ],
+    "status": "ACTIVE"
+  },
+  {
+    "id": "HTL-6",
+    "name": "Kuala Lumpur City Center Hotel",
+    "location": "KLCC, Kuala Lumpur, Malaysia",
+    "rating": 4.8,
+    "reviews": 310,
+    "price": 11000,
+    "category": "4-Star Deluxe",
+    "image": "https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=800&q=80",
+    "amenities": [
+      "Petronas Towers View",
+      "Rooftop Pool",
+      "Free Breakfast"
+    ],
+    "status": "ACTIVE"
+  }
+]

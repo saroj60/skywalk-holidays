@@ -42,6 +42,82 @@ export default function PackageDetailClient({
 }: PackageDetailClientProps) {
   const [pkg, setPkg] = useState(initialPackage);
 
+  const mergeMatchIntoPkg = (prev: any, match: any) => {
+    // Normalize itinerary
+    const newItinerary = Array.isArray(match.itinerary) && match.itinerary.length > 0
+      ? match.itinerary
+      : typeof match.itinerary === "string"
+      ? JSON.parse(match.itinerary || "[]")
+      : prev.itinerary;
+
+    // Derived outline
+    const derivedOutline = (newItinerary || []).map((day: any) => ({
+      day: day.day || "Day",
+      title: day.title || "",
+      activity: day.highlight || day.desc || day.description || day.activity || "",
+    }));
+
+    // Normalize hotelInfo
+    let newHotelInfo = prev.hotelInfo;
+    if (typeof match.hotelInfo === "string") {
+      newHotelInfo = {
+        name: match.hotelInfo,
+        rating: "3-Star & 4-Star Certified Hospitality",
+        roomType: "Deluxe Twin/Double Room with Breakfast",
+        checkIn: "2:00 PM",
+        checkOut: "12:00 PM",
+        amenities: ["Daily Buffet Breakfast", "Free High-Speed Wi-Fi", "Air Conditioning", "En-suite Bathroom"],
+      };
+    } else if (match.hotelInfo && typeof match.hotelInfo === "object") {
+      newHotelInfo = match.hotelInfo;
+    }
+
+    // Normalize gallery
+    let newGallery = prev.gallery;
+    if (Array.isArray(match.gallery) && match.gallery.length > 0) {
+      newGallery = match.gallery;
+    } else if (typeof match.gallery === "string") {
+      try {
+        newGallery = JSON.parse(match.gallery);
+      } catch (e) {}
+    }
+
+    // Normalize inclusions & exclusions
+    const newInclusions = Array.isArray(match.inclusions) && match.inclusions.length > 0
+      ? match.inclusions
+      : typeof match.inclusions === "string"
+      ? JSON.parse(match.inclusions || "[]")
+      : prev.inclusions;
+
+    const newExclusions = Array.isArray(match.exclusions) && match.exclusions.length > 0
+      ? match.exclusions
+      : typeof match.exclusions === "string"
+      ? JSON.parse(match.exclusions || "[]")
+      : prev.exclusions;
+
+    return {
+      ...prev,
+      title: match.title || prev.title,
+      price: Number(match.price) || prev.price,
+      originalPrice: Number(match.originalPrice) || prev.originalPrice,
+      duration: match.duration || prev.duration,
+      destination: match.destination || prev.destination,
+      country: match.country || prev.country,
+      badge: match.badge || prev.badge,
+      overview: match.overview !== undefined && match.overview !== "" ? match.overview : prev.overview,
+      highlights: Array.isArray(match.highlights) && match.highlights.length > 0 ? match.highlights : prev.highlights,
+      inclusions: newInclusions,
+      exclusions: newExclusions,
+      itinerary: newItinerary,
+      outlineItinerary: derivedOutline.length > 0 ? derivedOutline : prev.outlineItinerary,
+      hotelInfo: newHotelInfo,
+      gallery: newGallery,
+      image: match.coverImage || match.image || prev.image,
+      rating: Number(match.rating) || prev.rating,
+      reviewsCount: Number(match.reviews) || prev.reviewsCount,
+    };
+  };
+
   const syncPackage = useCallback(() => {
     // 1. Read from localStorage for immediate preview if admin saved in browser
     if (typeof window !== "undefined") {
@@ -61,28 +137,7 @@ export default function PackageDetailClient({
                     initialPackage.title.toLowerCase().trim().includes(p.title.toLowerCase().trim())))
             );
             if (match) {
-              setPkg((prev: any) => ({
-                ...prev,
-                price: Number(match.price) || prev.price,
-                originalPrice: Number(match.originalPrice) || prev.originalPrice,
-                title: match.title || prev.title,
-                duration: match.duration || prev.duration,
-                destination: match.destination || prev.destination,
-                badge: match.badge || prev.badge,
-                inclusions:
-                  Array.isArray(match.inclusions) && match.inclusions.length > 0
-                    ? match.inclusions
-                    : prev.inclusions,
-                exclusions:
-                  Array.isArray(match.exclusions) && match.exclusions.length > 0
-                    ? match.exclusions
-                    : prev.exclusions,
-                itinerary:
-                  Array.isArray(match.itinerary) && match.itinerary.length > 0
-                    ? match.itinerary
-                    : prev.itinerary,
-                hotelInfo: match.hotelInfo || prev.hotelInfo,
-              }));
+              setPkg((prev: any) => mergeMatchIntoPkg(prev, match));
             }
           }
         }
@@ -105,28 +160,7 @@ export default function PackageDetailClient({
                   initialPackage.title.toLowerCase().trim().includes(p.title.toLowerCase().trim())))
           );
           if (match) {
-            setPkg((prev: any) => ({
-              ...prev,
-              price: Number(match.price) || prev.price,
-              originalPrice: Number(match.originalPrice) || prev.originalPrice,
-              title: match.title || prev.title,
-              duration: match.duration || prev.duration,
-              destination: match.destination || prev.destination,
-              badge: match.badge || prev.badge,
-              inclusions:
-                Array.isArray(match.inclusions) && match.inclusions.length > 0
-                  ? match.inclusions
-                  : prev.inclusions,
-              exclusions:
-                Array.isArray(match.exclusions) && match.exclusions.length > 0
-                  ? match.exclusions
-                  : prev.exclusions,
-              itinerary:
-                Array.isArray(match.itinerary) && match.itinerary.length > 0
-                  ? match.itinerary
-                  : prev.itinerary,
-              hotelInfo: match.hotelInfo || prev.hotelInfo,
-            }));
+            setPkg((prev: any) => mergeMatchIntoPkg(prev, match));
           }
         }
       })

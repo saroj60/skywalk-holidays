@@ -121,6 +121,9 @@ export default function HotelManager() {
         setHotels([data.hotel, ...hotels]);
         setIsNewModalOpen(false);
         resetForm();
+        if (typeof window !== "undefined") {
+          window.dispatchEvent(new Event("skywalk-hotels-updated"));
+        }
       }
     } catch (error) {
       alert("Failed to save hotel record");
@@ -144,6 +147,9 @@ export default function HotelManager() {
         );
         setEditingHotel(null);
         resetForm();
+        if (typeof window !== "undefined") {
+          window.dispatchEvent(new Event("skywalk-hotels-updated"));
+        }
       }
     } catch (error) {
       alert("Failed to update hotel record");
@@ -156,6 +162,9 @@ export default function HotelManager() {
       const res = await fetch(`/api/hotels/${id}`, { method: "DELETE" });
       if (res.ok) {
         setHotels((prev) => prev.filter((h) => h.id !== id));
+        if (typeof window !== "undefined") {
+          window.dispatchEvent(new Event("skywalk-hotels-updated"));
+        }
       }
     } catch (error) {
       alert("Failed to delete hotel");

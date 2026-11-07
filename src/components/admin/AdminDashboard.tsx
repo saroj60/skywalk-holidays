@@ -10,6 +10,7 @@ import GalleryManager from "./GalleryManager";
 import CountryManager from "./CountryManager";
 import CrmManager from "./CrmManager";
 import StaffManager from "./StaffManager";
+import SettingsManager from "./SettingsManager";
 import AdminLoginForm from "./AdminLoginForm";
 import {
   Package,
@@ -24,6 +25,7 @@ import {
   Camera,
   Globe2,
   Users,
+  Settings,
   ShieldCheck,
   CheckCircle2,
   ChevronRight,
@@ -216,6 +218,7 @@ export default function AdminDashboard() {
     "flights",
     "hotels",
     "gallery",
+    "settings",
     "staff",
   ];
 
@@ -455,6 +458,21 @@ export default function AdminDashboard() {
               </button>
             )}
 
+            {allowedTabs.includes("settings") && (
+              <button
+                type="button"
+                onClick={() => setActiveTab("settings")}
+                className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium transition-colors shrink-0 ${
+                  activeTab === "settings"
+                    ? "bg-slate-900 text-white shadow-xs"
+                    : "text-slate-600 hover:text-slate-900 hover:bg-slate-100"
+                }`}
+              >
+                <Settings size={14} className={activeTab === "settings" ? "text-white" : "text-slate-400"} />
+                <span>Site Settings</span>
+              </button>
+            )}
+
             {allowedTabs.includes("staff") && (
               <button
                 type="button"
@@ -494,6 +512,7 @@ export default function AdminDashboard() {
         {activeTab === "flights" && <FlightManager />}
         {activeTab === "hotels" && <HotelManager />}
         {activeTab === "gallery" && <GalleryManager />}
+        {activeTab === "settings" && <SettingsManager />}
         {activeTab === "staff" && <StaffManager />}
       </main>
     </div>
