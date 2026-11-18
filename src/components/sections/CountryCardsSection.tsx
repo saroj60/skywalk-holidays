@@ -321,12 +321,19 @@ const INITIAL_FEATURED_FOUR = [
 
 interface CountryCardsSectionProps {
   initialLivePackages?: any[];
+  initialDestinations?: any[];
 }
 
 export default function CountryCardsSection({
   initialLivePackages,
+  initialDestinations,
 }: CountryCardsSectionProps = {}) {
-  const [countriesList, setCountriesList] = useState(POPULAR_COUNTRIES);
+  const [countriesList, setCountriesList] = useState<any[]>(() => {
+    if (initialDestinations && Array.isArray(initialDestinations) && initialDestinations.length > 0) {
+      return initialDestinations.filter((c: any) => c.featured !== false);
+    }
+    return POPULAR_COUNTRIES;
+  });
   const [selectedCountryId, setSelectedCountryId] = useState<string>("all");
   const [livePackages, setLivePackages] = useState<any[]>(() => {
     if (initialLivePackages && Array.isArray(initialLivePackages) && initialLivePackages.length > 0) {
@@ -511,7 +518,7 @@ export default function CountryCardsSection({
           {countriesList.slice(0, 8).map((country, index) => {
             const isSelected = selectedCountryId === country.id;
             const packageCount =
-              COUNTRY_PACKAGES_MAP[country.id]?.length || country.packagesCount || 3;
+              country.packagesCount || COUNTRY_PACKAGES_MAP[country.id]?.length || 3;
 
             return (
               <motion.div
@@ -656,7 +663,7 @@ export default function CountryCardsSection({
                 ★ All Featured (4)
               </button>
               {countriesList.slice(0, 6).map((c) => {
-                const count = COUNTRY_PACKAGES_MAP[c.id]?.length || c.packagesCount;
+                const count = c.packagesCount || COUNTRY_PACKAGES_MAP[c.id]?.length || 3;
                 return (
                   <button
                     key={c.id}

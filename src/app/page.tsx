@@ -10,6 +10,7 @@ import CTABanner from "@/components/common/CTABanner";
 import CountryCardsSection from "@/components/sections/CountryCardsSection";
 import VideoGuidesSection from "@/components/sections/VideoGuidesSection";
 import { getAllPackages } from "@/lib/server/packagesDataStore";
+import { getStoredDestinations } from "@/lib/server/destinationsStore";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
@@ -67,7 +68,10 @@ export const metadata: Metadata = {
 };
 
 export default async function HomePage() {
-  const initialPackages = await getAllPackages().catch(() => []);
+  const [initialPackages, initialDestinations] = await Promise.all([
+    getAllPackages().catch(() => []),
+    Promise.resolve().then(() => getStoredDestinations()).catch(() => []),
+  ]);
 
   const faqJsonLd = {
     "@context": "https://schema.org",
@@ -123,7 +127,10 @@ export default async function HomePage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
       />
       <HeroSection />
-      <CountryCardsSection initialLivePackages={initialPackages} />
+      <CountryCardsSection
+        initialLivePackages={initialPackages}
+        initialDestinations={initialDestinations}
+      />
       <UpcomingHolidaysSection />
       <ServicesSection />
       <StatsCounter />

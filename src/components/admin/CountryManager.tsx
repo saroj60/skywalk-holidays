@@ -91,17 +91,28 @@ export default function CountryManager({ onSwitchToPackages }: CountryManagerPro
   }, []);
 
   // Save countries state to localStorage and server API
-  const saveCountriesState = (updatedCountries: CountryRecord[]) => {
+  const saveCountriesState = async (updatedCountries: CountryRecord[]) => {
     setCountries(updatedCountries);
     if (typeof window !== "undefined") {
       localStorage.setItem("skywalk_countries", JSON.stringify(updatedCountries));
       window.dispatchEvent(new Event("skywalk-countries-updated"));
     }
-    fetch("/api/destinations", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(updatedCountries),
-    }).catch(() => {});
+
+    try {
+      const token = typeof window !== "undefined" ? localStorage.getItem("skywalk_admin_token") : null;
+      const headers: Record<string, string> = { "Content-Type": "application/json" };
+      if (token) {
+        headers["Authorization"] = `Bearer ${token}`;
+      }
+
+      await fetch("/api/destinations", {
+        method: "POST",
+        headers,
+        body: JSON.stringify(updatedCountries),
+      });
+    } catch (err) {
+      console.warn("Could not sync destinations to server API:", err);
+    }
   };
 
   const handleOpenCreateCountry = () => {
