@@ -6,21 +6,10 @@
     "destination": "Bangkok & Pattaya, Thailand",
     "country": "International",
     "duration": "05 Nights and 06 Days",
-    "price": 40000,
+    "price": 50000,
     "originalPrice": 58000,
     "rating": 4.9,
     "reviews": 218,
-    "overview": "Experience the ultimate Thailand vacation with our 6-day Bangkok & Pattaya holiday package. Start in the coastal resort city of Pattaya with an exhilarating speedboat excursion to Coral Island, crystal-clear water beach activities, and a complimentary Indian buffet lunch. Discover the architectural marvel of Sanctuary of Truth and lively Walking Street. Then, travel by private transfer to vibrant Bangkok for a guided temple exploration featuring the 5.5-ton solid gold Sukhothai Buddha at Wat Traimitr and the iconic Reclining Buddha at Wat Pho. Enjoy leisurely market shopping at Chatuchak and Pratunam, authentic Thai street food, and seamless round-trip flights and private transfers from Kathmandu.",
-    "highlights": [
-      "Round-trip international flight tickets between Kathmandu and Bangkok",
-      "Private airport meet-and-greet reception and dedicated transfers",
-      "Exciting Coral Island Speedboat Tour with beach relaxation & Indian buffet lunch",
-      "Guided Bangkok City Tour visiting Wat Traimitr (Solid Gold Buddha) & Wat Pho (Reclining Buddha)",
-      "Pattaya coastal exploration: Sanctuary of Truth, Pattaya Viewpoint & Walking Street",
-      "Full free day in Bangkok for shopping at Chatuchak Weekend Market & Pratunam Market",
-      "3-Star hotel accommodation with daily breakfast at Welcome Plaza Pattaya & Bangkok City Hotel",
-      "Complete Nepal visa assistance and 24/7 dedicated travel support desk"
-    ],
     "inclusions": [
       "Round-trip airfare (Kathmandu ⇄ Bangkok)",
       "Private airport pick-up and drop",
@@ -91,7 +80,6 @@
       }
     ],
     "hotelInfo": "Welcome Plaza Hotel Pattaya & Bangkok City Hotel (or similar 3-star) (3-Star Standard Hospitality)",
-    "transportation": "Private Airport Transfers & AC Tourist Coaches",
     "coverImage": "/images/bangkok-pattaya.png",
     "gallery": [
       "/images/bangkok-pattaya.png",
@@ -121,17 +109,6 @@
     "originalPrice": 92000,
     "rating": 4.9,
     "reviews": 184,
-    "overview": "Embark on an unforgettable 7-day tropical and cultural journey connecting the enchanting island of Bali with the bustling metropolis of Malaysia. Begin in Bali with spiritual landmarks, the volcanic vistas of Kintamani and Mount Batur, sacred Pura Taman Ayun, the iconic floating Ulun Danu Bratan temple, and sunset at Tanah Lot sea temple. Then fly to Malaysia to explore colorful Batu Caves, cool off at Genting Highlands with a scenic cable car ride, and discover Kuala Lumpur's modern skyline and Petronas Twin Towers. Complete with round-trip flights, 3-star accommodations, daily breakfast, and guided tours.",
-    "highlights": [
-      "Round-trip airfare from Kathmandu & inter-country flight from Bali to Malaysia",
-      "Kintamani volcano tour with Mount Batur panorama & Luwak coffee plantation tasting",
-      "Tegalalang rice terraces, Ubud Royal Palace & vibrant Ubud art market",
-      "Bali spiritual landmarks: Pura Taman Ayun, Ulun Danu Bratan floating temple & Tanah Lot sea temple",
-      "Scenic mountain drive & panoramic cable car ride to Genting Highlands resort",
-      "Visit colorful Batu Caves Hindu temple and giant golden Murugan statue",
-      "Full-day Kuala Lumpur city tour with Petronas Twin Towers, King's Palace & National Mosque",
-      "3-Star hotel accommodations with daily breakfast and private airport transfers"
-    ],
     "inclusions": [
       "Round-trip airfare (Kathmandu ⇄ Bali & Kuala Lumpur ⇄ Kathmandu)",
       "Inter-country flight ticket from Bali (DPS) to Malaysia (KUL)",
@@ -210,7 +187,6 @@
       }
     ],
     "hotelInfo": "3-Star Deluxe Partner Hotels (Bali & Kuala Lumpur) (3-Star Standard Hospitality)",
-    "transportation": "Private Airport Transfers & AC Tourist Coaches",
     "coverImage": "/images/bali-kelingking.jpg",
     "gallery": [
       "/images/bali-kelingking.jpg",
@@ -241,17 +217,6 @@
     "originalPrice": 68000,
     "rating": 4.9,
     "reviews": 142,
-    "overview": "Experience the ultimate extended vacation in Thailand with our 8-day Bangkok & Pattaya tour package. Begin along the sunny coast of Pattaya with an exciting speedboat voyage to Coral Island (Koh Larn) featuring beach activities and lunch. Spend a full dedicated day discovering Pattaya's cultural jewels including the world-renowned all-wood Sanctuary of Truth, the majestic White Buddha (Wat Phra Yai on Big Buddha Hill), and the dazzling Alcazar Cabaret Show. Then travel to Bangkok for a guided temple and heritage city tour of Wat Traimitr (5.5-ton Solid Gold Sukhothai Buddha) and Wat Pho (Reclining Buddha). With 3 full leisure free days in Bangkok, explore Chatuchak Weekend Market, Pratunam wholesale fashion district, Siam Paragon, riverside ICONSIAM, vibrant night markets, authentic street food, and Thai massages before your comfortable flight home to Kathmandu.",
-    "highlights": [
-      "Round-trip international flights between Kathmandu and Bangkok",
-      "Arrival reception at Suvarnabhumi Airport & private transfer to Pattaya",
-      "Pattaya stay at Welcome Plaza Hotel with daily breakfast",
-      "Exciting Coral Island (Koh Larn) speedboat tour with lunch",
-      "Full day Pattaya exploration: Sanctuary of Truth, White Buddha & Alcazar Show",
-      "Private transfer to Bangkok with guided Golden Temple (Wat Traimitr) & Reclining Buddha (Wat Pho) tour",
-      "3 full leisure and shopping days in Bangkok (Chatuchak, Pratunam, ICONSIAM & Night Markets)",
-      "Private return airport transfer to Suvarnabhumi Airport and flight to Kathmandu"
-    ],
     "inclusions": [
       "Round-trip international airfare (Kathmandu ⇄ Bangkok)",
       "Private airport meet & greet transfers upon arrival and departure at Suvarnabhumi Airport",
@@ -338,7 +303,6 @@
       }
     ],
     "hotelInfo": "Welcome Plaza Hotel Pattaya & 3-Star Bangkok Partner Hotel (3-Star Deluxe Rated Properties)",
-    "transportation": "Private Airport Transfers & AC Tourist Coaches",
     "coverImage": "/images/gallery/sanctuary-of-truth-pattaya.png",
     "gallery": [
       "/images/gallery/sanctuary-of-truth-pattaya.png",
@@ -368,17 +332,6 @@
     "originalPrice": 82000,
     "rating": 4.9,
     "reviews": 196,
-    "overview": "Experience the ultimate Thailand multi-destination journey combining vibrant Bangkok, coastal Pattaya, and world-famous Phuket. Begin in Pattaya with an exhilarating speedboat excursion to Coral Island featuring beach fun, crystal waters, and an Indian buffet lunch. Discover Bangkok's renowned Buddhist heritage with guided visits to Wat Traimitr (5.5-ton solid gold Sukhothai Buddha) and Wat Pho (Reclining Buddha). Then, fly south across the Andaman Sea to tropical Phuket to relax on buzzing Patong Beach and embark on a full-day luxury speedboat tour to the breathtaking Phi Phi Islands and Maya Bay with beachside dining. Return to Bangkok for shopping at Chatuchak Weekend Market and Pratunam wholesale district before returning home to Kathmandu.",
-    "highlights": [
-      "Round-trip international flights (Kathmandu ⇄ Bangkok) & Domestic flights (Bangkok ⇄ Phuket)",
-      "Dedicated airport meet & greet with private airport transfers across all cities",
-      "Pattaya stay with Coral Island Speedboat Tour and delicious Indian lunch",
-      "Bangkok City Tour: Golden Buddha Temple (Wat Traimitr) & Reclining Buddha (Wat Pho)",
-      "Domestic flight to tropical Phuket with Patong Beach leisure & vibrant nightlife",
-      "Full-day Phi Phi Island & Maya Bay speedboat tour with snorkeling & beachside lunch",
-      "Return flight to Bangkok with full free shopping day at Chatuchak & Pratunam markets",
-      "3-Star hotel accommodations with daily breakfast throughout the itinerary"
-    ],
     "inclusions": [
       "Round-trip international airfare (Kathmandu ⇄ Bangkok)",
       "Domestic airfare tickets (Bangkok ⇄ Phuket)",
@@ -463,7 +416,6 @@
       }
     ],
     "hotelInfo": "3-Star Deluxe Partner Hotels in Pattaya, Bangkok & Phuket (3-Star Deluxe Rated Properties)",
-    "transportation": "Private Airport Transfers & AC Tourist Coaches",
     "coverImage": "/images/gallery/thailand-phi-phi-maya-bay.png",
     "gallery": [
       "/images/gallery/thailand-phi-phi-maya-bay.png",
@@ -498,17 +450,6 @@
     "originalPrice": 52000,
     "rating": 4.9,
     "reviews": 168,
-    "overview": "Experience the best of Thailand with our action-packed 5-day Bangkok and Pattaya tour package by Skywalk Tours and Travels. Begin along the sun-drenched coast of Pattaya with private airport reception and a smooth transfer to your choice of Welcome Plaza or Phuphaya Hotel. Embark on an exhilarating full-day speedboat excursion to Coral Island with beach activities, turquoise waters, and lunch included. Next, journey to Bangkok for a comprehensive city and temple tour visiting Wat Traimitr (home to the famed 5.5-ton solid gold Sukhothai Buddha) and Wat Pho (housing the colossal gold Reclining Buddha). Savor a full free day for world-class shopping at Chatuchak, Pratunam, and modern malls, all backed by included round-trip airfare, private transfers, daily breakfast, and your Thailand tourist visa fee.",
-    "highlights": [
-      "Round-trip international flights between Kathmandu and Bangkok",
-      "Dedicated Skywalk airport meet-and-greet with private vehicle transfer to Pattaya",
-      "Pattaya stay at Welcome Plaza Hotel or Phuphaya Hotel with daily breakfast",
-      "Full-day Coral Island Speedboat Tour with white sandy beach activities & lunch",
-      "Bangkok City Tour: Wat Traimitr (5.5-ton Solid Gold Buddha) & Wat Pho (Reclining Buddha)",
-      "Full free leisure and shopping day in Bangkok (Chatuchak, Pratunam & Thai Street Food)",
-      "Thailand Single Entry Tourist Visa Fee fully included in package cost",
-      "Complete private airport departure transfer for your return flight to Kathmandu"
-    ],
     "inclusions": [
       "Round-trip airfare (Kathmandu ⇄ Bangkok)",
       "Private airport pick-up and drop",
@@ -569,7 +510,6 @@
       }
     ],
     "hotelInfo": "Welcome Plaza or Phuphaya Hotel Pattaya & 3-Star Bangkok Partner Hotel (3-Star Standard / Deluxe Properties)",
-    "transportation": "Private Airport Transfers & AC Tourist Coaches",
     "coverImage": "/images/gallery/pattaya-coral-island-platinum-speedboat.jpg",
     "gallery": [
       "/images/gallery/pattaya-coral-island-platinum-speedboat.jpg",
@@ -600,17 +540,6 @@
     "originalPrice": 89000,
     "rating": 4.9,
     "reviews": 175,
-    "overview": "Embark on the ultimate 8-day island hopping and city adventure across Thailand with SkyWalk Tours and Travels. Experience the vibrant capital of Bangkok, the tropical energy of Phuket's Patong Beach, and the dramatic limestone sea cliffs and emerald waters of Krabi. This premium tri-destination package includes round-trip international flights from Kathmandu, all domestic flights in Thailand (Bangkok to Phuket and Krabi to Bangkok), 3-star deluxe hotel stays at Princeton Hotel Bangkok, Grand Phoenix Hotel Phuket, and Ao Nang Hotel Krabi, an unforgettable full-day Phi Phi Islands & Maya Bay tour with lunch, a scenic overland transfer from Phuket to Krabi, a full-day Krabi 4 Island Tour (Chicken Island, Tup Island sandbar walk, Poda Island, Phra Nang Cave) with lunch, a full day for world-class shopping at Chatuchak and Pratunam, and your Thailand tourist visa fee included.",
-    "highlights": [
-      "Round-trip international flights (Kathmandu ⇄ Bangkok) & domestic flights (BKK ⇄ HKT & KBV ⇄ BKK)",
-      "Private airport transfers upon arrival and departure in all three destinations",
-      "Stay in comfortable 3-star partner hotels: Princeton Hotel Bangkok, Grand Phoenix Phuket & Ao Nang Hotel Krabi",
-      "Full-day Phi Phi Islands & Maya Bay tour with snorkeling & beachside Thai buffet lunch",
-      "Scenic private overland transfer through coastal landscapes from Phuket to Krabi",
-      "Full-day Krabi 4 Island Tour: Chicken Island, Tup Island sandbar, Poda Island & Phra Nang Cave Beach with lunch",
-      "Full free day in Bangkok for shopping at Chatuchak Weekend Market & Pratunam wholesale fashion centers",
-      "Thailand Single Entry Tourist Visa Fee fully included in package cost"
-    ],
     "inclusions": [
       "Round-trip international flights (Kathmandu ⇄ Bangkok)",
       "Domestic flights in Thailand (Bangkok to Phuket & Krabi to Bangkok)",
@@ -701,7 +630,6 @@
       }
     ],
     "hotelInfo": "Princeton Hotel Bangkok (3*), Grand Phoenix Hotel Phuket (3*), Ao Nang Hotel Krabi (3*) (3-Star Deluxe Partner Properties)",
-    "transportation": "Private Airport Transfers & AC Tourist Coaches",
     "coverImage": "/images/gallery/thailand-krabi-island-boat.jpg",
     "gallery": [
       "/images/gallery/thailand-krabi-island-boat.jpg",
@@ -732,19 +660,6 @@
     "originalPrice": 82000,
     "rating": 4.9,
     "reviews": 152,
-    "overview": "Embark on an exhilarating 6-day twin-nation holiday exploring the ultra-modern city-state of Singapore and the cultural landscapes of Malaysia with SkyWalk Tours and Travels. Touch down in Singapore for an unforgettable stay at Value Thomson Hotel (or similar 3-star property), experience a guided city tour past Merlion Park and the Civic District, and ride the scenic cable car into Sentosa Island featuring the mesmerizing Wings of Time night show. Journey overland across the border into Malaysia aboard a luxury coach. Ascend into the cool misty heights of Genting Highlands via the panoramic Skyway cable car, discover the 400-million-year-old sacred Batu Caves with its monumental 42.7m golden Lord Muruga statue, and take in the architectural marvels of Kuala Lumpur—from the King's Palace to the historic National Monument. Backed by round-trip flights from Kathmandu, deluxe 3-star hotels, daily buffet breakfast, and complete visa documentation assistance.",
-    "highlights": [
-      "Round-trip international flights from Kathmandu (KTM ⇄ SIN / KUL ⇄ KTM)",
-      "Private airport reception and transfers in Singapore and Kuala Lumpur",
-      "Half-day Singapore City Tour: Civic District, Padang, Parliament House & Merlion Park",
-      "Sentosa Island Tour with 1-way scenic cable car & Wings of Time 1st show ticket",
-      "Inter-country cross-border transfer via comfortable Luxury Coach to Kuala Lumpur",
-      "Genting Highlands mountain resort excursion with 1-way Skyway Cable Car ride",
-      "Visit 400-million-year-old Batu Caves Hindu Temple & 42.7m golden Lord Muruga statue",
-      "Half-day Kuala Lumpur City Tour: National Monument, King's Palace Gate & Jamek Mosque",
-      "3-Star hotel accommodations with daily buffet breakfast throughout the tour",
-      "Dedicated visa assistance for Singapore and Malaysia from Kathmandu"
-    ],
     "inclusions": [
       "Round-trip international airfare (Kathmandu ⇄ Singapore / Kuala Lumpur ⇄ Kathmandu)",
       "Private airport pick-up and drop transfers",
@@ -821,7 +736,6 @@
       }
     ],
     "hotelInfo": "Value Thomson Hotel Singapore (3*) & 3-Star Kuala Lumpur Partner Hotel (3-Star Deluxe Rated Properties)",
-    "transportation": "Private Airport Transfers & AC Tourist Coaches",
     "coverImage": "/images/gallery/malaysia-petronas-towers-flag-night.png",
     "gallery": [
       "/images/gallery/malaysia-petronas-towers-flag-night.png",
@@ -850,17 +764,6 @@
     "originalPrice": 105000,
     "rating": 4.9,
     "reviews": 138,
-    "overview": "Experience the ultimate tropical paradise in the Maldives with SkyWalk Tours and Travels. Touch down in Malé and be welcomed with dedicated private airport transfers to your beachfront 3-star hotel in Hulhumalé. Embark on a breathtaking full-day ocean adventure featuring an excursion to a secluded pristine sandbank surrounded by turquoise lagoons, guided coral reef snorkeling with vibrant schools of tropical fish, and an enchanting sunset dolphin cruise watching wild spinner dolphins leaping along the boat. Enjoy a leisurely day exploring Hulhumalé's serene white-sand beaches, coastal cafes, and local island markets before your private return airport transfer. Backed by round-trip international flights from Kathmandu, beachfront accommodations, daily breakfast, and free 30-day tourist visa on arrival for Nepali citizens.",
-    "highlights": [
-      "Round-trip international flight tickets (Kathmandu ⇄ Malé International Airport)",
-      "Private airport reception and transfers between Malé Airport and Hulhumalé hotel",
-      "3 Nights beachfront hotel accommodation in Hulhumalé with daily breakfast",
-      "Secluded pristine white sandbank excursion surrounded by crystal-clear open sea",
-      "Guided coral reef snorkeling adventure suitable for all experience levels (gear included)",
-      "Romantic sunset dolphin cruise sailing on calm waters with leaping dolphins",
-      "Free day to explore white-sand beaches, water sports, and local island markets",
-      "Free 30-day Tourist Visa on Arrival for Nepali passport holders (no advance fee)"
-    ],
     "inclusions": [
       "Round-trip international flight tickets (Kathmandu ⇄ Malé International Airport)",
       "Private airport pick-up upon arrival and private hotel drop-off on departure",
@@ -916,7 +819,6 @@
       }
     ],
     "hotelInfo": "3-Star Deluxe Beachfront Partner Hotel in Hulhumalé, Maldives (3-Star Standard Beachfront Property)",
-    "transportation": "Private Airport Transfers & AC Tourist Coaches",
     "coverImage": "/images/gallery/maldives-overwater-bungalows-aerial-lagoon.png",
     "gallery": [
       "/images/gallery/maldives-overwater-bungalows-aerial-lagoon.png",
@@ -944,16 +846,6 @@
     "originalPrice": 108000,
     "rating": 4.9,
     "reviews": 150,
-    "overview": "Experience the ultimate Philippine journey blending the colonial Spanish heritage of Manila with the world-famous powdery white beaches of Boracay. Begin with a private airport transfer in Manila before catching an exciting domestic flight to Boracay—renowned worldwide for turquoise waters, exhilarating marine sports, and vibrant nightlife. Enjoy an island hopping boat excursion visiting Puka Beach, snorkeling vibrant coral reefs, and savoring an authentic Filipino-style buffet lunch. Fly back to Manila to immerse yourself in the historic walled city of Intramuros, Fort Santiago, Manila Cathedral, San Agustin Church, Rizal Park, and the ultra-modern skyline of Bonifacio Global City.",
-    "highlights": [
-      "Round-trip international flights (Kathmandu ⇄ Manila) & domestic flights (Manila ⇄ Boracay)",
-      "Private airport transfers upon arrival & departure in Manila",
-      "Full Boracay Island Hopping boat tour with Puka Beach & vibrant coral reef snorkeling",
-      "Delicious authentic Filipino-style buffet lunch on the island tour",
-      "Comprehensive Manila City Tour: Intramuros, Fort Santiago, Manila Cathedral, San Agustin Church, Rizal Park & BGC",
-      "3-Star hotel in Manila and beachfront resort accommodation in Boracay with daily buffet breakfast",
-      "SkyWalk Tours complete visa assistance & document verification desk"
-    ],
     "inclusions": [
       "Round-trip international flight tickets (Kathmandu ⇄ Manila)",
       "Domestic round-trip flight tickets (Manila ⇄ Boracay)",
@@ -1027,7 +919,6 @@
       }
     ],
     "hotelInfo": "3-Star Deluxe City Hotel in Manila & Beachfront Resort in Boracay (3-Star Deluxe Standard Properties)",
-    "transportation": "Private Airport Transfers & AC Tourist Coaches",
     "coverImage": "/images/gallery/philippines-boracay-beach-bangka-boats.png",
     "gallery": [
       "/images/gallery/philippines-boracay-beach-bangka-boats.png",
@@ -1054,17 +945,6 @@
     "originalPrice": 118000,
     "rating": 4.9,
     "reviews": 150,
-    "overview": "Embark on the ultimate 8-day Philippine tropical vacation pairing the colonial history and cosmopolitan vibrancy of Manila with the sun-drenched white sand paradise of Boracay. Enjoy private airport transfers in Manila before boarding a domestic flight to Boracay. Experience a full Boracay Island Hopping boat cruise featuring Puka Beach, guided coral reef snorkeling, secluded coves, and a mouthwatering Filipino buffet lunch. Delight in a full free day at leisure on Boracay to relax on powdery sands or enjoy exciting water sports. Fly back to Manila for a guided heritage city tour of Intramuros, Fort Santiago, Manila Cathedral, San Agustin Church, Rizal Park, and Bonifacio Global City (BGC), followed by a dedicated free day to explore Manila's luxury shopping malls and cultural attractions at your own pace.",
-    "highlights": [
-      "Round-trip international airfare (Kathmandu ⇄ Manila) & domestic return flights (Manila ⇄ Boracay)",
-      "Private airport transfers upon arrival & departure at Ninoy Aquino International Airport (MNL)",
-      "Full Boracay Island Hopping boat excursion: Puka Beach, snorkeling & Filipino buffet lunch",
-      "Full Free Day in Boracay – Explore White Beach or try parasailing, scuba diving, and sunset sails",
-      "Comprehensive Manila Heritage & Modern City Tour: Intramuros, Fort Santiago, Cathedral, Rizal Park, San Agustin & BGC",
-      "Full Free Day in Manila – Explore SM Mall of Asia, Greenbelt Makati, and vibrant night markets",
-      "3-Star city hotel in Manila (4 Nights) & beachfront resort in Boracay (3 Nights) with daily breakfast",
-      "Complete SkyWalk Tours visa assistance with 120K bank statement verification desk"
-    ],
     "inclusions": [
       "Round-trip international flight tickets (Kathmandu ⇄ Manila)",
       "Domestic round-trip flight tickets (Manila ⇄ Boracay)",
@@ -1155,7 +1035,6 @@
       }
     ],
     "hotelInfo": "3-Star Deluxe City Hotel in Manila & Beachfront Resort in Boracay (3-Star Deluxe Standard Properties)",
-    "transportation": "Private Airport Transfers & AC Tourist Coaches",
     "coverImage": "/images/gallery/philippines-el-nido-palawan-aerial-lagoon.png",
     "gallery": [
       "/images/gallery/philippines-el-nido-palawan-aerial-lagoon.png",
@@ -1182,17 +1061,6 @@
     "originalPrice": 70000,
     "rating": 4.9,
     "reviews": 150,
-    "overview": "Experience the ultimate Thailand holiday combining the crystal-clear waters and limestone cliffs of Phuket with the vibrant cultural temples and street shopping of Bangkok. Arrive in Bangkok with VIP meet & greet and private hotel transfer before boarding a domestic flight to tropical Phuket. Settle in and enjoy Patong Beach followed by a full-day speedboat excursion across the world-famous Phi Phi Islands, Maya Bay, and emerald lagoons with a delicious Thai buffet lunch. Fly back to Bangkok for a guided tour of the Reclining Buddha (Wat Pho) and Golden Buddha (Wat Traimit), followed by a full free day for shopping at Chatuchak Weekend Market and Pratunam wholesale fashion markets.",
-    "highlights": [
-      "Round-trip international flights (Kathmandu ⇄ Bangkok) & domestic flights (Bangkok ⇄ Phuket)",
-      "Private airport transfers upon arrival & departure in Bangkok and Phuket",
-      "Full-day Phi Phi Islands tour with Maya Bay, emerald lagoons & coral reef snorkeling",
-      "Delicious Thai buffet lunch on the beach during the island tour",
-      "Bangkok City & Temple Tour: Temple of the Reclining Buddha (Wat Pho) & Golden Buddha (Wat Traimit)",
-      "Full Free Day in Bangkok – Shop at Chatuchak Weekend Market & Pratunam wholesale clothing market",
-      "3-Star hotel accommodations with daily buffet breakfast (Princeton Bangkok & Grand Phoenix Phuket)",
-      "Thailand Tourist Visa single-entry fee included"
-    ],
     "inclusions": [
       "Round-trip international flight tickets (Kathmandu ⇄ Bangkok)",
       "Domestic round-trip flight tickets (Bangkok ⇄ Phuket)",
@@ -1267,7 +1135,6 @@
       }
     ],
     "hotelInfo": "Princeton Hotel Bangkok 3* & Grand Phoenix Hotel Phuket 3* (3-Star Standard Hospitality Partner Properties)",
-    "transportation": "Private Airport Transfers & AC Tourist Coaches",
     "coverImage": "/images/gallery/phuket-phi-phi-maya-bay-boats.png",
     "gallery": [
       "/images/gallery/phuket-phi-phi-maya-bay-boats.png",
@@ -1295,18 +1162,6 @@
     "originalPrice": 66000,
     "rating": 4.9,
     "reviews": 150,
-    "overview": "Embark on an unforgettable 4-day cosmopolitan escape to Singapore with SkyWalk Tours & Travels. Begin with private airport pickup directly to Value Thomson Hotel (or similar 3-star). Immerse yourself in the colonial beauty of the Civic District, Merlion Park overlooking Marina Bay, and the entertainment haven of Sentosa Island—including a scenic one-way cable car ride and the spectacular Wings of Time night show. Enjoy a full free day to discover the UNESCO-listed Singapore Botanic Gardens, stroll along Marina Bay skyline, and witness the futuristic Supertrees at Gardens by the Bay before a seamless private departure transfer.",
-    "highlights": [
-      "Round-trip international flights from Kathmandu to Singapore",
-      "Private airport pick-up and drop-off transfers in Singapore",
-      "3 Nights stay at Value Thomson Hotel (or similar 3-star)",
-      "Daily international breakfast at hotel",
-      "Singapore Half-Day Guided City Tour: Civic District & Merlion Park",
-      "Sentosa Island Tour with One-Way Cable Car ride included",
-      "Wings of Time 1st show entrance pass included",
-      "Full Free Day to explore Marina Bay skyline, Botanic Gardens & Gardens by the Bay",
-      "Visa guidance and free visa facility for Nepali passport holders"
-    ],
     "inclusions": [
       "Round-trip airfare (Kathmandu ⇄ Singapore)",
       "Private airport pick-up and drop-off transfers",
@@ -1360,7 +1215,6 @@
       }
     ],
     "hotelInfo": "Value Thomson Hotel Singapore (or Similar 3-Star Hotel) (3-Star Deluxe)",
-    "transportation": "Private Airport Transfers & AC Tourist Coaches",
     "coverImage": "/images/gallery/singapore-merlion-park-marina-bay.jpg",
     "gallery": [
       "/images/gallery/singapore-marina-bay-aerial-sunset-skyline.png",
@@ -1389,17 +1243,6 @@
     "originalPrice": 86000,
     "rating": 4.9,
     "reviews": 150,
-    "overview": "Experience an incredible twin-nation voyage linking the seaside vitality and sacred temples of Thailand with the colonial heritage and Indian Ocean beauty of Sri Lanka. Fly to Bangkok and transfer directly to Pattaya for a stay at Welcome Plaza Hotel, followed by a speedboat adventure across crystal-clear Coral Island with a freshly prepared Indian buffet lunch. Discover Pattaya's vibrant coastal entertainment before a private transfer to Bangkok to marvel at the 5.5-ton solid gold Buddha at Wat Traimit and the 46-meter Reclining Buddha at Wat Pho. Then, fly to Sri Lanka's historic coastal capital of Colombo for a guided city tour exploring Gangaramaya Temple, Galle Face Green oceanfront, and bustling shopping bazaars before your flight home to Kathmandu.",
-    "highlights": [
-      "Round-trip airfare + Inter-country flight from Bangkok to Colombo",
-      "Private airport transfers upon arrival & departure across Thailand & Sri Lanka",
-      "6 Nights accommodation in 3-star partner hotels with daily breakfast",
-      "Full-day speedboat excursion to Coral Island (Koh Larn) with Indian buffet lunch",
-      "Bangkok Temple Tour: Wat Traimit (5.5-Ton Golden Buddha) & Wat Pho (Reclining Buddha)",
-      "Pattaya exploration with Walking Street, Viewpoint & Sanctuary of Truth options",
-      "Guided half-day Colombo City Tour visiting major heritage & shopping attractions",
-      "Complete visa assistance and document clearance for Nepali passport holders"
-    ],
     "inclusions": [
       "Round-trip airfare (Kathmandu ⇄ Bangkok / Colombo ⇄ Kathmandu) + inter-country flight (Bangkok ⇄ Colombo)",
       "Private airport pick-up and drop-off transfers in Thailand and Sri Lanka",
@@ -1478,7 +1321,6 @@
       }
     ],
     "hotelInfo": "3-Star Partner Hotels in Pattaya, Bangkok & Colombo (3-Star Deluxe)",
-    "transportation": "Private Airport Transfers & AC Tourist Coaches",
     "coverImage": "/images/gallery/sri-lanka-national-flag-flying-sky.png",
     "gallery": [
       "/images/gallery/sri-lanka-national-flag-flying-sky.png",
@@ -1511,19 +1353,6 @@
     "originalPrice": 94000,
     "rating": 4.9,
     "reviews": 176,
-    "overview": "Embark on an extraordinary 8-day journey connecting the vibrant energy of Thailand with the timeless cultural beauty and natural wonders of Vietnam. Begin with the sun-kissed beaches of Pattaya, featuring an exhilarating speedboat ride to Coral Island with an Indian buffet lunch. Marvel at Bangkok's sacred Buddhist landmarks including the 5.5-ton solid gold Buddha at Wat Traimitr and the iconic Reclining Buddha at Wat Pho. Fly to historic Hanoi, Vietnam's thousand-year-old capital, and embark on an unforgettable 2-day / 1-night luxury Halong Bay cruise among soaring limestone karsts. Explore mystical Surprise Cave (Sung Sot), conquer Titov Island for panoramic emerald bay vistas, glide through Luon Cave on a traditional bamboo boat, and enjoy onboard cooking classes, Tai Chi, and squid fishing. Conclude with a comprehensive Hanoi city tour covering the Ho Chi Minh Complex, One Pillar Pagoda, Temple of Literature, and Hoan Kiem Lake before your return flight.",
-    "highlights": [
-      "Round-trip international flight tickets between Kathmandu & Bangkok plus Bangkok to Hanoi inter-country flights",
-      "Private airport meet-and-greet reception and dedicated transfers in Thailand and Vietnam",
-      "Exciting Coral Island Speedboat Tour with golden beaches, swimming & Indian buffet lunch",
-      "Guided Bangkok City Tour visiting Wat Traimitr (5.5-Ton Solid Gold Buddha) & Wat Pho (Reclining Buddha)",
-      "2-Day / 1-Night Halong Bay Luxury Cruise aboard a traditional vessel with private sea-view cabin",
-      "Cruise excursions: Surprise Cave (Sung Sot), Titov Island panoramic peak & Luon Cave bamboo boat ride",
-      "Sundeck Tai Chi session, sunset cocktail party, authentic Vietnamese cooking class & night squid fishing",
-      "Guided Hanoi City Tour: Ho Chi Minh Mausoleum, Ba Dinh Square, One Pillar Pagoda & Temple of Literature",
-      "Scenic walk around Hoan Kiem Lake, Turtle Tower & free time in Hanoi Old Quarter",
-      "Vietnam visa letter / pre-approval documentation provided by SkyWalk Holidays"
-    ],
     "inclusions": [
       "Vietnam visa letter / approval letter included",
       "Seven nights accommodation with daily breakfast as per detailed itinerary (including 1 Night luxury Halong Bay Cruise cabin)",
@@ -1614,7 +1443,6 @@
       }
     ],
     "hotelInfo": "3-Star Partner Hotels & Luxury Halong Bay Cruise (3-Star Deluxe)",
-    "transportation": "Private Airport Transfers & AC Tourist Coaches",
     "coverImage": "/images/gallery/halong-bay-luxury-yacht-cruise-sunset.png",
     "gallery": [
       "/images/gallery/halong-bay-luxury-yacht-cruise-sunset.png",
@@ -1649,20 +1477,6 @@
     "originalPrice": 106000,
     "rating": 4.9,
     "reviews": 194,
-    "overview": "Embark on Southeast Asia's ultimate grand multi-country adventure covering Thailand, Singapore, and Malaysia in one seamless 9-day journey. Begin in Thailand with the sunny beaches of Pattaya and an exhilarating speedboat trip to Coral Island with an Indian buffet lunch. Marvel at Bangkok's revered golden heritage at Wat Traimitr and the giant Reclining Buddha at Wat Pho. Fly onwards to cosmopolitan Singapore for a guided Civic District and Merlion Park city tour, followed by an unforgettable Sentosa Island excursion featuring a scenic cable car ride and the dazzling Wings of Time ocean spectacular. Journey by luxury cross-border coach into Malaysia, ascending to the cool mountain heights of Genting Highlands via the Skyway cable car, marveling at the sacred Batu Caves with its 42.7m golden Lord Murugan statue, and discovering Kuala Lumpur's royal and cultural landmarks before your return flight to Kathmandu.",
-    "highlights": [
-      "Round-trip airfare from Kathmandu plus Bangkok to Singapore international flight",
-      "Scenic luxury express coach transfer from Singapore to Kuala Lumpur, Malaysia",
-      "Pattaya Coral Island (Koh Larn) speedboat tour with beach time and Indian buffet lunch",
-      "Bangkok guided cultural temple tour: Wat Traimitr (5.5-Ton Solid Gold Buddha) & Wat Pho",
-      "Singapore city sightseeing: Civic District, Padang Cricket Club & Merlion Park Marina Bay",
-      "Sentosa Island tour with One-Way Cable Car ride and Wings of Time first show pass included",
-      "Genting Highlands mountain resort tour with Skyway Cable Car ride included",
-      "Iconic Batu Caves visit with the colossal 42.7m golden Lord Murugan statue",
-      "Kuala Lumpur guided city tour: National Monument, King's Palace & House of Parliament",
-      "3-Star hotel accommodations with daily breakfast across Pattaya, Bangkok, Singapore & Kuala Lumpur",
-      "Dedicated 24/7 trip support and visa assistance for Nepali passport holders"
-    ],
     "inclusions": [
       "Round-trip airfare from Kathmandu & inter-country flight from Bangkok to Singapore",
       "Private airport pick-up and drop-off transfers in all destinations",
@@ -1761,7 +1575,6 @@
       }
     ],
     "hotelInfo": "3-Star Partner Hotels in Thailand, Singapore & Malaysia (3-Star Deluxe)",
-    "transportation": "Private Airport Transfers & AC Tourist Coaches",
     "coverImage": "/images/gallery/thailand-malaysia-singapore-trio.jpg",
     "gallery": [
       "/images/gallery/thailand-malaysia-singapore-trio.jpg",
@@ -1794,20 +1607,6 @@
     "originalPrice": 75000,
     "rating": 4.9,
     "reviews": 168,
-    "overview": "Immerse yourself in the captivating beauty, rich history, and timeless charm of Vietnam on this handcrafted 6-day luxury tour. Begin in Hanoi, one of Asia’s most romantic capitals, with tree-lined French boulevards, Tran Quoc Pagoda on West Lake, the sacred Ho Chi Minh Complex, One Pillar Pagoda, the 11th-century Temple of Literature, and the bustling Hanoi Train Street. Journey to world-famous Ha Long Bay for an unforgettable 2-day / 1-night overnight luxury cruise aboard the La Regina Royal Cruise, exploring magnificent Sung Sot (Surprise) Cave, kayaking through Luon Cave, enjoying a sunset sundeck party, and savoring gourmet Vietnamese cuisine. Fly south to coastal Da Nang, where you will experience a traditional round basket boat ride through Cam Thanh Coconut Palm Village, watch fishermen cast nets, and discover the enchanting UNESCO World Heritage town of Hoi An with its Japanese Covered Bridge, lantern workshops, and a tranquil flower-lantern boat ride on the Thu Bon River.",
-    "highlights": [
-      "4-Star premium accommodations: Flower Garden Hotel Hanoi, La Regina Royal Cruise Noble Suite & Eden Ocean View Hotel Da Nang",
-      "Overnight luxury Ha Long Bay Cruise aboard La Regina Royal Cruise with private en-suite suite cabin",
-      "Ha Long Bay adventures: Sung Sot (Surprise) Cave exploration & Luon Cave bamboo boat row or kayaking",
-      "Sundeck Tai Chi morning session, sundeck sunset party with local wine & squid fishing under the stars",
-      "Full-Day Guided Hanoi City Tour: 6th-century Tran Quoc Pagoda, Ho Chi Minh Complex, One Pillar Pagoda & Temple of Literature",
-      "Hanoi Train Street experience witnessing local life unfold right beside the active railway tracks",
-      "Cam Thanh Coconut Village excursion featuring iconic round basket boat ride and traditional net-casting performance",
-      "Hoi An Ancient Town guided walking tour (Japanese Covered Bridge, Fujian Assembly Hall, Tan Ky Ancient House)",
-      "Evening boat ride along the Thu Bon River with floating flower lantern release in Hoi An",
-      "Comfortable private air-conditioned vehicle transfers throughout the tour with English-speaking guides",
-      "Daily bottled water (2 bottles per person per touring day) and comprehensive trip support"
-    ],
     "inclusions": [
       "Accommodation in top-rated 4-Star hotels (Flower Garden Hotel Hanoi & Eden Ocean View Hotel Da Nang)",
       "Overnight 2-Day / 1-Night Luxury Cruise aboard La Regina Royal Cruise in a Noble Suite Room",
@@ -1881,7 +1680,6 @@
       }
     ],
     "hotelInfo": "4-Star Hotels & Luxury Cruise (Hanoi, Ha Long Bay, Da Nang) (4-Star Premium Accommodation)",
-    "transportation": "Private Airport Transfers & AC Tourist Coaches",
     "coverImage": "/images/gallery/vietnam-highlights-collage-card.png",
     "gallery": [
       "/images/gallery/vietnam-highlights-collage-card.png",
@@ -1905,7 +1703,7 @@
   },
   {
     "id": 17,
-    "slug": "vietnam-8d",
+    "slug": "bali-7d",
     "title": "Let's Explore Vietnam - 07 Nights and 08 Days Premium Itinerary",
     "destination": "Hanoi, Ha Long Bay, Da Nang, Ba Na Hills & VinWonders",
     "country": "Vietnam",
@@ -1914,22 +1712,6 @@
     "originalPrice": 92000,
     "rating": 4.9,
     "reviews": 184,
-    "overview": "Experience the pinnacle of Vietnamese culture, breathtaking landscapes, and world-class entertainment with our 8-day premium journey. Begin in historic Hanoi with romantic tree-lined boulevards, the sacred 6th-century Tran Quoc Pagoda on West Lake, Ho Chi Minh Complex, One Pillar Pagoda, the historic Temple of Literature, and vibrant Train Street. Embark on a luxurious 2-day / 1-night cruise across Ha Long Bay's dramatic limestone seascapes with Sung Sot (Surprise) Cave, Luon Cave kayaking, and a sundeck sunset party. Fly to coastal Da Nang to explore the world-famous Ba Na Hills featuring the iconic Golden Bridge held by colossal giant stone hands, the European-style French Village, and Fantasy Park. Discover Cam Thanh Coconut Palm Village on a traditional round bamboo basket boat, and wander through lantern-lit UNESCO Hoi An Ancient Town with a floating flower lantern river cruise. Spend an exhilarating day exploring VinWonders Nam Hoi An's River Safari, Adventure Land, and Water World before returning home with cherished lifetime memories.",
-    "highlights": [
-      "4-Star premium accommodations: Flower Garden Hotel Hanoi, La Regina Royal Cruise Noble Suite & Eden Ocean View Hotel Da Nang",
-      "Iconic Ba Na Hills full-day excursion with world-record cable car ride & the famous Golden Giant Hands Bridge",
-      "European French Village exploration & indoor entertainment at Fantasy Park",
-      "VinWonders Nam Hoi An full-day theme park adventure: River Safari, Folk Island & Water World",
-      "Overnight luxury Ha Long Bay Cruise aboard La Regina Royal Cruise with private en-suite suite cabin",
-      "Sung Sot (Surprise) Cave exploration and Luon Cave bamboo boat row or kayaking",
-      "Sundeck Tai Chi morning session, sunset party with local wine & squid fishing under starry skies",
-      "Full-Day Guided Hanoi City Tour: Tran Quoc Pagoda, Ho Chi Minh Complex & 11th-century Temple of Literature",
-      "Famous Hanoi Train Street experience with active railway trackside coffee culture",
-      "Cam Thanh Coconut Village basket boat ride with traditional fishing net-casting performance",
-      "Guided walking tour of UNESCO Hoi An Ancient Town & evening Thu Bon River boat ride with flower lanterns",
-      "Comfortable private air-conditioned vehicle transfers throughout the tour with English-speaking guides",
-      "Daily bottled water (2 bottles per person per touring day) and comprehensive trip support"
-    ],
     "inclusions": [
       "Accommodation in top-rated 4-Star hotels (Flower Garden Hotel Hanoi & Eden Ocean View Hotel Da Nang)",
       "Overnight 2-Day / 1-Night Luxury Cruise aboard La Regina Royal Cruise in a Noble Suite Room",
@@ -2022,7 +1804,6 @@
       }
     ],
     "hotelInfo": "4-Star Hotels & Luxury Cruise (Hanoi, Ha Long Bay, Da Nang) (4-Star Premium Accommodation)",
-    "transportation": "Private Airport Transfers & AC Tourist Coaches",
     "coverImage": "/images/gallery/vietnam-highlights-collage-card.jpg",
     "gallery": [
       "/images/gallery/vietnam-highlights-collage-card.jpg",
@@ -2045,7 +1826,7 @@
   },
   {
     "id": 18,
-    "slug": "bali-7d",
+    "slug": "china-beijing-shanghai-8d",
     "title": "Exotic Bali Indonesia Honeymoon & Island Tour - 06 Nights and 07 Days",
     "destination": "Bali (Ubud, Kuta & Nusa Penida), Indonesia",
     "country": "Indonesia",
@@ -2054,17 +1835,6 @@
     "originalPrice": 96000,
     "rating": 4.9,
     "reviews": 165,
-    "overview": "Escape to paradise on our curated 7-day Bali Indonesia tour from Nepal. Discover the sacred heart of Ubud with lush emerald rice terraces and jungle swings, stay in a luxury private pool villa, and sail across crystal waters to Nusa Penida's iconic Kelingking T-Rex cliff and Angel's Billabong. Experience golden sunsets at Tanah Lot sea temple, dramatic coastal cliffs at Uluwatu, relaxing Balinese spa massages, and lively beachside dining in Kuta with round-trip flights and seamless visa support from Kathmandu.",
-    "highlights": [
-      "Round-trip international flights between Kathmandu and Denpasar, Bali",
-      "Private luxury pool villa accommodation in Ubud & 4-Star beachfront resort in Kuta",
-      "Full-day Nusa Penida Island speedboat excursion: Kelingking T-Rex Cliff, Broken Beach & Crystal Bay",
-      "Ubud Highland Tour: Tegalalang Rice Terraces, Aloha Jungle Swing & Sacred Monkey Forest",
-      "Scenic sunset tours to Tanah Lot marine temple & dramatic Uluwatu clifftop temple",
-      "Complimentary traditional 60-minute Balinese aromatherapy massage & romantic beach dinner",
-      "All private airport and inter-hotel AC transfers throughout Bali",
-      "Complete Indonesia Visa-on-Arrival assistance and 24/7 travel desk from Nepal"
-    ],
     "inclusions": [
       "Round-trip airfare from Kathmandu to Bali with baggage allowance",
       "03 Nights at 4-Star Resort in Kuta + 03 Nights at Private Pool Villa in Ubud",
@@ -2140,7 +1910,6 @@
       }
     ],
     "hotelInfo": "3-Star Deluxe Hotels with Daily Breakfast",
-    "transportation": "Private Airport Transfers & AC Tourist Coaches",
     "coverImage": "/images/bali-kelingking.jpg",
     "gallery": [
       "/images/bali-kelingking.jpg",
@@ -2154,7 +1923,7 @@
   },
   {
     "id": 19,
-    "slug": "china-beijing-shanghai-8d",
+    "slug": "package-19",
     "title": "China Wonders: Beijing, Great Wall & Shanghai - 07 Nights and 08 Days",
     "destination": "Beijing & Shanghai, China",
     "country": "China",
@@ -2163,17 +1932,6 @@
     "originalPrice": 155000,
     "rating": 4.9,
     "reviews": 128,
-    "overview": "Embark on an unforgettable grand voyage through the imperial past and ultra-futuristic present of China. Walk upon the legendary Great Wall at Mutianyu, explore the majestic Forbidden City and Tiananmen Square, and cruise beneath the neon-lit skyscrapers of Shanghai's The Bund. Travel in comfort on the world's fastest bullet train from Beijing to Shanghai at 300 km/h. Enjoy handpicked 4-star hotels, authentic Peking duck, and full Nepal-to-China visa and ticketing support.",
-    "highlights": [
-      "Round-trip international flights from Kathmandu to Beijing & Shanghai",
-      "Mutianyu Great Wall excursion with scenic round-trip cable car tickets",
-      "Guided imperial tour: Tiananmen Square, Forbidden City & Summer Palace",
-      "High-speed modern bullet train journey from Beijing to Shanghai (300 km/h)",
-      "Shanghai skyline sightseeing: The Bund, Yu Garden, and Nanjing Road",
-      "Evening Huangpu River luxury sightseeing cruise in Shanghai",
-      "4-Star hotel accommodation with daily buffet breakfast and authentic Chinese dinners",
-      "Complete China tourist visa processing, biometrics guidance, and embassy support in Kathmandu"
-    ],
     "inclusions": [
       "International flights between Kathmandu, Beijing, and Shanghai",
       "04 Nights in 4-Star Beijing Hotel + 03 Nights in 4-Star Shanghai Hotel",
@@ -2257,7 +2015,6 @@
       }
     ],
     "hotelInfo": "3-Star Deluxe Hotels with Daily Breakfast",
-    "transportation": "Private Airport Transfers & AC Tourist Coaches",
     "coverImage": "https://images.unsplash.com/photo-1508804185872-d7badad00f7d?w=800&q=80",
     "gallery": [
       "https://images.unsplash.com/photo-1508804185872-d7badad00f7d?w=800&q=80",

@@ -9,6 +9,10 @@ import StatsCounter from "@/components/common/StatsCounter";
 import CTABanner from "@/components/common/CTABanner";
 import CountryCardsSection from "@/components/sections/CountryCardsSection";
 import VideoGuidesSection from "@/components/sections/VideoGuidesSection";
+import { getAllPackages } from "@/lib/server/packagesDataStore";
+
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
 
 export const metadata: Metadata = {
   title: "Skywalk Holidays | #1 Tour and Travel Company in Nepal — Thailand, Bali, China & Flights",
@@ -62,7 +66,9 @@ export const metadata: Metadata = {
   },
 };
 
-export default function HomePage() {
+export default async function HomePage() {
+  const initialPackages = await getAllPackages().catch(() => []);
+
   const faqJsonLd = {
     "@context": "https://schema.org",
     "@type": "FAQPage",
@@ -117,7 +123,7 @@ export default function HomePage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
       />
       <HeroSection />
-      <CountryCardsSection />
+      <CountryCardsSection initialLivePackages={initialPackages} />
       <UpcomingHolidaysSection />
       <ServicesSection />
       <StatsCounter />

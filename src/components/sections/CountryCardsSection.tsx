@@ -319,10 +319,19 @@ const INITIAL_FEATURED_FOUR = [
   },
 ];
 
-export default function CountryCardsSection() {
+interface CountryCardsSectionProps {
+  initialLivePackages?: any[];
+}
+
+export default function CountryCardsSection({
+  initialLivePackages,
+}: CountryCardsSectionProps = {}) {
   const [countriesList, setCountriesList] = useState(POPULAR_COUNTRIES);
   const [selectedCountryId, setSelectedCountryId] = useState<string>("all");
   const [livePackages, setLivePackages] = useState<any[]>(() => {
+    if (initialLivePackages && Array.isArray(initialLivePackages) && initialLivePackages.length > 0) {
+      return initialLivePackages;
+    }
     if (typeof window !== "undefined") {
       try {
         const stored = localStorage.getItem("skywalk_admin_packages_v1");

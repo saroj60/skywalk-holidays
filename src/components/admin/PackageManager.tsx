@@ -69,6 +69,7 @@ export default function PackageManager({
   });
 
   const [loading, setLoading] = useState(false);
+  const [saving, setSaving] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [filterCategory, setFilterCategory] = useState("ALL");
   const [statusNotification, setStatusNotification] = useState<string | null>(null);
@@ -145,6 +146,10 @@ export default function PackageManager({
       setLoading(false);
     }
   };
+
+  useEffect(() => {
+    fetchPackages();
+  }, []);
 
   const handleResetToDefaults = () => {
     if (
@@ -239,48 +244,16 @@ export default function PackageManager({
       .replace(/[^a-z0-9-_]+/g, "-")
       .replace(/(^-|-$)/g, "");
 
-    let updatedList: PackageRecord[];
-    if (editingPackage.id) {
-      // Update existing
-      updatedList = packages.map((p) =>
-        p.id === editingPackage.id ? ({ ...p, ...editingPackage, slug: safeSlug } as PackageRecord) : p
-      );
-    } else {
-      // Create new
-      const newId = Math.max(0, ...packages.map((p) => Number(p.id) || 0)) + 1;
-      const newPkg: PackageRecord = {
-        id: newId,
-        slug: safeSlug,
-        title: editingPackage.title,
-        destination: editingPackage.destination,
-        country: editingPackage.country || "International",
-        duration: editingPackage.duration || "5 Nights / 6 Days",
-        price: Number(editingPackage.price),
-        originalPrice: Number(editingPackage.originalPrice || editingPackage.price * 1.2),
-        rating: editingPackage.rating || 4.9,
-        reviews: editingPackage.reviews || 120,
-        overview: editingPackage.overview || "",
-        highlights: editingPackage.highlights || [],
-        inclusions: editingPackage.inclusions || [],
-        exclusions: editingPackage.exclusions || [],
-        itinerary: editingPackage.itinerary || [],
-        hotelInfo: editingPackage.hotelInfo || "3-Star Deluxe Hotels",
-        transportation: editingPackage.transportation || "Private AC Transfers",
-        coverImage: editingPackage.coverImage || "/images/bangkok-pattaya.png",
-        gallery: editingPackage.gallery || [],
-        category: editingPackage.category || "International",
-        badge: editingPackage.badge || "Popular",
-        featured: editingPackage.featured ?? false,
-        status: editingPackage.status || "ACTIVE",
-      };
-      updatedList = [newPkg, ...packages];
-    }
+    const payload = {
+      ...editingPackage,
+      slug: safeSlug,
+      price: Math.round(Number(editingPackage.price)),
+      originalPrice: Math.round(
+        Number(editingPackage.originalPrice || Number(editingPackage.price) * 1.2)
+      ),
+    };
 
-    // Persist immediately in state and local storage
-    persistPackages(updatedList);
-    showNotification(`Package "${editingPackage.title}" saved successfully!`);
-
-    // Non-blocking sync with backend API if running
+    setSaving(true);
     try {
       const endpoint = editingPackage.id ? `/api/packages/${editingPackage.id}` : "/api/packages";
       const method = editingPackage.id ? "PATCH" : "POST";
@@ -289,17 +262,53 @@ export default function PackageManager({
       if (token) {
         headers["Authorization"] = `Bearer ${token}`;
       }
-      await fetch(endpoint, {
+
+      const res = await fetch(endpoint, {
         method,
         headers,
-        body: JSON.stringify(editingPackage),
+        body: JSON.stringify(payload),
       });
-    } catch (e) {
-      console.warn("Backend API not reachable; changes saved locally in browser.", e);
-    }
 
-    setIsEditing(false);
-    setEditingPackage(null);
+      if (res.ok) {
+        const data = await res.json();
+        const savedRecord: PackageRecord = data.package || (payload as PackageRecord);
+
+        let updatedList: PackageRecord[];
+        if (editingPackage.id) {
+          updatedList = packages.map((p) =>
+            String(p.id) === String(editingPackage.id) ? { ...p, ...savedRecord } : p
+          );
+        } else {
+          updatedList = [savedRecord, ...packages];
+        }
+
+        persistPackages(updatedList);
+        showNotification(`✓ Saved to Hostinger MySQL: "${editingPackage.title}"`);
+        setIsEditing(false);
+        setEditingPackage(null);
+      } else {
+        const errJson = await res.json().catch(() => ({}));
+        alert(`Server error (${res.status}): ${errJson.error || "Failed saving to database."}`);
+      }
+    } catch (e: any) {
+      console.warn("Backend API sync failed, saving locally in browser cache.", e);
+      // Fallback local update
+      let updatedList: PackageRecord[];
+      if (editingPackage.id) {
+        updatedList = packages.map((p) =>
+          p.id === editingPackage.id ? ({ ...p, ...payload } as PackageRecord) : p
+        );
+      } else {
+        const newId = Math.max(0, ...packages.map((p) => Number(p.id) || 0)) + 1;
+        updatedList = [{ ...(payload as PackageRecord), id: newId }, ...packages];
+      }
+      persistPackages(updatedList);
+      showNotification(`Saved locally. Warning: server unreachable (${e.message})`);
+      setIsEditing(false);
+      setEditingPackage(null);
+    } finally {
+      setSaving(false);
+    }
   };
 
   const handleDeletePackage = async (id: string | number) => {
@@ -1338,10 +1347,20 @@ export default function PackageManager({
             </Button>
             <Button
               onClick={handleSavePackage}
-              className="bg-[#f97316] hover:bg-[#ea580c] text-white font-bold gap-2 px-6 shadow-md"
+              disabled={saving}
+              className="bg-[#f97316] hover:bg-[#ea580c] text-white font-bold gap-2 px-6 shadow-md cursor-pointer disabled:opacity-60"
             >
-              <Save size={16} />
-              Save Package Changes
+              {saving ? (
+                <>
+                  <RefreshCw size={16} className="animate-spin" />
+                  Saving to Hostinger MySQL...
+                </>
+              ) : (
+                <>
+                  <Save size={16} />
+                  Save Package Changes
+                </>
+              )}
             </Button>
           </div>
         </div>
