@@ -164,6 +164,7 @@ export default function AdminDashboard() {
             if (typeof window !== "undefined") {
               localStorage.setItem("skywalk_admin_logged", "true");
               localStorage.setItem("skywalk_admin_user", JSON.stringify(userWithTabs));
+              document.cookie = "skywalk_admin_logged=true; path=/; max-age=604800; SameSite=Lax";
             }
             setCurrentUser(userWithTabs);
             setIsAuthenticated(true);
@@ -178,6 +179,7 @@ export default function AdminDashboard() {
         if (isLogged && savedUser) {
           try {
             const parsed = JSON.parse(savedUser);
+            document.cookie = "skywalk_admin_logged=true; path=/; max-age=604800; SameSite=Lax";
             setCurrentUser(parsed);
             setIsAuthenticated(true);
             return;

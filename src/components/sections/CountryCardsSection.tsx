@@ -367,7 +367,10 @@ export default function CountryCardsSection({
       } catch (e) {}
     }
 
-    fetch("/api/packages", { cache: "no-store" })
+    fetch(`/api/packages?_t=${Date.now()}`, {
+      cache: "no-store",
+      headers: { "Cache-Control": "no-cache", Pragma: "no-cache" },
+    })
       .then((res) => res.json())
       .then((data) => {
         if (data && Array.isArray(data.packages) && data.packages.length > 0) {
@@ -390,7 +393,10 @@ export default function CountryCardsSection({
       }
     }
 
-    fetch("/api/destinations", { cache: "no-store" })
+    fetch(`/api/destinations?_t=${Date.now()}`, {
+      cache: "no-store",
+      headers: { "Cache-Control": "no-cache", Pragma: "no-cache" },
+    })
       .then((res) => res.json())
       .then((data) => {
         if (data && Array.isArray(data.destinations) && data.destinations.length > 0) {

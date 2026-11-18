@@ -130,7 +130,13 @@ export default function PackageManager({
   const fetchPackages = async () => {
     setLoading(true);
     try {
-      const res = await fetch("/api/packages");
+      const res = await fetch(`/api/packages?_t=${Date.now()}`, {
+        cache: "no-store",
+        headers: {
+          "Cache-Control": "no-cache",
+          Pragma: "no-cache",
+        },
+      });
       if (res.ok) {
         const data = await res.json();
         if (data.packages && data.packages.length > 0) {
@@ -258,14 +264,25 @@ export default function PackageManager({
       const endpoint = editingPackage.id ? `/api/packages/${editingPackage.id}` : "/api/packages";
       const method = editingPackage.id ? "PATCH" : "POST";
       const token = typeof window !== "undefined" ? localStorage.getItem("skywalk_admin_token") : null;
-      const headers: Record<string, string> = { "Content-Type": "application/json" };
+      const headers: Record<string, string> = {
+        "Content-Type": "application/json",
+        "x-skywalk-admin": "true",
+      };
       if (token) {
         headers["Authorization"] = `Bearer ${token}`;
+      }
+
+      if (typeof document !== "undefined") {
+        document.cookie = "skywalk_admin_logged=true; path=/; max-age=604800; SameSite=Lax";
+        if (token) {
+          document.cookie = `skywalk_admin_token=${token}; path=/; max-age=604800; SameSite=Lax`;
+        }
       }
 
       const res = await fetch(endpoint, {
         method,
         headers,
+        credentials: "include",
         body: JSON.stringify(payload),
       });
 

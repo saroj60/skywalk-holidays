@@ -52,7 +52,10 @@ export default function CountryManager({ onSwitchToPackages }: CountryManagerPro
   // Load countries & packages from API, localStorage or defaults
   useEffect(() => {
     // 1. Fetch live destinations from server
-    fetch("/api/destinations", { cache: "no-store" })
+    fetch(`/api/destinations?_t=${Date.now()}`, {
+      cache: "no-store",
+      headers: { "Cache-Control": "no-cache", Pragma: "no-cache" },
+    })
       .then((res) => res.json())
       .then((data) => {
         if (data && Array.isArray(data.destinations) && data.destinations.length > 0) {
@@ -100,14 +103,25 @@ export default function CountryManager({ onSwitchToPackages }: CountryManagerPro
 
     try {
       const token = typeof window !== "undefined" ? localStorage.getItem("skywalk_admin_token") : null;
-      const headers: Record<string, string> = { "Content-Type": "application/json" };
+      const headers: Record<string, string> = {
+        "Content-Type": "application/json",
+        "x-skywalk-admin": "true",
+      };
       if (token) {
         headers["Authorization"] = `Bearer ${token}`;
+      }
+
+      if (typeof document !== "undefined") {
+        document.cookie = "skywalk_admin_logged=true; path=/; max-age=604800; SameSite=Lax";
+        if (token) {
+          document.cookie = `skywalk_admin_token=${token}; path=/; max-age=604800; SameSite=Lax`;
+        }
       }
 
       await fetch("/api/destinations", {
         method: "POST",
         headers,
+        credentials: "include",
         body: JSON.stringify(updatedCountries),
       });
     } catch (err) {

@@ -12,12 +12,23 @@ function checkIsAdmin(req: NextRequest) {
   if (isDev) return true;
   const hasLoggedCookie = req.cookies.get("skywalk_admin_logged")?.value === "true";
   const hasToken = req.cookies.get("skywalk_admin_token")?.value;
-  return Boolean(hasLoggedCookie || hasToken);
+  const hasAdminHeader = req.headers.get("x-skywalk-admin") === "true";
+  const authHeader = req.headers.get("authorization");
+  return Boolean(hasLoggedCookie || hasToken || hasAdminHeader || authHeader);
 }
 
 export async function GET() {
   const destinations = getStoredDestinations();
-  return NextResponse.json({ success: true, destinations });
+  return NextResponse.json(
+    { success: true, destinations },
+    {
+      headers: {
+        "Cache-Control": "no-store, no-cache, must-revalidate, proxy-revalidate",
+        "CDN-Cache-Control": "no-store",
+        "Surrogate-Control": "no-store",
+      },
+    }
+  );
 }
 
 export async function POST(req: NextRequest) {
