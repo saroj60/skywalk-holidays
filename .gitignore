@@ -28,6 +28,7 @@
 *.sqlite3
 *.db-journal
 *.pdf
+*.zip
 
 # debug
 npm-debug.log*

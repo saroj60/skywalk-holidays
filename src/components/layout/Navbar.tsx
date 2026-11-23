@@ -40,18 +40,34 @@ export default function Navbar() {
 
       {/* Top Bar */}
       <div className="hidden md:block bg-[#0a1628] text-white text-xs py-2">
-        <div className="container-custom flex justify-between items-center">
-          <div className="flex items-center gap-6">
-            <a href={`tel:${company.mobile || company.phone}`} className="flex items-center gap-1.5 hover:text-[#0ea5e9] transition-colors">
-              <Phone size={12} />
-              {company.mobile || company.phone}
-            </a>
-            <a href={`mailto:${company.email}`} className="flex items-center gap-1.5 hover:text-[#0ea5e9] transition-colors">
-              <Mail size={12} />
+        <div className="container-custom flex flex-wrap justify-between items-center gap-y-1.5 gap-x-4">
+          <div className="flex items-center gap-4 lg:gap-6 flex-wrap">
+            <div className="flex items-center gap-2 flex-wrap">
+              <Phone size={12} className="text-[#0ea5e9] shrink-0" />
+              {(company.phoneNumbers && company.phoneNumbers.length > 0
+                ? company.phoneNumbers
+                : ["+977 971-4491103", "+977 970-7054143", "+977 970-7054144"]
+              ).map((num, idx) => (
+                <React.Fragment key={num}>
+                  {idx > 0 && <span className="text-white/30 text-[10px]">|</span>}
+                  <a
+                    href={`tel:${num.replace(/\s+/g, "")}`}
+                    className="hover:text-[#0ea5e9] transition-colors whitespace-nowrap"
+                  >
+                    {num}
+                  </a>
+                </React.Fragment>
+              ))}
+            </div>
+            <a
+              href={`mailto:${company.email}`}
+              className="flex items-center gap-1.5 hover:text-[#0ea5e9] transition-colors shrink-0"
+            >
+              <Mail size={12} className="text-[#0ea5e9] shrink-0" />
               {company.email}
             </a>
           </div>
-          <div className="text-[#94a3b8]">{company.address}</div>
+          <div className="text-[#94a3b8] hidden xl:block">{company.address}</div>
         </div>
       </div>
 
@@ -250,6 +266,27 @@ export default function Navbar() {
               <Button size="sm" className="flex-1" asChild>
                 <Link href="/services/custom" onClick={() => setMobileOpen(false)}>Book Now</Link>
               </Button>
+            </div>
+
+            <div className="pt-3 mt-2 border-t border-slate-100 text-xs text-slate-500 space-y-1.5">
+              <div className="flex items-center gap-1.5 font-semibold text-slate-700">
+                <Phone size={12} className="text-[#0ea5e9]" />
+                <span>Call / WhatsApp:</span>
+              </div>
+              <div className="flex flex-wrap gap-x-3 gap-y-1 pl-4 text-xs">
+                {(company.phoneNumbers && company.phoneNumbers.length > 0
+                  ? company.phoneNumbers
+                  : ["+977 971-4491103", "+977 970-7054143", "+977 970-7054144"]
+                ).map((num) => (
+                  <a
+                    key={num}
+                    href={`tel:${num.replace(/\s+/g, "")}`}
+                    className="text-[#0ea5e9] hover:underline font-medium"
+                  >
+                    {num}
+                  </a>
+                ))}
+              </div>
             </div>
           </div>
         </div>

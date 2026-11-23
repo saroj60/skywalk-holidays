@@ -9,6 +9,7 @@ export interface CompanyInfo {
   description: string;
   phone: string;
   mobile: string;
+  phoneNumbers?: readonly string[] | string[];
   email: string;
   address: string;
   mapsUrl: string;

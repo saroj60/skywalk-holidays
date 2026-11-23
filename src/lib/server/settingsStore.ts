@@ -8,6 +8,7 @@ export interface SiteSettings {
   description: string;
   phone: string;
   mobile: string;
+  phoneNumbers?: readonly string[] | string[];
   email: string;
   address: string;
   mapsUrl: string;
@@ -27,6 +28,7 @@ const DEFAULT_SETTINGS: SiteSettings = {
   description: COMPANY.description,
   phone: COMPANY.phone,
   mobile: COMPANY.mobile,
+  phoneNumbers: COMPANY.phoneNumbers,
   email: COMPANY.email,
   address: COMPANY.address,
   mapsUrl: COMPANY.mapsUrl,

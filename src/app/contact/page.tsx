@@ -255,9 +255,21 @@ export default function ContactPage() {
                     </a>
                   </div>
                   <div className="flex items-center justify-between">
-                    <span className="font-semibold text-[#0a1628]">Phone Line:</span>
+                    <span className="font-semibold text-[#0a1628]">Office Line:</span>
                     <a href="tel:9714491103" className="text-[#0ea5e9] font-bold hover:underline">
                       971-4491103
+                    </a>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <span className="font-semibold text-[#0a1628]">Hotline 1:</span>
+                    <a href="tel:+9779707054143" className="text-[#0ea5e9] font-bold hover:underline">
+                      +977 970-7054143
+                    </a>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <span className="font-semibold text-[#0a1628]">Hotline 2:</span>
+                    <a href="tel:+9779707054144" className="text-[#0ea5e9] font-bold hover:underline">
+                      +977 970-7054144
                     </a>
                   </div>
                 </div>

@@ -101,13 +101,23 @@ export default function Footer() {
               {company.description} We make travel seamless, memorable, and accessible for everyone.
             </p>
             <div className="space-y-2">
-              <a
-                href={`tel:${company.mobile || company.phone}`}
-                className="flex items-center gap-2 text-sm text-[#94a3b8] hover:text-[#0ea5e9] transition-colors"
-              >
-                <Phone size={14} className="text-[#0ea5e9]" />
-                {company.mobile || company.phone}
-              </a>
+              <div className="flex items-start gap-2 text-sm text-[#94a3b8]">
+                <Phone size={14} className="text-[#0ea5e9] mt-0.5 shrink-0" />
+                <div className="flex flex-col gap-1">
+                  {(company.phoneNumbers && company.phoneNumbers.length > 0
+                    ? company.phoneNumbers
+                    : ["+977 971-4491103", "+977 970-7054143", "+977 970-7054144"]
+                  ).map((num) => (
+                    <a
+                      key={num}
+                      href={`tel:${num.replace(/\s+/g, "")}`}
+                      className="hover:text-[#0ea5e9] transition-colors"
+                    >
+                      {num}
+                    </a>
+                  ))}
+                </div>
+              </div>
               <a
                 href={`mailto:${company.email}`}
                 className="flex items-center gap-2 text-sm text-[#94a3b8] hover:text-[#0ea5e9] transition-colors"

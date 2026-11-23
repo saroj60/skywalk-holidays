@@ -17,6 +17,11 @@ export const COMPANY = {
     "Nepal's premier travel agency offering world-class flight bookings, hotel stays, holiday packages & visa assistance.",
   phone: "971-4491103",
   mobile: "+977 971-4491103",
+  phoneNumbers: [
+    "+977 971-4491103",
+    "+977 970-7054143",
+    "+977 970-7054144",
+  ],
   email: "skywalktoursandtravels32@gmail.com",
   address: "Pepsicola, Kathmandu, Nepal, 44600",
   mapsUrl: "https://maps.app.goo.gl/cSd8z1m3BnbegeSY6",
