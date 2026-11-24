@@ -219,13 +219,9 @@ export default function AboutPage() {
                 </div>
               </div>
 
-              {/* Bottom Headquarters & Travelers Info */}
+              {/* Bottom Travelers Info */}
               <div className="relative z-10 bg-white/95 backdrop-blur-md rounded-2xl p-4 border border-slate-200/80 shadow-md">
-                <div className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-[#0ea5e9]">
-                  <MapPin size={13} className="text-[#f97316] shrink-0" />
-                  <span>Headquartered in Thamel, Kathmandu</span>
-                </div>
-                <p className="text-xs sm:text-sm font-semibold text-[#0a1628] mt-1">
+                <p className="text-xs sm:text-sm font-semibold text-[#0a1628]">
                   Serving over 1500+ happy travelers across 14+ global destinations.
                 </p>
               </div>
