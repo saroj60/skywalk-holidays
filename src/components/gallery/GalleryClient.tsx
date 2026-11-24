@@ -1323,21 +1323,37 @@ export default function GalleryClient() {
   const [items, setItems] = useState(GALLERY_ITEMS);
 
   useEffect(() => {
-    if (typeof window !== "undefined") {
-      const stored = localStorage.getItem("skywalk_gallery_photos");
-      if (stored) {
-        try {
-          const parsed = JSON.parse(stored);
-          if (Array.isArray(parsed) && parsed.length > 0) {
-            // Keep official photos always prioritized at top
-            const officialUrls = new Set(GALLERY_ITEMS.map((g) => g.image));
-            const userUploaded = parsed.filter((p: any) => !officialUrls.has(p.image));
-            setItems([...GALLERY_ITEMS, ...userUploaded]);
+    const loadGallery = async () => {
+      try {
+        const res = await fetch("/api/gallery", { cache: "no-store" });
+        if (res.ok) {
+          const data = await res.json();
+          if (data.photos && Array.isArray(data.photos) && data.photos.length > 0) {
+            setItems(data.photos);
+            if (typeof window !== "undefined") {
+              localStorage.setItem("skywalk_gallery_photos", JSON.stringify(data.photos));
+            }
             return;
           }
-        } catch (e) {}
+        }
+      } catch (e) {}
+
+      if (typeof window !== "undefined") {
+        const stored = localStorage.getItem("skywalk_gallery_photos");
+        if (stored) {
+          try {
+            const parsed = JSON.parse(stored);
+            if (Array.isArray(parsed) && parsed.length > 0) {
+              const officialUrls = new Set(GALLERY_ITEMS.map((g) => g.image));
+              const userUploaded = parsed.filter((p: any) => !officialUrls.has(p.image));
+              setItems([...GALLERY_ITEMS, ...userUploaded]);
+              return;
+            }
+          } catch (e) {}
+        }
       }
-    }
+    };
+    loadGallery();
   }, []);
 
   const filteredItems =

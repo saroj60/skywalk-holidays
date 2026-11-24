@@ -70,21 +70,58 @@ export default function StaffManager() {
   const [formDepartment, setFormDepartment] = useState("");
   const [toastMsg, setToastMsg] = useState("");
 
-  useEffect(() => {
+  const persistStaffList = async (updated: StaffAccount[]) => {
+    setStaffList(updated);
     if (typeof window !== "undefined") {
-      const stored = localStorage.getItem(STAFF_STORAGE_KEY);
-      if (stored) {
-        try {
-          const parsed = JSON.parse(stored);
-          if (Array.isArray(parsed) && parsed.length > 0) {
-            setStaffList(parsed);
+      localStorage.setItem(STAFF_STORAGE_KEY, JSON.stringify(updated));
+    }
+    try {
+      const token = typeof window !== "undefined" ? localStorage.getItem("skywalk_admin_token") : null;
+      const headers: Record<string, string> = { "Content-Type": "application/json" };
+      if (token) headers["Authorization"] = `Bearer ${token}`;
+      await fetch("/api/sys-admin/staff", {
+        method: "POST",
+        headers,
+        body: JSON.stringify({ staff: updated }),
+      });
+    } catch (e) {}
+  };
+
+  useEffect(() => {
+    const loadStaff = async () => {
+      try {
+        const token = typeof window !== "undefined" ? localStorage.getItem("skywalk_admin_token") : null;
+        const headers: Record<string, string> = {};
+        if (token) headers["Authorization"] = `Bearer ${token}`;
+        const res = await fetch("/api/sys-admin/staff", { headers, cache: "no-store" });
+        if (res.ok) {
+          const data = await res.json();
+          if (data.staff && Array.isArray(data.staff) && data.staff.length > 0) {
+            setStaffList(data.staff);
+            if (typeof window !== "undefined") {
+              localStorage.setItem(STAFF_STORAGE_KEY, JSON.stringify(data.staff));
+            }
             return;
           }
-        } catch (e) {}
+        }
+      } catch (e) {}
+
+      if (typeof window !== "undefined") {
+        const stored = localStorage.getItem(STAFF_STORAGE_KEY);
+        if (stored) {
+          try {
+            const parsed = JSON.parse(stored);
+            if (Array.isArray(parsed) && parsed.length > 0) {
+              setStaffList(parsed);
+              return;
+            }
+          } catch (e) {}
+        }
+        setStaffList(INITIAL_STAFF_ACCOUNTS);
+        localStorage.setItem(STAFF_STORAGE_KEY, JSON.stringify(INITIAL_STAFF_ACCOUNTS));
       }
-      setStaffList(INITIAL_STAFF_ACCOUNTS);
-      localStorage.setItem(STAFF_STORAGE_KEY, JSON.stringify(INITIAL_STAFF_ACCOUNTS));
-    }
+    };
+    loadStaff();
   }, []);
 
   const showToast = (msg: string) => {
@@ -142,8 +179,7 @@ export default function StaffManager() {
         return s;
       });
 
-      setStaffList(updated);
-      localStorage.setItem(STAFF_STORAGE_KEY, JSON.stringify(updated));
+      persistStaffList(updated);
       showToast(`Updated account for ${formName.trim()}`);
     } else {
       const newStaff: StaffAccount = {
@@ -158,8 +194,7 @@ export default function StaffManager() {
       };
 
       const updated = [newStaff, ...staffList];
-      setStaffList(updated);
-      localStorage.setItem(STAFF_STORAGE_KEY, JSON.stringify(updated));
+      persistStaffList(updated);
       showToast(`Created staff account for ${formName.trim()}`);
     }
 
@@ -179,8 +214,7 @@ export default function StaffManager() {
     const updated: StaffAccount[] = staffList.map((s) =>
       s.id === id ? { ...s, status: nextStatus } : s
     );
-    setStaffList(updated);
-    localStorage.setItem(STAFF_STORAGE_KEY, JSON.stringify(updated));
+    persistStaffList(updated);
     showToast(`Account status set to ${nextStatus} for ${target.name}`);
   };
 
@@ -194,8 +228,7 @@ export default function StaffManager() {
     if (!confirm(`Are you sure you want to permanently delete staff account ${target.name}?`)) return;
 
     const filtered = staffList.filter((s) => s.id !== id);
-    setStaffList(filtered);
-    localStorage.setItem(STAFF_STORAGE_KEY, JSON.stringify(filtered));
+    persistStaffList(filtered);
     showToast(`Deleted staff account ${target.name}`);
   };
 

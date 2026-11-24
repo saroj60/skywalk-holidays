@@ -920,31 +920,58 @@ export default function GalleryManager() {
   const [uploading, setUploading] = useState(false);
   const [savedSuccess, setSavedSuccess] = useState(false);
 
-  // Load photos from localStorage or defaults
+  // Load photos from MySQL API first, fallback to localStorage or defaults
   useEffect(() => {
-    if (typeof window !== "undefined") {
-      const stored = localStorage.getItem("skywalk_gallery_photos");
-      if (stored) {
-        try {
-          const parsed = JSON.parse(stored);
-          if (Array.isArray(parsed) && parsed.length > 0) {
-            const existingUrls = new Set(parsed.map((p: any) => p.image));
-            const missingOfficial = DEFAULT_GALLERY_PHOTOS.filter((g) => !existingUrls.has(g.image));
-            setPhotos([...missingOfficial, ...parsed]);
+    const loadPhotos = async () => {
+      try {
+        const res = await fetch("/api/gallery", { cache: "no-store" });
+        if (res.ok) {
+          const data = await res.json();
+          if (data.photos && Array.isArray(data.photos) && data.photos.length > 0) {
+            setPhotos(data.photos);
+            if (typeof window !== "undefined") {
+              localStorage.setItem("skywalk_gallery_photos", JSON.stringify(data.photos));
+            }
             return;
           }
-        } catch (e) {}
+        }
+      } catch (e) {}
+
+      if (typeof window !== "undefined") {
+        const stored = localStorage.getItem("skywalk_gallery_photos");
+        if (stored) {
+          try {
+            const parsed = JSON.parse(stored);
+            if (Array.isArray(parsed) && parsed.length > 0) {
+              const existingUrls = new Set(parsed.map((p: any) => p.image));
+              const missingOfficial = DEFAULT_GALLERY_PHOTOS.filter((g) => !existingUrls.has(g.image));
+              setPhotos([...missingOfficial, ...parsed]);
+              return;
+            }
+          } catch (e) {}
+        }
       }
-    }
-    setPhotos(DEFAULT_GALLERY_PHOTOS);
+      setPhotos(DEFAULT_GALLERY_PHOTOS);
+    };
+    loadPhotos();
   }, []);
 
-  // Sync to localStorage
-  const savePhotosState = (updatedPhotos: GalleryRecord[]) => {
+  // Sync to MySQL API and localStorage
+  const savePhotosState = async (updatedPhotos: GalleryRecord[]) => {
     setPhotos(updatedPhotos);
     if (typeof window !== "undefined") {
       localStorage.setItem("skywalk_gallery_photos", JSON.stringify(updatedPhotos));
     }
+    try {
+      const token = typeof window !== "undefined" ? localStorage.getItem("skywalk_admin_token") : null;
+      const headers: Record<string, string> = { "Content-Type": "application/json" };
+      if (token) headers["Authorization"] = `Bearer ${token}`;
+      await fetch("/api/gallery", {
+        method: "POST",
+        headers,
+        body: JSON.stringify({ photos: updatedPhotos }),
+      });
+    } catch (e) {}
   };
 
   const handleOpenCreate = () => {
