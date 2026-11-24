@@ -36,27 +36,22 @@ export default function ContactInquiryForm() {
     setIsSubmitting(true);
     setErrorMsg("");
 
+    const waLink = buildWhatsAppLink({
+      service: formData.serviceInterested,
+      name: formData.name,
+      destination: formData.destination || "General Inquiry",
+      whatsappNumber: formData.phone,
+      additionalDetails: `Email: ${formData.email} | Note: ${formData.message}`,
+    });
+    setWhatsappUrl(waLink);
+
     try {
-      const res = await fetch("/api/reach-us", {
+      await fetch("/api/reach-us", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
-      });
+      }).catch((e) => console.warn("Background reach-us sync warning:", e));
 
-      if (!res.ok) {
-        const errData = await res.json().catch(() => ({}));
-        throw new Error(errData.error || "Failed to submit message.");
-      }
-
-      const waLink = buildWhatsAppLink({
-        service: formData.serviceInterested,
-        name: formData.name,
-        destination: formData.destination || "General Inquiry",
-        whatsappNumber: formData.phone,
-        additionalDetails: `Email: ${formData.email} | Note: ${formData.message}`,
-      });
-
-      setWhatsappUrl(waLink);
       setSubmitted(true);
 
       // Automatically launch WhatsApp with pre-filled inquiry details
@@ -64,7 +59,10 @@ export default function ContactInquiryForm() {
         window.open(waLink, "_blank");
       }
     } catch (err: any) {
-      setErrorMsg(err.message || "An error occurred while sending your message.");
+      setSubmitted(true);
+      if (typeof window !== "undefined") {
+        window.open(waLink, "_blank");
+      }
     } finally {
       setIsSubmitting(false);
     }

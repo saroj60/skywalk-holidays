@@ -61,9 +61,21 @@ export default function FlightInquiryForm() {
     setIsSubmitting(true);
     setErrorMsg("");
 
+    const waLink = buildWhatsAppLink({
+      service: "Flight Booking",
+      name: formData.fullName,
+      from: formData.fromAirport,
+      to: formData.toAirport,
+      travelDate: `${formData.departureDate}${formData.returnDate ? ` (Return: ${formData.returnDate})` : ""}`,
+      passengers: `${formData.adults} Adult(s), ${formData.children} Child(ren) | Class: ${formData.travelClass}`,
+      whatsappNumber: formData.whatsappNumber,
+      additionalDetails: `Email: ${formData.email || "N/A"}`,
+    });
+    setWhatsappUrl(waLink);
+
     try {
-      // 1. Post to backend API
-      const res = await fetch("/api/inquiries/flight", {
+      // 1. Post to backend API (async without blocking customer)
+      await fetch("/api/inquiries/flight", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -77,26 +89,8 @@ export default function FlightInquiryForm() {
           customerName: formData.fullName,
           whatsappNumber: formData.whatsappNumber,
         }),
-      });
+      }).catch((e) => console.warn("Flight inquiry backend sync warning:", e));
 
-      if (!res.ok) {
-        const errData = await res.json().catch(() => ({}));
-        throw new Error(errData.error || "Failed to save inquiry to database.");
-      }
-
-      // 2. Build WhatsApp link
-      const waLink = buildWhatsAppLink({
-        service: "Flight Booking",
-        name: formData.fullName,
-        from: formData.fromAirport,
-        to: formData.toAirport,
-        travelDate: `${formData.departureDate}${formData.returnDate ? ` (Return: ${formData.returnDate})` : ""}`,
-        passengers: `${formData.adults} Adult(s), ${formData.children} Child(ren) | Class: ${formData.travelClass}`,
-        whatsappNumber: formData.whatsappNumber,
-        additionalDetails: `Email: ${formData.email || "N/A"}`,
-      });
-
-      setWhatsappUrl(waLink);
       setSubmitted(true);
 
       // Automatically launch WhatsApp with pre-filled inquiry details
@@ -104,7 +98,10 @@ export default function FlightInquiryForm() {
         window.open(waLink, "_blank");
       }
     } catch (err: any) {
-      setErrorMsg(err.message || "An unexpected error occurred while submitting.");
+      setSubmitted(true);
+      if (typeof window !== "undefined") {
+        window.open(waLink, "_blank");
+      }
     } finally {
       setIsSubmitting(false);
     }

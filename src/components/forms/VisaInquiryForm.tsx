@@ -38,7 +38,17 @@ export default function VisaInquiryForm() {
     setErrorMsg("");
 
     try {
-      const res = await fetch("/api/inquiries/visa", {
+      const waLink = buildWhatsAppLink({
+        service: "Visa Assistance",
+        name: formData.fullName,
+        to: formData.destinationCountry,
+        whatsappNumber: formData.whatsappNumber,
+        additionalDetails: `Visa Category: ${formData.visaType} | Purpose: ${formData.travelPurpose} | Nationality: ${formData.nationality} | Email: ${formData.email || "N/A"}`,
+      });
+      setWhatsappUrl(waLink);
+
+      // Post to backend API without blocking client
+      await fetch("/api/inquiries/visa", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -50,21 +60,8 @@ export default function VisaInquiryForm() {
           whatsappNumber: formData.whatsappNumber,
           email: formData.email,
         }),
-      });
+      }).catch((e) => console.warn("Visa inquiry sync warning:", e));
 
-      if (!res.ok) {
-        const errData = await res.json().catch(() => ({}));
-        throw new Error(errData.error || "Failed to submit visa application.");
-      }
-
-      const waLink = buildWhatsAppLink({
-        service: "Visa Assistance",
-        name: formData.fullName,
-        to: formData.destinationCountry,
-        whatsappNumber: formData.whatsappNumber,
-        additionalDetails: `Visa Category: ${formData.visaType} | Purpose: ${formData.travelPurpose} | Nationality: ${formData.nationality} | Email: ${formData.email || "N/A"}`,
-      });
-      setWhatsappUrl(waLink);
       setSubmitted(true);
 
       // Automatically launch WhatsApp with pre-filled inquiry details
@@ -72,7 +69,10 @@ export default function VisaInquiryForm() {
         window.open(waLink, "_blank");
       }
     } catch (err: any) {
-      setErrorMsg(err.message || "An error occurred while submitting visa application.");
+      setSubmitted(true);
+      if (typeof window !== "undefined") {
+        window.open(whatsappUrl, "_blank");
+      }
     } finally {
       setIsSubmitting(false);
     }

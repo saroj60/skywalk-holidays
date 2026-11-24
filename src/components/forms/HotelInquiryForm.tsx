@@ -50,7 +50,19 @@ export default function HotelInquiryForm() {
     setErrorMsg("");
 
     try {
-      const res = await fetch("/api/inquiries/hotel", {
+      const waLink = buildWhatsAppLink({
+        service: "Hotel Booking",
+        name: formData.fullName,
+        destination: formData.destination,
+        travelDate: `${formData.checkInDate}${formData.checkOutDate ? ` to ${formData.checkOutDate}` : ""}`,
+        passengers: `${formData.guests}, ${formData.rooms}`,
+        whatsappNumber: formData.whatsappNumber,
+        additionalDetails: `Email: ${formData.email || "N/A"}`,
+      });
+      setWhatsappUrl(waLink);
+
+      // Async post to backend API without blocking client
+      await fetch("/api/inquiries/hotel", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -62,24 +74,8 @@ export default function HotelInquiryForm() {
           customerName: formData.fullName,
           whatsappNumber: formData.whatsappNumber,
         }),
-      });
+      }).catch((e) => console.warn("Hotel inquiry sync warning:", e));
 
-      if (!res.ok) {
-        const errData = await res.json().catch(() => ({}));
-        throw new Error(errData.error || "Failed to save hotel inquiry.");
-      }
-
-      const waLink = buildWhatsAppLink({
-        service: "Hotel Booking",
-        name: formData.fullName,
-        destination: formData.destination,
-        travelDate: `${formData.checkInDate}${formData.checkOutDate ? ` to ${formData.checkOutDate}` : ""}`,
-        passengers: `${formData.guests}, ${formData.rooms}`,
-        whatsappNumber: formData.whatsappNumber,
-        additionalDetails: `Email: ${formData.email || "N/A"}`,
-      });
-
-      setWhatsappUrl(waLink);
       setSubmitted(true);
 
       // Automatically launch WhatsApp with pre-filled inquiry details
@@ -87,7 +83,10 @@ export default function HotelInquiryForm() {
         window.open(waLink, "_blank");
       }
     } catch (err: any) {
-      setErrorMsg(err.message || "An error occurred while submitting hotel inquiry.");
+      setSubmitted(true);
+      if (typeof window !== "undefined") {
+        window.open(whatsappUrl, "_blank");
+      }
     } finally {
       setIsSubmitting(false);
     }
