@@ -127,11 +127,8 @@ const TEST_LEAD_IDS = new Set([
 
 export const STAFF_MEMBERS = [
   "Unassigned",
-  "Saroj",
-  "Aayush",
-  "Tour Desk",
-  "Ticketing Desk",
-  "Visa Specialist",
+  "Admin",
+  "Sales Desk",
 ];
 
 export const PIPELINE_STAGES: {
@@ -251,7 +248,7 @@ export default function CrmManager({ crmServiceFilter, userRole }: CrmManagerPro
     travelDate: "",
     travelers: "2 Travelers",
     budget: "",
-    assignedStaff: "Saroj",
+    assignedStaff: "Sales Desk",
     notes: "",
     status: "NEW" as CrmStatus,
   });
@@ -461,7 +458,7 @@ export default function CrmManager({ crmServiceFilter, userRole }: CrmManagerPro
       travelDate: "",
       travelers: "2 Travelers",
       budget: "",
-      assignedStaff: "Saroj",
+      assignedStaff: "Sales Desk",
       notes: "",
       status: "NEW",
     });
