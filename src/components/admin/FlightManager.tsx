@@ -278,6 +278,7 @@ export default function FlightManager() {
                             src={flight.logo}
                             alt={flight.name}
                             fill
+                            unoptimized
                             className="object-contain p-0.5"
                           />
                         </div>
@@ -449,6 +450,7 @@ export default function FlightManager() {
                           src={formData.logo}
                           alt="Logo Preview"
                           fill
+                          unoptimized
                           className="object-contain"
                         />
                       </div>

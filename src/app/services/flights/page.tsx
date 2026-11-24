@@ -312,6 +312,7 @@ export default function FlightsPage() {
                         src={airline.logo}
                         alt={airline.name}
                         fill
+                        unoptimized
                         className="object-cover"
                         onError={() => setFailedLogos((prev) => ({ ...prev, [airline.name]: true }))}
                         sizes="56px"
