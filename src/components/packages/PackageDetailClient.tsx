@@ -1006,8 +1006,8 @@ export default function PackageDetailClient({
 
           </div>
 
-          {/* Right Column: Booking Inquiry Card */}
-          <div className="lg:col-span-1 self-start z-20">
+          {/* Right Column: Fixed/Sticky Booking Inquiry Card */}
+          <div className="lg:col-span-1 lg:sticky lg:top-32 self-start z-20">
             <PackageInquirySidebar
               packageTitle={pkg.title}
               packagePrice={Number(pkg.price)}
