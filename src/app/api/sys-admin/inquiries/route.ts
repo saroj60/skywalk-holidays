@@ -23,14 +23,18 @@ export async function GET(req: NextRequest) {
   }
 
   let leads: any[] = [];
+  let dbLoaded = false;
 
   try {
-    const flights = await prisma.flightInquiry?.findMany().catch(() => []) || [];
-    const hotels = await prisma.hotelInquiry?.findMany().catch(() => []) || [];
-    const packages = await prisma.holidayPackageInquiry?.findMany().catch(() => []) || [];
-    const visas = await prisma.visaApplication?.findMany().catch(() => []) || [];
-    const buses = await prisma.busInquiry?.findMany().catch(() => []) || [];
-    const contacts = await prisma.contactMessage?.findMany().catch(() => []) || [];
+    const [flights, hotels, packages, visas, buses, contacts] = await Promise.all([
+      prisma.flightInquiry?.findMany() || Promise.resolve([]),
+      prisma.hotelInquiry?.findMany() || Promise.resolve([]),
+      prisma.holidayPackageInquiry?.findMany() || Promise.resolve([]),
+      prisma.visaApplication?.findMany() || Promise.resolve([]),
+      prisma.busInquiry?.findMany() || Promise.resolve([]),
+      prisma.contactMessage?.findMany() || Promise.resolve([]),
+    ]);
+    dbLoaded = true;
 
     // Map all inquiries to unified CRM lead format
     leads = [
@@ -146,12 +150,13 @@ export async function GET(req: NextRequest) {
     leads = [];
   }
 
-  // Merge fail-safe backup leads
+  // Merge fail-safe backup leads ONLY if DB was unavailable or for manual offline leads
   try {
     const localBackups = getLocalInquiries();
     const existingRawIds = new Set(leads.map((l) => l.rawId));
     for (const backup of localBackups) {
-      if (!existingRawIds.has(backup.id)) {
+      const isManualLead = backup.id.startsWith("lead-");
+      if ((!dbLoaded || isManualLead) && !existingRawIds.has(backup.id)) {
         leads.push({
           id: backup.id.startsWith("lead-") ? `BK-${backup.id.slice(-6).toUpperCase()}` : (backup.id.startsWith("MSG-") ? backup.id : `MSG-${backup.id.slice(0, 6).toUpperCase()}`),
           rawId: backup.id,

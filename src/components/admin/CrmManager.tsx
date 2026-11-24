@@ -278,32 +278,6 @@ export default function CrmManager({ crmServiceFilter, userRole }: CrmManagerPro
           const validApiLeads = data.leads.filter(
             (l: CrmLead) => !TEST_LEAD_IDS.has(l.id) && !TEST_LEAD_IDS.has(l.rawId)
           );
-
-          // Check local storage for overrides/newly added local leads
-          const savedLocal = localStorage.getItem(CRM_STORAGE_KEY);
-          if (savedLocal) {
-            try {
-              const parsedLocal = JSON.parse(savedLocal);
-              if (Array.isArray(parsedLocal) && parsedLocal.length > 0) {
-                const leadMap = new Map<string, CrmLead>();
-                // First insert local un-synced leads
-                parsedLocal
-                  .filter((l: CrmLead) => !TEST_LEAD_IDS.has(l.id) && !TEST_LEAD_IDS.has(l.rawId))
-                  .forEach((l: CrmLead) => leadMap.set(l.id, l));
-                // Overlay API leads from server (authoritative source)
-                validApiLeads.forEach((l: CrmLead) => leadMap.set(l.id, l));
-                const merged = Array.from(leadMap.values()).sort((a, b) => {
-                  const timeA = new Date(a.createdAt || a.createdDate).getTime();
-                  const timeB = new Date(b.createdAt || b.createdDate).getTime();
-                  return timeB - timeA;
-                });
-                setLeads(merged);
-                localStorage.setItem(CRM_STORAGE_KEY, JSON.stringify(merged));
-                setLoading(false);
-                return;
-              }
-            } catch (e) {}
-          }
           setLeads(validApiLeads);
           localStorage.setItem(CRM_STORAGE_KEY, JSON.stringify(validApiLeads));
           setLoading(false);
