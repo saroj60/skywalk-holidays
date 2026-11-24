@@ -238,7 +238,7 @@ export default function Footer() {
           <p className="text-xs text-[#64748b] text-center" suppressHydrationWarning>
             © {new Date().getFullYear()} {company.name}. All rights reserved.
           </p>
-          <div className="flex items-center gap-3 text-xs text-[#64748b]">
+          <div className="flex flex-wrap items-center justify-center gap-3 text-xs text-[#64748b]">
             <Link
               href="/login"
               className="hover:text-[#0ea5e9] transition-colors flex items-center gap-1 font-medium"
@@ -246,6 +246,15 @@ export default function Footer() {
               <Lock size={12} />
               <span>Staff Login</span>
             </Link>
+            <span>•</span>
+            <a
+              href="https://wa.me/9779815769007"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-[#0ea5e9] transition-colors font-medium"
+            >
+              Developed by <span className="text-white/90 hover:text-[#0ea5e9]">Skillence International Technology</span>
+            </a>
             <span>•</span>
             <p>Made with ❤️ in Nepal</p>
           </div>
