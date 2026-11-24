@@ -855,23 +855,8 @@ export default function CrmManager({ crmServiceFilter, userRole }: CrmManagerPro
             ))}
           </select>
 
-          {/* Staff Dropdown */}
-          <select
-            value={selectedStaff}
-            onChange={(e) => setSelectedStaff(e.target.value)}
-            className="text-xs font-semibold px-2.5 py-1.5 bg-slate-50 border border-slate-200 rounded-lg text-[#0a1628] focus:outline-none focus:border-[#0ea5e9]"
-          >
-            <option value="All">All Staff Agents</option>
-            {STAFF_MEMBERS.map((st) => (
-              <option key={st} value={st}>
-                {st}
-              </option>
-            ))}
-          </select>
-
           {(selectedService !== "All" ||
             selectedStatus !== "All" ||
-            selectedStaff !== "All" ||
             searchQuery) && (
             <button
               onClick={() => {
