@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { getAdminUserFromRequest } from "@/lib/auth";
+import { getLocalInquiries, saveLocalInquiry } from "@/lib/server/inquiriesStore";
 
 export async function GET(req: NextRequest) {
   const admin = getAdminUserFromRequest(req);
@@ -13,12 +14,12 @@ export async function GET(req: NextRequest) {
   let leads: any[] = [];
 
   try {
-    const flights = await prisma.flightInquiry.findMany().catch(() => []);
-    const hotels = await prisma.hotelInquiry.findMany().catch(() => []);
-    const packages = await prisma.holidayPackageInquiry.findMany().catch(() => []);
-    const visas = await prisma.visaApplication.findMany().catch(() => []);
-    const buses = await prisma.busInquiry.findMany().catch(() => []);
-    const contacts = await prisma.contactMessage.findMany().catch(() => []);
+    const flights = await prisma.flightInquiry?.findMany().catch(() => []) || [];
+    const hotels = await prisma.hotelInquiry?.findMany().catch(() => []) || [];
+    const packages = await prisma.holidayPackageInquiry?.findMany().catch(() => []) || [];
+    const visas = await prisma.visaApplication?.findMany().catch(() => []) || [];
+    const buses = await prisma.busInquiry?.findMany().catch(() => []) || [];
+    const contacts = await prisma.contactMessage?.findMany().catch(() => []) || [];
 
     // Map all inquiries to unified CRM lead format
     leads = [
@@ -111,6 +112,32 @@ export async function GET(req: NextRequest) {
     leads = [];
   }
 
+  // Merge fail-safe backup leads
+  try {
+    const localBackups = getLocalInquiries();
+    const existingRawIds = new Set(leads.map((l) => l.rawId));
+    for (const backup of localBackups) {
+      if (!existingRawIds.has(backup.id)) {
+        leads.push({
+          id: backup.id.startsWith("lead-") ? `BK-${backup.id.slice(-6)}` : backup.id,
+          rawId: backup.id,
+          table: backup.table,
+          customerName: backup.customerName,
+          serviceType: backup.serviceType,
+          destination: backup.destination || "General Inquiry",
+          travelDate: backup.travelDate || "Flexible",
+          whatsappNumber: backup.whatsappNumber,
+          status: backup.status,
+          createdDate: backup.createdDate,
+          assignedStaff: backup.assignedStaff || "Unassigned",
+          notes: backup.notes || "",
+        });
+      }
+    }
+  } catch (e) {
+    console.error("Error reading local inquiry backups:", e);
+  }
+
   leads.sort((a, b) => (a.createdDate < b.createdDate ? 1 : -1));
 
   return NextResponse.json({ success: true, leads });
@@ -132,25 +159,36 @@ export async function POST(req: NextRequest) {
       status,
     } = body;
 
-    const newLead = {
-      id: `LEAD-${Date.now().toString().slice(-6)}`,
-      rawId: `lead-${Date.now()}`,
+    const saved = saveLocalInquiry({
       table: "contact",
-      customerName: customerName || "Customer",
       serviceType: serviceType || "Holiday Package",
+      customerName: customerName || "Customer",
+      whatsappNumber: whatsappNumber || "",
       destination: destination || "Custom Tour",
       travelDate: travelDate || "Flexible",
-      whatsappNumber: whatsappNumber || "",
-      travelers: travelers || "2 Travelers",
-      budget: budget || "",
       status: status || "NEW",
-      createdDate: new Date().toISOString().split("T")[0],
       assignedStaff: assignedStaff || "Unassigned",
-      notes: notes || "",
+      notes: `${notes || ""}${travelers ? `\nTravelers: ${travelers}` : ""}${budget ? `\nBudget: ${budget}` : ""}`,
+      rawPayload: body,
+    });
+
+    const newLead = {
+      id: `LEAD-${saved.id.slice(-6)}`,
+      rawId: saved.id,
+      table: "contact",
+      customerName: saved.customerName,
+      serviceType: saved.serviceType,
+      destination: saved.destination,
+      travelDate: saved.travelDate,
+      whatsappNumber: saved.whatsappNumber,
+      status: saved.status,
+      createdDate: saved.createdDate,
+      assignedStaff: saved.assignedStaff,
+      notes: saved.notes,
     };
 
-    return NextResponse.json({ success: true, lead: newLead }, { status: 201 });
+    return NextResponse.json({ success: true, lead: newLead });
   } catch (error) {
-    return NextResponse.json({ error: "Failed to create lead." }, { status: 500 });
+    return NextResponse.json({ error: "Failed to create manual lead." }, { status: 500 });
   }
 }

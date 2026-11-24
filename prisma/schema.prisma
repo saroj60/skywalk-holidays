@@ -1,31 +1,11 @@
+generator client {
+  provider      = "prisma-client-js"
+  binaryTargets = ["native", "debian-openssl-1.1.x", "debian-openssl-3.0.x", "rhel-openssl-1.0.x", "rhel-openssl-3.0.x"]
+}
+
 datasource db {
   provider = "mysql"
   url      = env("DATABASE_URL")
-}
-
-generator client {
-  provider = "prisma-client-js"
-}
-
-enum Role {
-  SUPER_ADMIN
-  STAFF
-  AGENT
-}
-
-enum InquiryStatus {
-  NEW
-  CONTACTED
-  QUOTATION_SENT
-  CONFIRMED
-  COMPLETED
-  CANCELLED
-}
-
-enum PackageStatus {
-  DRAFT
-  ACTIVE
-  ARCHIVED
 }
 
 model User {
@@ -160,9 +140,9 @@ model UpcomingDeparture {
   packageId      Int?
   title          String
   destination    String
-  startDate      String   // e.g. "2026-10-12"
-  endDate        String   // e.g. "2026-10-18"
-  seasonTag      String   // e.g. "Dashain Holiday Special"
+  startDate      String
+  endDate        String
+  seasonTag      String
   totalSeats     Int      @default(20)
   availableSeats Int      @default(5)
   price          Int
@@ -186,4 +166,25 @@ model ContactMessage {
   notes             String?       @db.Text
   createdAt         DateTime      @default(now())
   updatedAt         DateTime      @updatedAt
+}
+
+enum Role {
+  SUPER_ADMIN
+  STAFF
+  AGENT
+}
+
+enum InquiryStatus {
+  NEW
+  CONTACTED
+  QUOTATION_SENT
+  CONFIRMED
+  COMPLETED
+  CANCELLED
+}
+
+enum PackageStatus {
+  DRAFT
+  ACTIVE
+  ARCHIVED
 }

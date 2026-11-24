@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { checkRateLimit } from "@/lib/rate-limit";
 import { logger } from "@/lib/logger";
+import { saveLocalInquiry } from "@/lib/server/inquiriesStore";
 
 export async function POST(req: NextRequest) {
   const rateCheck = checkRateLimit(req, 10, 60000);
@@ -13,7 +14,7 @@ export async function POST(req: NextRequest) {
   }
 
   try {
-    const body = await req.json();
+    const body = await req.json().catch(() => ({}));
     const { fullName, nationality, destinationCountry, visaType, travelPurpose, whatsappNumber, email } = body;
 
     if (!fullName || !destinationCountry || !visaType || !whatsappNumber) {
@@ -23,8 +24,41 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const application = await prisma.visaApplication.create({
-      data: {
+    let application: any = null;
+
+    try {
+      if (prisma && prisma.visaApplication && typeof prisma.visaApplication.create === "function") {
+        application = await prisma.visaApplication.create({
+          data: {
+            fullName,
+            nationality: nationality || "Nepalese",
+            destinationCountry,
+            visaType,
+            travelPurpose: travelPurpose || "Tourism",
+            whatsappNumber,
+            email: email || "",
+            status: "NEW",
+          },
+        });
+        logger.info("New visa application saved in DB", { id: application.id, fullName });
+      }
+    } catch (dbError) {
+      logger.warn("Primary database store skipped for visa application, using backup", dbError);
+    }
+
+    if (!application) {
+      const backup = saveLocalInquiry({
+        table: "visa",
+        serviceType: "Visa Assistance",
+        customerName: fullName,
+        whatsappNumber,
+        destination: destinationCountry,
+        travelDate: null,
+        notes: `Type: ${visaType}, Nationality: ${nationality || "Nepalese"}, Purpose: ${travelPurpose || "Tourism"}${email ? `\nEmail: ${email}` : ""}`,
+        rawPayload: body,
+      });
+      application = {
+        id: backup.id,
         fullName,
         nationality: nationality || "Nepalese",
         destinationCountry,
@@ -33,14 +67,14 @@ export async function POST(req: NextRequest) {
         whatsappNumber,
         email: email || "",
         status: "NEW",
-      },
-    });
+        createdAt: backup.createdAt,
+      };
+      logger.info("New visa application saved in fail-safe storage", { id: application.id, fullName });
+    }
 
-    logger.info("New visa application saved", { id: application.id, fullName });
-
-    return NextResponse.json({ success: true, application }, { status: 201 });
-  } catch (error) {
+    return NextResponse.json({ success: true, application }, { status: 200 });
+  } catch (error: any) {
     logger.error("Error creating visa application", error);
-    return NextResponse.json({ error: "Failed to submit visa application." }, { status: 500 });
+    return NextResponse.json({ error: error?.message || "Failed to submit visa application." }, { status: 500 });
   }
 }

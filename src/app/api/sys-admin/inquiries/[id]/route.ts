@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { getAdminUserFromRequest } from "@/lib/auth";
+import { updateLocalInquiry, deleteLocalInquiry } from "@/lib/server/inquiriesStore";
 
 export async function PATCH(
   req: NextRequest,
@@ -15,7 +16,7 @@ export async function PATCH(
   const { id } = await params;
 
   try {
-    const { table, status, assignedStaff, notes, budget } = await req.json();
+    const { table, status, assignedStaff, notes } = await req.json();
 
     const updateData: any = {};
     if (status) updateData.status = status;
@@ -25,21 +26,27 @@ export async function PATCH(
     let updatedRecord: any = null;
 
     try {
-      if (table === "flight") {
+      if (table === "flight" && prisma.flightInquiry) {
         updatedRecord = await prisma.flightInquiry.update({ where: { id }, data: updateData });
-      } else if (table === "hotel") {
+      } else if (table === "hotel" && prisma.hotelInquiry) {
         updatedRecord = await prisma.hotelInquiry.update({ where: { id }, data: updateData });
-      } else if (table === "package") {
+      } else if (table === "package" && prisma.holidayPackageInquiry) {
         updatedRecord = await prisma.holidayPackageInquiry.update({ where: { id }, data: updateData });
-      } else if (table === "visa") {
+      } else if (table === "visa" && prisma.visaApplication) {
         updatedRecord = await prisma.visaApplication.update({ where: { id }, data: updateData });
-      } else if (table === "bus") {
+      } else if (table === "bus" && prisma.busInquiry) {
         updatedRecord = await prisma.busInquiry.update({ where: { id }, data: updateData });
-      } else if (table === "contact") {
+      } else if (table === "contact" && prisma.contactMessage) {
         updatedRecord = await prisma.contactMessage.update({ where: { id }, data: updateData });
       }
     } catch (e) {
-      // Return simulated success if offline/dev mode
+      // Ignored if table not in SQLite or database unavailable
+    }
+
+    // Also update local backup if applicable
+    updateLocalInquiry(id, updateData);
+
+    if (!updatedRecord) {
       updatedRecord = { id, ...updateData };
     }
 
@@ -66,22 +73,24 @@ export async function DELETE(
     const table = searchParams.get("table");
 
     try {
-      if (table === "flight") {
+      if (table === "flight" && prisma.flightInquiry) {
         await prisma.flightInquiry.delete({ where: { id } });
-      } else if (table === "hotel") {
+      } else if (table === "hotel" && prisma.hotelInquiry) {
         await prisma.hotelInquiry.delete({ where: { id } });
-      } else if (table === "package") {
+      } else if (table === "package" && prisma.holidayPackageInquiry) {
         await prisma.holidayPackageInquiry.delete({ where: { id } });
-      } else if (table === "visa") {
+      } else if (table === "visa" && prisma.visaApplication) {
         await prisma.visaApplication.delete({ where: { id } });
-      } else if (table === "bus") {
+      } else if (table === "bus" && prisma.busInquiry) {
         await prisma.busInquiry.delete({ where: { id } });
-      } else if (table === "contact") {
+      } else if (table === "contact" && prisma.contactMessage) {
         await prisma.contactMessage.delete({ where: { id } });
       }
     } catch (e) {
       // Ignored if table not in SQLite or mock lead
     }
+
+    deleteLocalInquiry(id);
 
     return NextResponse.json({ success: true, message: `Lead ${id} deleted.` });
   } catch (error) {
