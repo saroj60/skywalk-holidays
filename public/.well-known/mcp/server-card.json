@@ -1,0 +1,54 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "name": "Skywalk Holidays MCP Server",
+  "version": "1.0.0",
+  "description": "Model Context Protocol (MCP) server for Skywalk Holidays Nepal — explore tour packages, flight ticketing, hotel reservations, and submit travel inquiries.",
+  "endpoint": "https://skywalkholiday.com/api/mcp",
+  "capabilities": {
+    "tools": true,
+    "resources": true,
+    "prompts": false
+  },
+  "tools": [
+    {
+      "name": "search_tours",
+      "description": "Search available international holiday tour packages by country (e.g., Thailand, Bali, China, Vietnam, Dubai).",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "destination": {
+            "type": "string",
+            "description": "Destination country or city"
+          },
+          "maxBudget": {
+            "type": "number",
+            "description": "Maximum budget in NPR"
+          }
+        }
+      }
+    },
+    {
+      "name": "get_contact_info",
+      "description": "Get official Skywalk Holidays hotline phone numbers, email, WhatsApp, and office address.",
+      "parameters": {
+        "type": "object",
+        "properties": {}
+      }
+    },
+    {
+      "name": "submit_inquiry",
+      "description": "Submit a booking inquiry for tour packages, flight ticketing, hotel reservations, or visa assistance.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "customerName": { "type": "string" },
+          "whatsappNumber": { "type": "string" },
+          "serviceType": { "type": "string" },
+          "destination": { "type": "string" },
+          "message": { "type": "string" }
+        },
+        "required": ["customerName", "whatsappNumber"]
+      }
+    }
+  ]
+}

@@ -1,0 +1,32 @@
+# SkyWalk Holidays
+
+> Nepal's premier travel agency and tour operator based in Kathmandu, specializing in all-inclusive international holiday packages, flight ticketing, hotel reservations, and visa assistance.
+
+## Core Travel Services
+- [International Holiday Packages](https://skywalkholiday.com/services/packages/international): Tailored and fixed group departure packages to Thailand (Bangkok, Pattaya, Phuket), Bali Indonesia, Vietnam (Hanoi, Ha Long Bay), China (Beijing, Shanghai, Great Wall), Singapore, Malaysia, and Maldives.
+- [Domestic Tours & Nepal Treks](https://skywalkholiday.com/services/packages/domestic): Curated travel packages across Nepal including Pokhara, Chitwan National Park safari, and Everest mountain flights.
+- [Air Flight Ticketing](https://skywalkholiday.com/services/flights): Domestic and international air ticket bookings comparing unpublished airline partner fares across 40+ carriers.
+- [Hotel Reservations](https://skywalkholiday.com/services/hotels): Luxury resorts, villas, and boutique budget stays with verified amenities and instant confirmation.
+- [Visa Assistance](https://skywalkholiday.com/services/visa): Full documentation guidance, embassy appointment scheduling, and application tracking for tourist, business, and transit visas.
+- [Custom Tour Planning](https://skywalkholiday.com/services/custom): Bespoke holiday itinerary building for families, honeymooners, and corporate groups.
+
+## Top International Destinations
+- [Thailand Tour Packages](https://skywalkholiday.com/destinations/thailand): Bangkok city, Grand Palace, Pattaya Coral Island, and Phuket beaches. Starting at NPR 42,000.
+- [Bali Tour Packages](https://skywalkholiday.com/destinations/bali): Ubud pool villas, Nusa Penida Kelingking beach, and Tanah Lot sunsets. Starting at NPR 78,000.
+- [Vietnam Tour Packages](https://skywalkholiday.com/destinations/vietnam): Hanoi historical quarters, Ha Long Bay overnight cruises, and Da Nang golden bridge.
+- [China Tour Packages](https://skywalkholiday.com/destinations/china): Beijing Forbidden City, Great Wall at Mutianyu, bullet trains, and Shanghai Bund.
+
+## Agency Contact & Support
+- Hotline 1: +977 971-4491103
+- Hotline 2: +977 970-7054143
+- Hotline 3: +977 970-7054144
+- WhatsApp: +977 971-4491103
+- Email: skywalktoursandtravels32@gmail.com
+- Office Address: Pepsicola, Kathmandu, Nepal, 44600
+- Google Maps: https://maps.app.goo.gl/cSd8z1m3BnbegeSY6
+- Contact & Quotes: https://skywalkholiday.com/contact
+
+## Agent Instructions & APIs
+- Inquiries can be submitted programmatically via POST https://skywalkholiday.com/api/reach-us
+- MCP Server Card is published at https://skywalkholiday.com/.well-known/mcp/server-card.json
+- Markdown representation of any page is accessible by sending header Accept: text/markdown

@@ -5,6 +5,7 @@ import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import WhatsAppFloatingButton from "@/components/common/WhatsAppFloatingButton";
 import SkyBackground from "@/components/common/SkyBackground";
+import WebMCPScript from "@/components/common/WebMCPScript";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -113,8 +114,8 @@ export default function RootLayout({
     "@context": "https://schema.org",
     "@graph": [
       {
-        "@type": "TravelAgency",
-        "@id": "https://skywalkholiday.com/#travelagency",
+        "@type": ["Organization", "LocalBusiness", "TravelAgency"],
+        "@id": "https://skywalkholiday.com/#organization",
         "name": "Skywalks Holidays",
         "alternateName": [
           "Skywalk Holidays",
@@ -128,7 +129,7 @@ export default function RootLayout({
         "image": "https://skywalkholiday.com/uploads/Explore%20Holiday%20Packages.png",
         "description":
           "Skywalk Holidays is Nepal's premier tour and travel company based in Kathmandu. We specialize in international holiday tour packages (Bangkok Thailand, Bali Indonesia, China, Vietnam, Europe), domestic tours, flight ticket booking, hotel reservations, and visa processing services.",
-        "telephone": "+977 971-4491103",
+        "telephone": ["+977 971-4491103", "+977 970-7054143", "+977 970-7054144"],
         "email": "skywalktoursandtravels32@gmail.com",
         "priceRange": "$$",
         "currenciesAccepted": "NPR, USD",
@@ -211,7 +212,7 @@ export default function RootLayout({
         "name": "Skywalk Holidays",
         "alternateName": "Skywalk Tours & Travels",
         "publisher": {
-          "@id": "https://skywalkholiday.com/#travelagency"
+          "@id": "https://skywalkholiday.com/#organization"
         },
         "potentialAction": {
           "@type": "SearchAction",
@@ -236,6 +237,7 @@ export default function RootLayout({
         <main>{children}</main>
         <Footer />
         <WhatsAppFloatingButton />
+        <WebMCPScript />
       </body>
     </html>
   );

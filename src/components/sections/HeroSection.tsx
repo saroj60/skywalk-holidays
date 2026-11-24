@@ -82,7 +82,15 @@ export default function HeroSection() {
         <div className="flex flex-col md:flex-row md:items-end justify-between w-full gap-3 sm:gap-6">
           
           {/* Bottom Left Corner: Action Buttons, Search Bar & Popular Tags */}
-          <div className="flex flex-col items-start text-left max-w-md sm:max-w-lg w-full">
+          <div className="flex flex-col items-start text-left max-w-md sm:max-w-xl w-full">
+            {/* Primary H1 Heading for SEO & Agents */}
+            <h1 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-white leading-tight tracking-tight mb-2 drop-shadow-md">
+              SkyWalk Holidays — Tour &amp; Travel Company in Nepal
+            </h1>
+            <p className="text-white/90 text-xs sm:text-sm font-medium mb-3 max-w-lg drop-shadow">
+              Curated international holiday packages, worldwide flight ticketing, luxury hotel bookings &amp; visa assistance from Kathmandu.
+            </p>
+
             {/* Action Buttons */}
             <div className="flex flex-wrap items-center gap-2 mb-2">
               <Button

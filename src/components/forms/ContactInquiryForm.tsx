@@ -130,7 +130,14 @@ export default function ContactInquiryForm() {
         </div>
       )}
 
-      <form onSubmit={handleSubmit} className="space-y-5">
+      <form
+        onSubmit={handleSubmit}
+        className="space-y-5"
+        {...({
+          toolname: "submit_travel_inquiry",
+          tooldescription: "Submit inquiry for tour packages, flight ticketing, hotel booking, or visa assistance",
+        } as any)}
+      >
         {/* Name & Email */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
