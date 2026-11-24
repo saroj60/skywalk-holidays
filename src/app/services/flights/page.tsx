@@ -23,54 +23,63 @@ const AIRLINES = [
     name: "Qatar Airways",
     routes: "Kathmandu → Doha & 150+ Global Destinations",
     code: "QR",
+    price: 65000,
     logo: "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=200&q=80",
   },
   {
     name: "Emirates",
     routes: "Kathmandu → International Hubs, Europe & USA",
     code: "EK",
+    price: 72000,
     logo: "https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?w=200&q=80",
   },
   {
     name: "Air Arabia",
     routes: "Kathmandu → Sharjah & Middle East",
     code: "G9",
+    price: 42000,
     logo: "https://images.unsplash.com/photo-1506012787146-f92b2d7d6d96?w=200&q=80",
   },
   {
     name: "IndiGo",
     routes: "Kathmandu → Delhi, Mumbai & India Network",
     code: "6E",
+    price: 18000,
     logo: "https://images.unsplash.com/photo-1488085061387-422e29b40080?w=200&q=80",
   },
   {
     name: "Nepal Airlines",
     routes: "Kathmandu → Narita, Bangkok, Kuala Lumpur & Domestic",
     code: "RA",
+    price: 35000,
     logo: "https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?w=200&q=80",
   },
   {
     name: "Buddha Air",
     routes: "Pokhara, Biratnagar, Bhairahawa, Nepalgunj & Mountain Flights",
     code: "U4",
+    price: 6500,
     logo: "https://images.unsplash.com/photo-1569154941061-e231b4725ef1?w=200&q=80",
   },
   {
     name: "Thai Airways",
     routes: "Kathmandu → Bangkok, East Asia & Australia",
     code: "TG",
+    price: 48000,
     logo: "https://images.unsplash.com/photo-1499856871958-5b9627545d1a?w=200&q=80",
   },
   {
     name: "Singapore Airlines",
     routes: "Kathmandu → Singapore, Australia & Pacific",
     code: "SQ",
+    price: 58000,
     logo: "https://images.unsplash.com/photo-1524592714635-d77511a4834d?w=200&q=80",
   },
   {
     name: "Yeti Airlines",
     routes: "Pokhara, Everest View & Major Nepal Hubs",
     code: "YT",
+    price: 5800,
     logo: "https://images.unsplash.com/photo-1509316975850-ff9c5deb0cd9?w=200&q=80",
   },
 ];
@@ -311,11 +320,18 @@ export default function FlightsPage() {
                       <span>{airline.code}</span>
                     )}
                   </div>
-                  <div>
-                    <h3 className="font-bold text-[#0a1628] text-base mb-1 group-hover:text-[#0ea5e9] transition-colors flex items-center gap-1.5">
-                      {airline.name}
-                      <span className="text-xs font-mono font-normal text-[#94a3b8]">[{airline.code}]</span>
-                    </h3>
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center justify-between gap-2 mb-1">
+                      <h3 className="font-bold text-[#0a1628] text-base group-hover:text-[#0ea5e9] transition-colors flex items-center gap-1.5 truncate">
+                        {airline.name}
+                        <span className="text-xs font-mono font-normal text-[#94a3b8]">[{airline.code}]</span>
+                      </h3>
+                      {airline.price && Number(airline.price) > 0 && (
+                        <span className="text-xs font-extrabold text-[#0ea5e9] bg-sky-50 border border-sky-200/80 px-2.5 py-0.5 rounded-full shrink-0 whitespace-nowrap">
+                          From NPR {Number(airline.price).toLocaleString()}
+                        </span>
+                      )}
+                    </div>
                     <p className="text-xs text-[#64748b] leading-relaxed">
                       {airline.routes}
                     </p>
