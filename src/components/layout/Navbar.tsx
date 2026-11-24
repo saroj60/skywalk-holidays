@@ -46,7 +46,7 @@ export default function Navbar() {
               <Phone size={12} className="text-[#0ea5e9] shrink-0" />
               {(company.phoneNumbers && company.phoneNumbers.length > 0
                 ? company.phoneNumbers
-                : ["+977 971-4491103", "+977 970-7054143", "+977 970-7054144"]
+                : ["+977 970-7054143", "+977 970-7054144", "+977 971-4491103"]
               ).map((num, idx) => (
                 <React.Fragment key={num}>
                   {idx > 0 && <span className="text-white/30 text-[10px]">|</span>}
@@ -276,7 +276,7 @@ export default function Navbar() {
               <div className="flex flex-wrap gap-x-3 gap-y-1 pl-4 text-xs">
                 {(company.phoneNumbers && company.phoneNumbers.length > 0
                   ? company.phoneNumbers
-                  : ["+977 971-4491103", "+977 970-7054143", "+977 970-7054144"]
+                  : ["+977 970-7054143", "+977 970-7054144", "+977 971-4491103"]
                 ).map((num) => (
                   <a
                     key={num}

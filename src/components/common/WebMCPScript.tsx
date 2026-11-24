@@ -43,7 +43,7 @@ export default function WebMCPScript() {
           execute: async () => {
             return {
               agency: "Skywalk Holidays Pvt. Ltd.",
-              hotlines: ["+977 971-4491103", "+977 970-7054143", "+977 970-7054144"],
+              hotlines: ["+977 970-7054143", "+977 970-7054144", "+977 971-4491103"],
               whatsapp: "+977 971-4491103",
               email: "skywalktoursandtravels32@gmail.com",
               address: "Pepsicola, Kathmandu, Nepal, 44600",

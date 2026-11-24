@@ -46,30 +46,38 @@ export async function POST(req: NextRequest) {
       logger.warn("Primary database store skipped for contact message, using local backup", dbError);
     }
 
-    // 2. Fail-safe backup store if DB was unavailable
-    if (!contactMsg) {
+    // 2. Synchronize to local fail-safe storage so dashboard is immediately updated
+    try {
       const backup = saveLocalInquiry({
+        id: contactMsg ? contactMsg.id : undefined,
         table: "contact",
         serviceType: serviceInterested || "General Contact Inquiry",
+        originalService: serviceInterested || "General Travel Inquiry",
         customerName: name,
         whatsappNumber: phone,
+        email,
+        message,
         destination: destination || null,
-        travelDate: null,
-        notes: `Email: ${email}\nMessage: ${message}`,
+        travelDate: "Flexible",
+        notes: message,
         rawPayload: { name, email, phone, serviceInterested, destination, message },
       });
-      contactMsg = {
-        id: backup.id,
-        name,
-        email,
-        phone,
-        serviceInterested: serviceInterested || "General Travel Inquiry",
-        destination: destination || null,
-        message,
-        status: "NEW",
-        createdAt: backup.createdAt,
-      };
-      logger.info("New contact message saved in fail-safe storage", { id: contactMsg.id, name });
+      if (!contactMsg) {
+        contactMsg = {
+          id: backup.id,
+          name,
+          email,
+          phone,
+          serviceInterested: serviceInterested || "General Travel Inquiry",
+          destination: destination || null,
+          message,
+          status: "NEW",
+          createdAt: backup.createdAt,
+        };
+        logger.info("New contact message saved in fail-safe storage", { id: contactMsg.id, name });
+      }
+    } catch (localErr) {
+      logger.warn("Local inquiry sync error:", localErr);
     }
 
     return NextResponse.json({ success: true, contactMsg }, { status: 200 });

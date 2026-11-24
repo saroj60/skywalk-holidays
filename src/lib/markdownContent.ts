@@ -2,7 +2,7 @@ export const HOMEPAGE_MARKDOWN = `# SkyWalk Holidays — Tour & Travel Company i
 
 > **Nepal's #1 Tour and Travel Company based in Kathmandu.**
 > Specializing in international holiday tour packages, worldwide flight ticketing, luxury hotel stays, and expedited visa assistance.
-> **Hotlines:** +977 971-4491103 | +977 970-7054143 | +977 970-7054144
+> **Hotlines:** +977 970-7054143 | +977 970-7054144 | +977 971-4491103
 > **WhatsApp:** [+977 971-4491103](https://wa.me/9779714491103)
 > **Email:** skywalktoursandtravels32@gmail.com
 > **Office Address:** Pepsicola, Kathmandu, Nepal, 44600 (Open 24/7)
@@ -67,7 +67,7 @@ export const HOMEPAGE_MARKDOWN = `# SkyWalk Holidays — Tour & Travel Company i
 ---
 
 ## 📞 How to Book & Inquire
-- **Direct Phone Hotline:** +977 971-4491103 / +977 970-7054143 / +977 970-7054144
+- **Direct Phone Hotline:** +977 970-7054143 / +977 970-7054144 / +977 971-4491103
 - **Direct WhatsApp Chat:** [Message on WhatsApp](https://wa.me/9779714491103)
 - **Online Booking Form:** [Submit Quote Request](https://skywalkholiday.com/contact)
 - **Programmatic API Endpoint:** \`POST https://skywalkholiday.com/api/reach-us\`

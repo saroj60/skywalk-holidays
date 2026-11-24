@@ -1,6 +1,7 @@
 import fs from "fs";
 import path from "path";
 import { COMPANY } from "@/lib/constants";
+import { getSiteDataFromDb, saveSiteDataToDb } from "@/lib/server/siteDataStore";
 
 export interface SiteSettings {
   name: string;
@@ -72,5 +73,24 @@ export function saveStoredSettings(newSettings: Partial<SiteSettings>): SiteSett
   } catch (e) {
     console.error("Error saving site-settings.json:", e);
   }
+  return merged;
+}
+
+export async function getStoredSettingsAsync(): Promise<SiteSettings> {
+  const dbData = await getSiteDataFromDb<SiteSettings>("site-settings");
+  if (dbData && typeof dbData === "object") {
+    return { ...DEFAULT_SETTINGS, ...dbData };
+  }
+  return getStoredSettings();
+}
+
+export async function saveStoredSettingsAsync(newSettings: Partial<SiteSettings>): Promise<SiteSettings> {
+  const current = await getStoredSettingsAsync();
+  const merged: SiteSettings = { ...current, ...newSettings };
+  await saveSiteDataToDb("site-settings", merged);
+  try {
+    if (!fs.existsSync(DATA_DIR)) fs.mkdirSync(DATA_DIR, { recursive: true });
+    fs.writeFileSync(SETTINGS_FILE, JSON.stringify(merged, null, 2), "utf-8");
+  } catch (e) {}
   return merged;
 }

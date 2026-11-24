@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getStoredHotels, saveStoredHotel } from "@/lib/server/hotelsStore";
+import { getStoredHotelsAsync, saveStoredHotelAsync } from "@/lib/server/hotelsStore";
 import { getAdminUserFromRequest } from "@/lib/auth";
 
 export const dynamic = "force-dynamic";
@@ -16,7 +16,7 @@ function checkIsAdmin(req: NextRequest) {
 }
 
 export async function GET() {
-  const hotels = getStoredHotels();
+  const hotels = await getStoredHotelsAsync();
   return NextResponse.json({ hotels });
 }
 
@@ -27,7 +27,7 @@ export async function POST(req: NextRequest) {
 
   try {
     const body = await req.json();
-    const saved = saveStoredHotel(body);
+    const saved = await saveStoredHotelAsync(body);
     return NextResponse.json({ success: true, hotel: saved }, { status: 201 });
   } catch (err: any) {
     return NextResponse.json({ error: "Failed to save hotel record: " + err.message }, { status: 500 });

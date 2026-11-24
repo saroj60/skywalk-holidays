@@ -52,45 +52,17 @@ export interface CurrentAdminUser {
 const DEPARTMENT_PRESETS = [
   {
     role: "MASTER_ADMIN" as UserRole,
-    name: "Master Administrator",
-    badge: "Master Admin",
+    name: "Administrator",
+    badge: "Admin",
     desc: "Full management & control",
     email: "skywalktoursandtravels32@gmail.com",
   },
   {
-    role: "TOURS_ADMIN" as UserRole,
-    name: "Tours Desk Officer",
-    badge: "Tours Desk",
-    desc: "Packages, destinations & tour leads",
-    email: "tours@skywalkholiday.com",
-  },
-  {
-    role: "FLIGHTS_ADMIN" as UserRole,
-    name: "Ticketing Desk Officer",
-    badge: "Ticketing Desk",
-    desc: "Flight deals & ticketing inquiries",
-    email: "flights@skywalkholiday.com",
-  },
-  {
-    role: "HOTELS_ADMIN" as UserRole,
-    name: "Hotels Operations Desk",
-    badge: "Hotels Desk",
-    desc: "Hotel listings & reservation leads",
-    email: "hotels@skywalkholiday.com",
-  },
-  {
-    role: "VISA_ADMIN" as UserRole,
-    name: "Visa Specialist",
-    badge: "Visa Desk",
-    desc: "Visa applications & filing reviews",
-    email: "visa@skywalkholiday.com",
-  },
-  {
-    role: "MEDIA_ADMIN" as UserRole,
-    name: "Media & Content Officer",
-    badge: "Media Desk",
-    desc: "Photo assets & marketing gallery",
-    email: "media@skywalkholiday.com",
+    role: "SALES_ADMIN" as UserRole,
+    name: "Sales Desk",
+    badge: "Sales Desk",
+    desc: "CRM inquiries, packages, flights & hotels",
+    email: "sales@skywalkholiday.com",
   },
 ];
 
@@ -130,6 +102,31 @@ export default function AdminDashboard() {
   });
 
   const [targetEditPackageId, setTargetEditPackageId] = useState<string | number | null>(null);
+  const [newInquiriesCount, setNewInquiriesCount] = useState<number>(0);
+
+  // Poll for new incoming inquiries to show live counter badge
+  useEffect(() => {
+    if (!isAuthenticated) return;
+    const fetchLeadCount = async () => {
+      try {
+        const token = typeof window !== "undefined" ? localStorage.getItem("skywalk_admin_token") : null;
+        const headers: Record<string, string> = {};
+        if (token) headers["Authorization"] = `Bearer ${token}`;
+        const res = await fetch("/api/sys-admin/inquiries", { headers });
+        if (res.ok) {
+          const data = await res.json();
+          if (Array.isArray(data.leads)) {
+            const count = data.leads.filter((l: any) => l.status === "NEW").length;
+            setNewInquiriesCount(count);
+          }
+        }
+      } catch (e) {}
+    };
+
+    fetchLeadCount();
+    const interval = setInterval(fetchLeadCount, 25000);
+    return () => clearInterval(interval);
+  }, [isAuthenticated]);
 
   const handleSwitchToPackages = (packageId?: string | number) => {
     if (packageId) {
@@ -300,12 +297,8 @@ export default function AdminDashboard() {
                 className="text-xs font-medium px-2 py-1 bg-slate-50 hover:bg-slate-100 border border-slate-200 rounded-lg text-slate-700 cursor-pointer focus:outline-none"
                 title="Switch active department desk"
               >
-                <option value="MASTER_ADMIN">👑 Master Admin (All Tabs)</option>
-                <option value="TOURS_ADMIN">🎒 Tours &amp; Packages Desk</option>
-                <option value="FLIGHTS_ADMIN">✈️ Ticketing &amp; Flights Desk</option>
-                <option value="HOTELS_ADMIN">🏨 Hotels &amp; Stays Desk</option>
-                <option value="VISA_ADMIN">🛂 Visa Specialist Desk</option>
-                <option value="MEDIA_ADMIN">📷 Media &amp; Gallery Desk</option>
+                <option value="MASTER_ADMIN">👑 Admin (Full Access)</option>
+                <option value="SALES_ADMIN">💼 Sales Desk (CRM &amp; Operations)</option>
               </select>
             </div>
 
@@ -367,6 +360,11 @@ export default function AdminDashboard() {
                     ? `${currentUser.crmServiceFilter} CRM`
                     : "CRM & Inquiries"}
                 </span>
+                {newInquiriesCount > 0 && (
+                  <span className="px-1.5 py-0.5 rounded-full text-[10px] font-extrabold bg-amber-500 text-white leading-none">
+                    {newInquiriesCount}
+                  </span>
+                )}
               </button>
             )}
 

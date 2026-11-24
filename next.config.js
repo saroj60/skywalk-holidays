@@ -30,6 +30,7 @@ const nextConfig = {
   output: "standalone",
   allowedDevOrigins: ["192.168.1.73", "localhost", "127.0.0.1"],
   images: {
+    unoptimized: true,
     remotePatterns: [
       {
         protocol: "https",
@@ -48,6 +49,10 @@ const nextConfig = {
   },
   async rewrites() {
     return [
+      {
+        source: "/uploads/:path*",
+        destination: "/api/uploads/:path*",
+      },
       {
         source: "/flights",
         destination: "/services/flights",

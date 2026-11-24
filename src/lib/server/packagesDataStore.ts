@@ -2,6 +2,7 @@ import fs from "fs";
 import path from "path";
 import { prisma } from "@/lib/prisma";
 import { getPackagesAsAdminRecords, AdminPackageRecord } from "@/lib/packagesData";
+import { getSiteDataFromDb, saveSiteDataToDb } from "@/lib/server/siteDataStore";
 
 const DATA_DIR = path.join(process.cwd(), "src", "data");
 const DATA_FILE = path.join(DATA_DIR, "packages-live.json");
@@ -74,6 +75,14 @@ export function writePackagesToFile(packages: AdminPackageRecord[]) {
 }
 
 export async function getAllPackages(): Promise<AdminPackageRecord[]> {
+  // 0. Check MySQL SiteData JSON store first (preserves all fields & deletions across GitHub redeploys)
+  try {
+    const sitePackages = await getSiteDataFromDb<AdminPackageRecord[]>("packages");
+    if (sitePackages && Array.isArray(sitePackages) && sitePackages.length > 0) {
+      return sitePackages;
+    }
+  } catch (e) {}
+
   // 1. Try fetching from Prisma Hostinger MySQL (with a 4s timeout guard)
   try {
     const dbPromise = prisma.holidayPackage.findMany({
@@ -163,7 +172,7 @@ export async function getPackageByIdOrSlug(
 }
 
 export async function saveOrUpdatePackage(pkgData: any): Promise<AdminPackageRecord> {
-  const currentList = ensureDataFile();
+  const currentList = await getAllPackages();
 
   const numId = Number(pkgData.id) || (pkgData.slug ? SLUG_TO_ID_MAP[pkgData.slug] : 0);
   const existingIndex = currentList.findIndex(
@@ -243,7 +252,8 @@ export async function saveOrUpdatePackage(pkgData: any): Promise<AdminPackageRec
     currentList.unshift(updatedRecord);
   }
 
-  // 1. Immediately persist to file store
+  // 1. Immediately persist to MySQL SiteData & file store
+  await saveSiteDataToDb("packages", currentList);
   writePackagesToFile(currentList);
 
   // 2. Await Hostinger MySQL Prisma upsert to guarantee persistence
@@ -313,12 +323,13 @@ export async function saveOrUpdatePackage(pkgData: any): Promise<AdminPackageRec
 }
 
 export async function removePackage(idOrSlug: string): Promise<boolean> {
-  const currentList = ensureDataFile();
+  const currentList = await getAllPackages();
   const needle = idOrSlug.toLowerCase().trim();
   const filtered = currentList.filter(
     (p) => String(p.id).toLowerCase() !== needle && p.slug?.toLowerCase() !== needle
   );
 
+  await saveSiteDataToDb("packages", filtered);
   writePackagesToFile(filtered);
 
   try {

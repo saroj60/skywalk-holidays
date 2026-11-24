@@ -1,6 +1,7 @@
 import fs from "fs";
 import path from "path";
 import { POPULAR_COUNTRIES } from "@/lib/constants";
+import { getSiteDataFromDb, saveSiteDataToDb } from "@/lib/server/siteDataStore";
 
 export interface DestinationCountry {
   id: string;
@@ -51,4 +52,17 @@ export function saveStoredDestinations(countries: DestinationCountry[]): boolean
     console.error("Error saving countries.json:", e);
     return false;
   }
+}
+
+export async function getStoredDestinationsAsync(): Promise<DestinationCountry[]> {
+  const dbData = await getSiteDataFromDb<DestinationCountry[]>("destinations");
+  if (dbData && Array.isArray(dbData) && dbData.length > 0) {
+    return dbData;
+  }
+  return getStoredDestinations();
+}
+
+export async function saveStoredDestinationsAsync(countries: DestinationCountry[]): Promise<boolean> {
+  await saveSiteDataToDb("destinations", countries);
+  return saveStoredDestinations(countries);
 }

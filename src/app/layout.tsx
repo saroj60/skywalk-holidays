@@ -129,7 +129,7 @@ export default function RootLayout({
         "image": "https://skywalkholiday.com/uploads/Explore%20Holiday%20Packages.png",
         "description":
           "Skywalk Holidays is Nepal's premier tour and travel company based in Kathmandu. We specialize in international holiday tour packages (Bangkok Thailand, Bali Indonesia, China, Vietnam, Europe), domestic tours, flight ticket booking, hotel reservations, and visa processing services.",
-        "telephone": ["+977 971-4491103", "+977 970-7054143", "+977 970-7054144"],
+        "telephone": ["+977 970-7054143", "+977 970-7054144", "+977 971-4491103"],
         "email": "skywalktoursandtravels32@gmail.com",
         "priceRange": "$$",
         "currenciesAccepted": "NPR, USD",

@@ -188,3 +188,16 @@ enum PackageStatus {
   ACTIVE
   ARCHIVED
 }
+
+model SiteData {
+  key       String   @id
+  value     String   @db.LongText
+  updatedAt DateTime @updatedAt
+}
+
+model MediaAsset {
+  filename  String   @id
+  mimeType  String
+  data      Bytes    @db.LongBlob
+  createdAt DateTime @default(now())
+}

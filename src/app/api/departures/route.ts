@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getAdminUserFromRequest } from "@/lib/auth";
-import { getStoredDepartures, saveStoredDeparture } from "@/lib/departuresData";
+import { getStoredDeparturesAsync, saveStoredDepartureAsync } from "@/lib/departuresData";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
@@ -17,7 +17,7 @@ function checkIsAdmin(req: NextRequest) {
 
 export async function GET(req: NextRequest) {
   try {
-    const departures = getStoredDepartures();
+    const departures = await getStoredDeparturesAsync();
     return NextResponse.json({ success: true, departures });
   } catch (error) {
     return NextResponse.json({ success: true, departures: [] });
@@ -31,7 +31,7 @@ export async function POST(req: NextRequest) {
 
   try {
     const body = await req.json();
-    const departure = saveStoredDeparture(body);
+    const departure = await saveStoredDepartureAsync(body);
     return NextResponse.json({ success: true, departure }, { status: 201 });
   } catch (error: any) {
     return NextResponse.json({ error: "Failed to schedule departure: " + error.message }, { status: 500 });

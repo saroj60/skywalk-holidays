@@ -1,6 +1,7 @@
 import fs from "fs";
 import path from "path";
 import { prisma } from "@/lib/prisma";
+import { getSiteDataFromDb, saveSiteDataToDb } from "@/lib/server/siteDataStore";
 import { PACKAGES_DICTIONARY } from "@/lib/packagesData";
 
 export interface DepartureItem {
@@ -647,8 +648,48 @@ export function deleteStoredDeparture(id: string): boolean {
   }
 }
 
+export async function getStoredDeparturesAsync(): Promise<DepartureItem[]> {
+  const dbData = await getSiteDataFromDb<DepartureItem[]>("departures");
+  if (dbData && Array.isArray(dbData)) {
+    return dbData;
+  }
+  return getStoredDepartures();
+}
+
+export async function saveStoredDepartureAsync(
+  dep: Partial<DepartureItem> & { id?: string }
+): Promise<DepartureItem> {
+  const current = await getStoredDeparturesAsync();
+  // Reuse merge logic by temporarily syncing or computing merged record
+  const saved = saveStoredDeparture(dep);
+  const idx = current.findIndex((d) => d.id === saved.id);
+  if (idx !== -1) {
+    current[idx] = saved;
+  } else {
+    current.push(saved);
+  }
+  await saveSiteDataToDb("departures", current);
+  try {
+    if (!fs.existsSync(DATA_DIR)) fs.mkdirSync(DATA_DIR, { recursive: true });
+    fs.writeFileSync(DEPARTURES_FILE, JSON.stringify(current, null, 2), "utf-8");
+  } catch (e) {}
+  return saved;
+}
+
+export async function deleteStoredDepartureAsync(id: string): Promise<boolean> {
+  const current = await getStoredDeparturesAsync();
+  const filtered = current.filter((d) => d.id !== id);
+  await saveSiteDataToDb("departures", filtered);
+  deleteStoredDeparture(id);
+  try {
+    if (!fs.existsSync(DATA_DIR)) fs.mkdirSync(DATA_DIR, { recursive: true });
+    fs.writeFileSync(DEPARTURES_FILE, JSON.stringify(filtered, null, 2), "utf-8");
+  } catch (e) {}
+  return true;
+}
+
 export async function getDepartureById(id: string): Promise<DepartureItem | null> {
-  const storedList = getStoredDepartures();
+  const storedList = await getStoredDeparturesAsync();
   const cleanId = decodeURIComponent(id).toLowerCase().trim();
 
   // Match by exact ID, custom slug, or linked packageSlug

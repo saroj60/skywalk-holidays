@@ -55,17 +55,56 @@ export interface CrmLead {
   table: "package" | "flight" | "hotel" | "visa" | "bus" | "contact" | string;
   customerName: string;
   serviceType: string;
+  originalService?: string;
   destination: string;
   travelDate: string;
   whatsappNumber: string;
   email?: string;
+  message?: string;
   travelers?: string;
   budget?: string;
   status: CrmStatus;
   createdDate: string;
+  createdAt?: string;
   assignedStaff: string;
   notes: string;
 }
+
+export const normalizeService = (str: string): string => {
+  const s = (str || "").toLowerCase();
+  if (s.includes("flight") || s.includes("ticket") || s.includes("air")) return "Flight Ticket";
+  if (s.includes("hotel") || s.includes("stay") || s.includes("resort") || s.includes("room")) return "Hotel Booking";
+  if (s.includes("package") || s.includes("tour") || s.includes("holiday")) return "Holiday Package";
+  if (s.includes("visa")) return "Visa Assistance";
+  if (s.includes("bus")) return "Bus Booking";
+  return "Contact Inquiry";
+};
+
+const serviceMatches = (lead: CrmLead, filterService: string): boolean => {
+  if (filterService === "All") return true;
+  if (filterService === "Contact Inquiry") {
+    return (
+      lead.table === "contact" ||
+      lead.serviceType === "Contact Inquiry" ||
+      (lead.serviceType || "").toLowerCase().includes("contact") ||
+      (lead.serviceType || "").toLowerCase().includes("general")
+    );
+  }
+  const normLead = normalizeService(lead.serviceType || lead.originalService || "");
+  const normFilter = normalizeService(filterService);
+  return normLead === normFilter;
+};
+
+const getAuthHeaders = (): Record<string, string> => {
+  const headers: Record<string, string> = { "Content-Type": "application/json" };
+  if (typeof window !== "undefined") {
+    const token = localStorage.getItem("skywalk_admin_token");
+    if (token) {
+      headers["Authorization"] = `Bearer ${token}`;
+    }
+  }
+  return headers;
+};
 
 const CRM_STORAGE_KEY = "skywalk_admin_crm_leads_v3";
 
@@ -230,7 +269,9 @@ export default function CrmManager({ crmServiceFilter, userRole }: CrmManagerPro
     }
 
     try {
-      const res = await fetch("/api/sys-admin/inquiries");
+      const res = await fetch("/api/sys-admin/inquiries", {
+        headers: getAuthHeaders(),
+      });
       if (res.ok) {
         const data = await res.json();
         if (data.leads && Array.isArray(data.leads)) {
@@ -245,11 +286,17 @@ export default function CrmManager({ crmServiceFilter, userRole }: CrmManagerPro
               const parsedLocal = JSON.parse(savedLocal);
               if (Array.isArray(parsedLocal) && parsedLocal.length > 0) {
                 const leadMap = new Map<string, CrmLead>();
-                validApiLeads.forEach((l: CrmLead) => leadMap.set(l.id, l));
+                // First insert local un-synced leads
                 parsedLocal
                   .filter((l: CrmLead) => !TEST_LEAD_IDS.has(l.id) && !TEST_LEAD_IDS.has(l.rawId))
                   .forEach((l: CrmLead) => leadMap.set(l.id, l));
-                const merged = Array.from(leadMap.values());
+                // Overlay API leads from server (authoritative source)
+                validApiLeads.forEach((l: CrmLead) => leadMap.set(l.id, l));
+                const merged = Array.from(leadMap.values()).sort((a, b) => {
+                  const timeA = new Date(a.createdAt || a.createdDate).getTime();
+                  const timeB = new Date(b.createdAt || b.createdDate).getTime();
+                  return timeB - timeA;
+                });
                 setLeads(merged);
                 localStorage.setItem(CRM_STORAGE_KEY, JSON.stringify(merged));
                 setLoading(false);
@@ -282,6 +329,21 @@ export default function CrmManager({ crmServiceFilter, userRole }: CrmManagerPro
 
   useEffect(() => {
     fetchLeads();
+
+    // Auto-poll inquiries every 25 seconds for new customer inquiries
+    const interval = setInterval(() => {
+      fetchLeads();
+    }, 25000);
+
+    const handleFocus = () => {
+      fetchLeads();
+    };
+    window.addEventListener("focus", handleFocus);
+
+    return () => {
+      clearInterval(interval);
+      window.removeEventListener("focus", handleFocus);
+    };
   }, []);
 
   // Save changes to localStorage and send update to API
@@ -313,7 +375,7 @@ export default function CrmManager({ crmServiceFilter, userRole }: CrmManagerPro
       const targetId = rawId || leadId;
       await fetch(`/api/sys-admin/inquiries/${targetId}`, {
         method: "PATCH",
-        headers: { "Content-Type": "application/json" },
+        headers: getAuthHeaders(),
         body: JSON.stringify({ table, status: newStatus }),
       });
     } catch (e) {}
@@ -339,7 +401,7 @@ export default function CrmManager({ crmServiceFilter, userRole }: CrmManagerPro
       const targetId = rawId || leadId;
       await fetch(`/api/sys-admin/inquiries/${targetId}`, {
         method: "PATCH",
-        headers: { "Content-Type": "application/json" },
+        headers: getAuthHeaders(),
         body: JSON.stringify({ table, assignedStaff: staffName }),
       });
     } catch (e) {}
@@ -365,7 +427,7 @@ export default function CrmManager({ crmServiceFilter, userRole }: CrmManagerPro
       const targetId = rawId || leadId;
       await fetch(`/api/sys-admin/inquiries/${targetId}`, {
         method: "PATCH",
-        headers: { "Content-Type": "application/json" },
+        headers: getAuthHeaders(),
         body: JSON.stringify({ table, notes: newNotes }),
       });
     } catch (e) {}
@@ -384,6 +446,7 @@ export default function CrmManager({ crmServiceFilter, userRole }: CrmManagerPro
       const targetId = rawId || leadId;
       await fetch(`/api/sys-admin/inquiries/${targetId}?table=${table}`, {
         method: "DELETE",
+        headers: getAuthHeaders(),
       });
     } catch (e) {}
   };
@@ -574,14 +637,16 @@ export default function CrmManager({ crmServiceFilter, userRole }: CrmManagerPro
       // Search
       const query = searchQuery.toLowerCase().trim();
       if (query) {
-        const matchesName = lead.customerName.toLowerCase().includes(query);
-        const matchesPhone = lead.whatsappNumber.toLowerCase().includes(query);
-        const matchesDest = lead.destination.toLowerCase().includes(query);
-        const matchesId = lead.id.toLowerCase().includes(query);
-        if (!matchesName && !matchesPhone && !matchesDest && !matchesId) return false;
+        const matchesName = (lead.customerName || "").toLowerCase().includes(query);
+        const matchesPhone = (lead.whatsappNumber || "").toLowerCase().includes(query);
+        const matchesDest = (lead.destination || "").toLowerCase().includes(query);
+        const matchesId = (lead.id || "").toLowerCase().includes(query);
+        const matchesEmail = (lead.email || "").toLowerCase().includes(query);
+        const matchesMsg = (lead.message || "").toLowerCase().includes(query);
+        if (!matchesName && !matchesPhone && !matchesDest && !matchesId && !matchesEmail && !matchesMsg) return false;
       }
       // Service
-      if (selectedService !== "All" && lead.serviceType !== selectedService) {
+      if (!serviceMatches(lead, selectedService)) {
         return false;
       }
       // Status
@@ -607,13 +672,14 @@ export default function CrmManager({ crmServiceFilter, userRole }: CrmManagerPro
   }, [leads]);
 
   // Helper for Service Icon
-  const getServiceIcon = (type: string) => {
-    const t = type.toLowerCase();
-    if (t.includes("flight")) return <Plane size={14} className="text-blue-500" />;
-    if (t.includes("hotel")) return <Hotel size={14} className="text-amber-500" />;
+  const getServiceIcon = (type: string, table?: string) => {
+    const t = (type || "").toLowerCase();
+    if (t.includes("flight") || t.includes("ticket") || t.includes("air")) return <Plane size={14} className="text-blue-500" />;
+    if (t.includes("hotel") || t.includes("stay") || t.includes("resort") || t.includes("room")) return <Hotel size={14} className="text-amber-500" />;
     if (t.includes("visa")) return <FileCheck size={14} className="text-violet-500" />;
     if (t.includes("bus")) return <Bus size={14} className="text-emerald-500" />;
-    return <Package size={14} className="text-sky-500" />;
+    if (t.includes("package") || t.includes("tour") || t.includes("holiday")) return <Package size={14} className="text-sky-500" />;
+    return <MessageSquare size={14} className="text-purple-500" />;
   };
 
   return (
@@ -792,11 +858,11 @@ export default function CrmManager({ crmServiceFilter, userRole }: CrmManagerPro
               <option value="All">All Services</option>
             )}
             <option value="Holiday Package">Holiday Packages</option>
-            <option value="Flight Ticket">Flight Tickets</option>
+            <option value="Flight Ticket">Flight Tickets &amp; Bookings</option>
             <option value="Hotel Booking">Hotel Bookings</option>
             <option value="Visa Assistance">Visa Assistance</option>
             <option value="Bus Booking">Bus Bookings</option>
-            <option value="Contact Inquiry">Contact Inquiries</option>
+            <option value="Contact Inquiry">General &amp; Web Inquiries</option>
           </select>
           {crmServiceFilter && userRole !== "MASTER_ADMIN" && (
             <span className="text-[10px] bg-sky-100 text-[#0ea5e9] px-2 py-0.5 rounded-full font-bold">
@@ -914,13 +980,23 @@ export default function CrmManager({ crmServiceFilter, userRole }: CrmManagerPro
                         {/* Service & Destination */}
                         <td className="py-3.5 px-4">
                           <div className="flex items-center gap-1.5 font-semibold text-[#0a1628]">
-                            {getServiceIcon(lead.serviceType)}
+                            {getServiceIcon(lead.serviceType, lead.table)}
                             <span>{lead.serviceType}</span>
+                            {lead.table === "contact" && (
+                              <span className="text-[9px] px-1.5 py-0.5 bg-purple-50 text-purple-700 rounded font-bold border border-purple-100">
+                                Contact Form
+                              </span>
+                            )}
                           </div>
                           <div className="text-[11px] text-[#64748b] flex items-center gap-1 mt-0.5">
                             <MapPin size={10} className="text-sky-500 shrink-0" />
                             <span className="truncate max-w-[170px]">{lead.destination}</span>
                           </div>
+                          {lead.message && (
+                            <div className="text-[10px] text-slate-500 italic truncate max-w-[200px] mt-0.5">
+                              &ldquo;{lead.message}&rdquo;
+                            </div>
+                          )}
                         </td>
 
                         {/* Travel Date */}
@@ -1143,9 +1219,20 @@ export default function CrmManager({ crmServiceFilter, userRole }: CrmManagerPro
 
                           {/* Service & Destination */}
                           <div className="flex items-center gap-1.5 text-[11px] text-slate-600 font-medium mb-1.5 truncate">
-                            {getServiceIcon(lead.serviceType)}
+                            {getServiceIcon(lead.serviceType, lead.table)}
                             <span className="truncate">{lead.destination}</span>
+                            {lead.table === "contact" && (
+                              <span className="text-[9px] px-1.5 py-0.5 bg-purple-50 text-purple-700 rounded font-bold border border-purple-100 ml-auto shrink-0">
+                                Web Form
+                              </span>
+                            )}
                           </div>
+
+                          {lead.message && (
+                            <div className="text-[10px] text-slate-500 italic truncate mb-2">
+                              &ldquo;{lead.message}&rdquo;
+                            </div>
+                          )}
 
                           {/* Travel Date & Budget */}
                           <div className="flex items-center gap-1 text-[10px] text-slate-500 mb-2.5">
@@ -1218,14 +1305,28 @@ export default function CrmManager({ crmServiceFilter, userRole }: CrmManagerPro
             {/* Header */}
             <div className="flex items-start justify-between gap-3 mb-5 pb-4 border-b border-slate-200">
               <div>
-                <span className="font-mono text-xs font-bold text-[#0ea5e9]">
-                  {selectedLead.id}
-                </span>
-                <h3 className="text-xl font-extrabold text-[#0a1628] leading-tight mt-0.5">
+                <div className="flex items-center gap-2">
+                  <span className="font-mono text-xs font-bold text-[#0ea5e9]">
+                    {selectedLead.id}
+                  </span>
+                  {selectedLead.table === "contact" ? (
+                    <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-purple-100 text-purple-700 border border-purple-200">
+                      Website Contact &amp; Reach Us Form
+                    </span>
+                  ) : (
+                    <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-sky-100 text-sky-700 border border-sky-200">
+                      Direct {selectedLead.serviceType}
+                    </span>
+                  )}
+                </div>
+                <h3 className="text-xl font-extrabold text-[#0a1628] leading-tight mt-1">
                   {selectedLead.customerName}
                 </h3>
-                <p className="text-xs text-slate-500">
-                  Inquired on {selectedLead.createdDate} via {selectedLead.serviceType}
+                <p className="text-xs text-slate-500 mt-0.5">
+                  Inquired on {selectedLead.createdDate} • Category: <strong className="text-slate-800">{selectedLead.serviceType}</strong>
+                  {selectedLead.originalService && selectedLead.originalService !== selectedLead.serviceType && (
+                    <span className="text-slate-400"> ({selectedLead.originalService})</span>
+                  )}
                 </p>
               </div>
 
@@ -1246,6 +1347,19 @@ export default function CrmManager({ crmServiceFilter, userRole }: CrmManagerPro
                 </a>
               </div>
             </div>
+
+            {/* Customer Inquiry Message Box */}
+            {selectedLead.message && (
+              <div className="mb-5 p-4 bg-sky-50/80 border border-sky-100 rounded-2xl text-xs">
+                <span className="text-[10px] uppercase font-bold text-sky-800 block mb-1 flex items-center gap-1.5">
+                  <MessageSquare size={13} className="text-[#0ea5e9]" />
+                  Customer Inquiry Message:
+                </span>
+                <p className="text-[#0a1628] font-medium leading-relaxed whitespace-pre-wrap">
+                  {selectedLead.message}
+                </p>
+              </div>
+            )}
 
             {/* Quick Details Grid */}
             <div className="grid grid-cols-2 gap-3 mb-5 text-xs bg-slate-50 p-4 rounded-2xl border border-slate-100">

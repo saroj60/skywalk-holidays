@@ -8,7 +8,7 @@ import SectionHeader from "@/components/common/SectionHeader";
 import CTABanner from "@/components/common/CTABanner";
 import HotelInquiryForm from "@/components/forms/HotelInquiryForm";
 import RecommendedHotelsClient from "@/components/hotels/RecommendedHotelsClient";
-import { getStoredHotels } from "@/lib/server/hotelsStore";
+import { getStoredHotelsAsync } from "@/lib/server/hotelsStore";
 
 export const metadata: Metadata = {
   title: "Hotel Booking in Nepal & Worldwide | Best Agency Rates — Skywalk Holidays",
@@ -152,8 +152,10 @@ const WHY_BOOK_HOTELS = [
   },
 ];
 
-export default function HotelsPage() {
-  const initialHotels = getStoredHotels();
+export const dynamic = "force-dynamic";
+
+export default async function HotelsPage() {
+  const initialHotels = await getStoredHotelsAsync();
   return (
     <>
       {/* Hero Section */}

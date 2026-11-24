@@ -1,5 +1,6 @@
 import fs from "fs";
 import path from "path";
+import { getSiteDataFromDb, saveSiteDataToDb } from "@/lib/server/siteDataStore";
 
 export interface FlightDeal {
   id: string;
@@ -96,4 +97,54 @@ export function deleteStoredFlight(id: string): boolean {
     console.error("Error deleting flight:", e);
     return false;
   }
+}
+
+export async function getStoredFlightsAsync(): Promise<FlightDeal[]> {
+  const dbData = await getSiteDataFromDb<FlightDeal[]>("flights");
+  if (dbData && Array.isArray(dbData) && dbData.length > 0) {
+    return dbData;
+  }
+  return getStoredFlights();
+}
+
+export async function saveStoredFlightAsync(flight: Partial<FlightDeal>): Promise<FlightDeal> {
+  const current = await getStoredFlightsAsync();
+  const id = flight.id || `FL-${Date.now()}`;
+  const existingIdx = current.findIndex((f) => f.id === id);
+
+  const record: FlightDeal = {
+    id,
+    name: flight.name || "Airline Partner",
+    code: flight.code || "AP",
+    routes: flight.routes || "Kathmandu → Destinations",
+    category: flight.category || "International",
+    price: flight.price !== undefined ? Number(flight.price) : 0,
+    logo: flight.logo || "",
+    status: flight.status || "ACTIVE",
+  };
+
+  if (existingIdx >= 0) {
+    current[existingIdx] = record;
+  } else {
+    current.unshift(record);
+  }
+
+  await saveSiteDataToDb("flights", current);
+  try {
+    if (!fs.existsSync(DATA_DIR)) fs.mkdirSync(DATA_DIR, { recursive: true });
+    fs.writeFileSync(FLIGHTS_FILE, JSON.stringify(current, null, 2), "utf-8");
+  } catch (e) {}
+
+  return record;
+}
+
+export async function deleteStoredFlightAsync(id: string): Promise<boolean> {
+  const current = await getStoredFlightsAsync();
+  const filtered = current.filter((f) => f.id !== id);
+  await saveSiteDataToDb("flights", filtered);
+  try {
+    if (!fs.existsSync(DATA_DIR)) fs.mkdirSync(DATA_DIR, { recursive: true });
+    fs.writeFileSync(FLIGHTS_FILE, JSON.stringify(filtered, null, 2), "utf-8");
+  } catch (e) {}
+  return true;
 }

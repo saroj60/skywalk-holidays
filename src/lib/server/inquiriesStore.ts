@@ -6,8 +6,11 @@ export interface StoredInquiry {
   id: string;
   table: "flight" | "hotel" | "package" | "visa" | "bus" | "contact";
   serviceType: string;
+  originalService?: string;
   customerName: string;
   whatsappNumber: string;
+  email?: string;
+  message?: string;
   destination?: string | null;
   travelDate?: string | null;
   status: "NEW" | "CONTACTED" | "QUOTATION_SENT" | "CONFIRMED" | "COMPLETED" | "CANCELLED";
@@ -66,8 +69,11 @@ export function saveLocalInquiry(
       id: item.id || `lead-${Date.now()}-${Math.random().toString(36).slice(2, 7)}`,
       table: item.table,
       serviceType: item.serviceType,
+      originalService: item.originalService,
       customerName: item.customerName,
       whatsappNumber: item.whatsappNumber,
+      email: item.email,
+      message: item.message,
       destination: item.destination || null,
       travelDate: item.travelDate || null,
       status: item.status || "NEW",
@@ -78,7 +84,12 @@ export function saveLocalInquiry(
       rawPayload: item.rawPayload || {},
     };
 
-    existing.unshift(newInquiry);
+    const idx = existing.findIndex((e) => e.id === newInquiry.id);
+    if (idx >= 0) {
+      existing[idx] = { ...existing[idx], ...newInquiry };
+    } else {
+      existing.unshift(newInquiry);
+    }
     fs.writeFileSync(INQUIRIES_FILE, JSON.stringify(existing, null, 2), "utf-8");
     return newInquiry;
   } catch (err) {
@@ -87,8 +98,11 @@ export function saveLocalInquiry(
       id: `lead-${Date.now()}`,
       table: item.table,
       serviceType: item.serviceType,
+      originalService: item.originalService,
       customerName: item.customerName,
       whatsappNumber: item.whatsappNumber,
+      email: item.email,
+      message: item.message,
       destination: item.destination || null,
       travelDate: item.travelDate || null,
       status: "NEW",

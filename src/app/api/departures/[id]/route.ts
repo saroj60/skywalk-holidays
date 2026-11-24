@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getAdminUserFromRequest } from "@/lib/auth";
-import { getDepartureById, saveStoredDeparture, deleteStoredDeparture } from "@/lib/departuresData";
+import { getDepartureById, saveStoredDepartureAsync, deleteStoredDepartureAsync } from "@/lib/departuresData";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
@@ -42,7 +42,7 @@ export async function PATCH(
   try {
     const { id } = await params;
     const body = await req.json();
-    const updated = saveStoredDeparture({ ...body, id });
+    const updated = await saveStoredDepartureAsync({ ...body, id });
     return NextResponse.json({ success: true, departure: updated });
   } catch (error: any) {
     return NextResponse.json({ error: "Failed to update departure: " + error.message }, { status: 500 });
@@ -66,7 +66,7 @@ export async function DELETE(
 
   try {
     const { id } = await params;
-    const success = deleteStoredDeparture(id);
+    const success = await deleteStoredDepartureAsync(id);
     return NextResponse.json({ success, message: "Departure deleted." });
   } catch (error: any) {
     return NextResponse.json({ error: "Failed to delete departure: " + error.message }, { status: 500 });

@@ -13,51 +13,16 @@ import { logger } from "@/lib/logger";
 const DEFAULT_SERVICE_ACCOUNTS = [
   {
     email: "skywalktoursandtravels32@gmail.com",
+    altEmail: "admin@skywalkholiday.com",
     password: "skywalkholiday@@2083",
-    name: "Master Administrator",
+    name: "Administrator",
     role: "MASTER_ADMIN" as UserRole,
   },
   {
-    email: "admin@skywalkholiday.com",
-    altEmail: "admin@skywalkholidays.com",
+    email: "sales@skywalkholiday.com",
     password: "skywalkholiday@@2083",
-    name: "Master Administrator",
-    role: "MASTER_ADMIN" as UserRole,
-  },
-  {
-    email: "tours@skywalkholiday.com",
-    altEmail: "tours@skywalkholidays.com",
-    password: "skywalkholiday@@2083",
-    name: "Tours & Holiday Packages Desk",
-    role: "TOURS_ADMIN" as UserRole,
-  },
-  {
-    email: "flights@skywalkholiday.com",
-    altEmail: "flights@skywalkholidays.com",
-    password: "skywalkholiday@@2083",
-    name: "Ticketing & Flights Desk",
-    role: "FLIGHTS_ADMIN" as UserRole,
-  },
-  {
-    email: "hotels@skywalkholiday.com",
-    altEmail: "hotels@skywalkholidays.com",
-    password: "skywalkholiday@@2083",
-    name: "Hotels & Stays Desk",
-    role: "HOTELS_ADMIN" as UserRole,
-  },
-  {
-    email: "visa@skywalkholiday.com",
-    altEmail: "visa@skywalkholidays.com",
-    password: "skywalkholiday@@2083",
-    name: "Visa Assistance Specialist",
-    role: "VISA_ADMIN" as UserRole,
-  },
-  {
-    email: "media@skywalkholiday.com",
-    altEmail: "media@skywalkholidays.com",
-    password: "skywalkholiday@@2083",
-    name: "Media & Content Desk",
-    role: "MEDIA_ADMIN" as UserRole,
+    name: "Sales Desk",
+    role: "SALES_ADMIN" as UserRole,
   },
 ];
 
@@ -130,7 +95,7 @@ export async function POST(req: NextRequest) {
       const isValid = await verifyPassword(password, user.passwordHash);
       if (isValid) {
         const userRole: UserRole =
-          user.role === "SUPER_ADMIN" ? "MASTER_ADMIN" : "TOURS_ADMIN";
+          user.role === "SUPER_ADMIN" ? "MASTER_ADMIN" : "SALES_ADMIN";
         const roleConfig = ROLE_CONFIGS[userRole];
 
         const token = signToken({

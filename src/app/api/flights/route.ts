@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getStoredFlights, saveStoredFlight } from "@/lib/server/flightsStore";
+import { getStoredFlightsAsync, saveStoredFlightAsync } from "@/lib/server/flightsStore";
 import { getAdminUserFromRequest } from "@/lib/auth";
 
 export const dynamic = "force-dynamic";
@@ -16,7 +16,7 @@ function checkIsAdmin(req: NextRequest) {
 }
 
 export async function GET() {
-  const flights = getStoredFlights();
+  const flights = await getStoredFlightsAsync();
   return NextResponse.json({ flights });
 }
 
@@ -27,7 +27,7 @@ export async function POST(req: NextRequest) {
 
   try {
     const body = await req.json();
-    const saved = saveStoredFlight(body);
+    const saved = await saveStoredFlightAsync(body);
     return NextResponse.json({ success: true, flight: saved }, { status: 201 });
   } catch (err: any) {
     return NextResponse.json({ error: "Failed to create flight deal: " + err.message }, { status: 500 });

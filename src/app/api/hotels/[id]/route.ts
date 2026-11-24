@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getStoredHotels, saveStoredHotel, deleteStoredHotel } from "@/lib/server/hotelsStore";
+import { getStoredHotelsAsync, saveStoredHotelAsync, deleteStoredHotelAsync } from "@/lib/server/hotelsStore";
 import { getAdminUserFromRequest } from "@/lib/auth";
 
 export const dynamic = "force-dynamic";
@@ -20,7 +20,7 @@ export async function GET(
   { params }: { params: Promise<{ id: string }> }
 ) {
   const { id } = await params;
-  const hotels = getStoredHotels();
+  const hotels = await getStoredHotelsAsync();
   const hotel = hotels.find((h) => h.id === id);
   if (!hotel) {
     return NextResponse.json({ error: "Hotel record not found." }, { status: 404 });
@@ -39,7 +39,7 @@ export async function PUT(
   try {
     const { id } = await params;
     const body = await req.json();
-    const saved = saveStoredHotel({ ...body, id });
+    const saved = await saveStoredHotelAsync({ ...body, id });
     return NextResponse.json({ success: true, hotel: saved });
   } catch (err: any) {
     return NextResponse.json({ error: err.message }, { status: 500 });
@@ -63,7 +63,7 @@ export async function DELETE(
 
   try {
     const { id } = await params;
-    const ok = deleteStoredHotel(id);
+    const ok = await deleteStoredHotelAsync(id);
     return NextResponse.json({ success: ok, message: "Hotel record deleted." });
   } catch (err: any) {
     return NextResponse.json({ error: err.message }, { status: 500 });

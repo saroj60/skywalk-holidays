@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getStoredFlights, saveStoredFlight, deleteStoredFlight } from "@/lib/server/flightsStore";
+import { getStoredFlightsAsync, saveStoredFlightAsync, deleteStoredFlightAsync } from "@/lib/server/flightsStore";
 import { getAdminUserFromRequest } from "@/lib/auth";
 
 export const dynamic = "force-dynamic";
@@ -20,7 +20,7 @@ export async function GET(
   { params }: { params: Promise<{ id: string }> }
 ) {
   const { id } = await params;
-  const flights = getStoredFlights();
+  const flights = await getStoredFlightsAsync();
   const flight = flights.find((f) => f.id === id);
   if (!flight) {
     return NextResponse.json({ error: "Flight deal not found." }, { status: 404 });
@@ -39,7 +39,7 @@ export async function PUT(
   try {
     const { id } = await params;
     const body = await req.json();
-    const saved = saveStoredFlight({ ...body, id });
+    const saved = await saveStoredFlightAsync({ ...body, id });
     return NextResponse.json({ success: true, flight: saved });
   } catch (err: any) {
     return NextResponse.json({ error: err.message }, { status: 500 });
@@ -63,7 +63,7 @@ export async function DELETE(
 
   try {
     const { id } = await params;
-    const ok = deleteStoredFlight(id);
+    const ok = await deleteStoredFlightAsync(id);
     return NextResponse.json({ success: ok, message: "Flight deal deleted." });
   } catch (err: any) {
     return NextResponse.json({ error: err.message }, { status: 500 });

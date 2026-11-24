@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getStoredSettings, saveStoredSettings } from "@/lib/server/settingsStore";
+import { getStoredSettingsAsync, saveStoredSettingsAsync } from "@/lib/server/settingsStore";
 import { getAdminUserFromRequest } from "@/lib/auth";
 
 export const dynamic = "force-dynamic";
@@ -16,7 +16,7 @@ function checkIsAdmin(req: NextRequest) {
 }
 
 export async function GET() {
-  const settings = getStoredSettings();
+  const settings = await getStoredSettingsAsync();
   return NextResponse.json({ success: true, settings });
 }
 
@@ -27,7 +27,7 @@ export async function POST(req: NextRequest) {
 
   try {
     const body = await req.json();
-    const saved = saveStoredSettings(body);
+    const saved = await saveStoredSettingsAsync(body);
     return NextResponse.json({ success: true, settings: saved });
   } catch (err: any) {
     return NextResponse.json({ error: err.message }, { status: 500 });

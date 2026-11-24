@@ -39,56 +39,20 @@ const STAFF_STORAGE_KEY = "skywalk_staff_accounts_v1";
 const INITIAL_STAFF_ACCOUNTS: StaffAccount[] = [
   {
     id: "usr-master",
-    name: "Master Administrator",
+    name: "Administrator",
     email: "skywalktoursandtravels32@gmail.com",
     role: "MASTER_ADMIN",
-    department: "Executive Management",
+    department: "Admin (Full Access)",
     lastLogin: "Just now",
     status: "ACTIVE",
   },
   {
-    id: "usr-tours",
-    name: "Saroj & Tours Desk",
-    email: "tours@skywalkholiday.com",
-    role: "TOURS_ADMIN",
-    department: "Holiday Packages & Outbound Tours",
-    lastLogin: "Today, 11:30 AM",
-    status: "ACTIVE",
-  },
-  {
-    id: "usr-flights",
-    name: "Aayush & Ticketing Desk",
-    email: "flights@skywalkholiday.com",
-    role: "FLIGHTS_ADMIN",
-    department: "Flight Deals & IATA Ticketing",
-    lastLogin: "Yesterday",
-    status: "ACTIVE",
-  },
-  {
-    id: "usr-hotels",
-    name: "Hotels Operations Desk",
-    email: "hotels@skywalkholiday.com",
-    role: "HOTELS_ADMIN",
-    department: "Partner Hotels & Resorts",
-    lastLogin: "2 days ago",
-    status: "ACTIVE",
-  },
-  {
-    id: "usr-visa",
-    name: "Visa Documentation Specialist",
-    email: "visa@skywalkholiday.com",
-    role: "VISA_ADMIN",
-    department: "Visa Documentation & VFS Filing",
-    lastLogin: "Today, 09:15 AM",
-    status: "ACTIVE",
-  },
-  {
-    id: "usr-media",
-    name: "Marketing & Gallery Desk",
-    email: "media@skywalkholiday.com",
-    role: "MEDIA_ADMIN",
-    department: "Photo Gallery & Social Media",
-    lastLogin: "3 days ago",
+    id: "usr-sales",
+    name: "Sales Desk",
+    email: "sales@skywalkholiday.com",
+    role: "SALES_ADMIN",
+    department: "Sales & Customer Inquiries",
+    lastLogin: "Today",
     status: "ACTIVE",
   },
 ];
@@ -102,7 +66,7 @@ export default function StaffManager() {
   const [formName, setFormName] = useState("");
   const [formEmail, setFormEmail] = useState("");
   const [formPassword, setFormPassword] = useState("");
-  const [formRole, setFormRole] = useState<UserRole>("TOURS_ADMIN");
+  const [formRole, setFormRole] = useState<UserRole>("SALES_ADMIN");
   const [formDepartment, setFormDepartment] = useState("");
   const [toastMsg, setToastMsg] = useState("");
 
@@ -135,7 +99,7 @@ export default function StaffManager() {
     setFormName("");
     setFormEmail("");
     setFormPassword("");
-    setFormRole("TOURS_ADMIN");
+    setFormRole("SALES_ADMIN");
     setFormDepartment("Holiday Packages Desk");
     setIsModalOpen(true);
   };
@@ -323,7 +287,7 @@ export default function StaffManager() {
             </thead>
             <tbody className="divide-y divide-slate-100 text-xs">
               {filteredStaff.map((staff) => {
-                const config = ROLE_CONFIGS[staff.role] || ROLE_CONFIGS.TOURS_ADMIN;
+                const config = ROLE_CONFIGS[staff.role] || ROLE_CONFIGS.SALES_ADMIN;
                 const isMaster = staff.role === "MASTER_ADMIN";
 
                 return (
@@ -488,11 +452,7 @@ export default function StaffManager() {
                     onChange={(e) => setFormRole(e.target.value as UserRole)}
                     className="w-full h-9 px-2.5 rounded-lg border border-slate-300 bg-white font-medium text-xs text-slate-800 focus:outline-none focus:ring-2 focus:ring-slate-900 focus:border-slate-900"
                   >
-                    <option value="TOURS_ADMIN">Tours &amp; Packages Desk</option>
-                    <option value="FLIGHTS_ADMIN">Ticketing &amp; Flights Desk</option>
-                    <option value="HOTELS_ADMIN">Hotels &amp; Stays Desk</option>
-                    <option value="VISA_ADMIN">Visa Documentation Desk</option>
-                    <option value="MEDIA_ADMIN">Media &amp; Gallery Desk</option>
+                    <option value="SALES_ADMIN">Sales Login (CRM &amp; Operations)</option>
                     <option value="MASTER_ADMIN">Master Administrator</option>
                   </select>
                 </div>

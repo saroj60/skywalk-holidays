@@ -106,7 +106,7 @@ export default function Footer() {
                 <div className="flex flex-col gap-1">
                   {(company.phoneNumbers && company.phoneNumbers.length > 0
                     ? company.phoneNumbers
-                    : ["+977 971-4491103", "+977 970-7054143", "+977 970-7054144"]
+                    : ["+977 970-7054143", "+977 970-7054144", "+977 971-4491103"]
                   ).map((num) => (
                     <a
                       key={num}

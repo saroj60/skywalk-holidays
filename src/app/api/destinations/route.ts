@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getStoredDestinations, saveStoredDestinations } from "@/lib/server/destinationsStore";
+import { getStoredDestinationsAsync, saveStoredDestinationsAsync } from "@/lib/server/destinationsStore";
 import { getAdminUserFromRequest } from "@/lib/auth";
 
 export const dynamic = "force-dynamic";
@@ -18,7 +18,7 @@ function checkIsAdmin(req: NextRequest) {
 }
 
 export async function GET() {
-  const destinations = getStoredDestinations();
+  const destinations = await getStoredDestinationsAsync();
   return NextResponse.json(
     { success: true, destinations },
     {
@@ -39,12 +39,12 @@ export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
     if (Array.isArray(body)) {
-      saveStoredDestinations(body);
+      await saveStoredDestinationsAsync(body);
       return NextResponse.json({ success: true, destinations: body });
     }
-    const current = getStoredDestinations();
+    const current = await getStoredDestinationsAsync();
     const updated = [body, ...current.filter((c) => c.id !== body.id)];
-    saveStoredDestinations(updated);
+    await saveStoredDestinationsAsync(updated);
     return NextResponse.json({ success: true, destinations: updated });
   } catch (err: any) {
     return NextResponse.json({ error: err.message }, { status: 500 });

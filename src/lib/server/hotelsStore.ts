@@ -1,5 +1,6 @@
 import fs from "fs";
 import path from "path";
+import { getSiteDataFromDb, saveSiteDataToDb } from "@/lib/server/siteDataStore";
 
 export interface HotelRecord {
   id: string;
@@ -163,4 +164,56 @@ export function deleteStoredHotel(id: string): boolean {
     console.error("Error deleting hotel:", e);
     return false;
   }
+}
+
+export async function getStoredHotelsAsync(): Promise<HotelRecord[]> {
+  const dbData = await getSiteDataFromDb<HotelRecord[]>("hotels");
+  if (dbData && Array.isArray(dbData) && dbData.length > 0) {
+    return dbData;
+  }
+  return getStoredHotels();
+}
+
+export async function saveStoredHotelAsync(hotel: Partial<HotelRecord>): Promise<HotelRecord> {
+  const current = await getStoredHotelsAsync();
+  const id = hotel.id || `HTL-${Date.now()}`;
+  const existingIdx = current.findIndex((h) => h.id === id);
+
+  const record: HotelRecord = {
+    id,
+    name: hotel.name || "Hotel Accommodation",
+    location: hotel.location || "City Center",
+    rating: hotel.rating ? Number(hotel.rating) : 4.8,
+    reviews: hotel.reviews ? Number(hotel.reviews) : 100,
+    price: hotel.price !== undefined ? Number(hotel.price) : 12000,
+    category: hotel.category || "4-Star Deluxe",
+    image: hotel.image || "https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800&q=80",
+    amenities: Array.isArray(hotel.amenities) ? hotel.amenities : ["Free Wi-Fi", "Daily Breakfast"],
+    status: hotel.status || "ACTIVE",
+  };
+
+  if (existingIdx >= 0) {
+    current[existingIdx] = record;
+  } else {
+    current.unshift(record);
+  }
+
+  await saveSiteDataToDb("hotels", current);
+  try {
+    if (!fs.existsSync(DATA_DIR)) fs.mkdirSync(DATA_DIR, { recursive: true });
+    fs.writeFileSync(HOTELS_FILE, JSON.stringify(current, null, 2), "utf-8");
+  } catch (e) {}
+
+  return record;
+}
+
+export async function deleteStoredHotelAsync(id: string): Promise<boolean> {
+  const current = await getStoredHotelsAsync();
+  const filtered = current.filter((h) => h.id !== id);
+  await saveSiteDataToDb("hotels", filtered);
+  try {
+    if (!fs.existsSync(DATA_DIR)) fs.mkdirSync(DATA_DIR, { recursive: true });
+    fs.writeFileSync(HOTELS_FILE, JSON.stringify(filtered, null, 2), "utf-8");
+  } catch (e) {}
+  return true;
 }

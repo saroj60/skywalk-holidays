@@ -29,6 +29,7 @@ interface TwoFactorPendingState {
 
 export default function AdminLoginForm() {
   const router = useRouter();
+  const [loginMode, setLoginMode] = useState<"admin" | "sales">("admin");
   const [loginEmail, setLoginEmail] = useState("");
   const [loginPassword, setLoginPassword] = useState("");
   const [loginError, setLoginError] = useState("");
@@ -81,8 +82,8 @@ export default function AdminLoginForm() {
         }
 
         if (data.success && data.user) {
-          const roleKey = (data.user.role || "TOURS_ADMIN") as UserRole;
-          const config = ROLE_CONFIGS[roleKey];
+          const roleKey = (data.user.role || "SALES_ADMIN") as UserRole;
+          const config = ROLE_CONFIGS[roleKey] || ROLE_CONFIGS.SALES_ADMIN;
           const userObj = {
             id: data.user.id || `usr-${roleKey.toLowerCase()}`,
             name: data.user.name || "Staff Member",
@@ -96,8 +97,10 @@ export default function AdminLoginForm() {
           if (typeof window !== "undefined") {
             localStorage.setItem("skywalk_admin_logged", "true");
             localStorage.setItem("skywalk_admin_user", JSON.stringify(userObj));
+            document.cookie = "skywalk_admin_logged=true; path=/; max-age=604800; SameSite=Lax";
             if (data.token) {
               localStorage.setItem("skywalk_admin_token", data.token);
+              document.cookie = `skywalk_admin_token=${data.token}; path=/; max-age=604800; SameSite=Lax`;
             }
           }
 
@@ -363,15 +366,48 @@ export default function AdminLoginForm() {
           </div>
         </div>
         <h1 className="mt-4 text-center text-2xl font-extrabold tracking-tight text-white">
-          Skywalks Admin &amp; Staff Login
+          Skywalks Admin &amp; Sales Login
         </h1>
         <p className="mt-1 text-center text-xs text-sky-200/70">
-          Secure Department Operations &amp; Content Management Portal
+          Secure Portal for Administrator &amp; Sales Team
         </p>
       </div>
 
       <div className="mt-6 sm:mx-auto sm:w-full sm:max-w-md px-4 relative z-10">
         <div className="bg-white py-8 px-6 sm:px-8 shadow-2xl border border-slate-100 rounded-3xl text-slate-900 text-left">
+          {/* 2-Login Mode Selector: Admin Login & Sales Login */}
+          <div className="grid grid-cols-2 gap-1.5 bg-slate-100 p-1 rounded-xl mb-5">
+            <button
+              type="button"
+              onClick={() => {
+                setLoginMode("admin");
+                setLoginError("");
+              }}
+              className={`py-2 px-3 rounded-lg text-xs font-bold transition-all flex items-center justify-center gap-1.5 ${
+                loginMode === "admin"
+                  ? "bg-[#0a1628] text-white shadow-sm"
+                  : "text-slate-600 hover:text-slate-900"
+              }`}
+            >
+              <ShieldCheck size={14} />
+              Admin Login
+            </button>
+            <button
+              type="button"
+              onClick={() => {
+                setLoginMode("sales");
+                setLoginError("");
+              }}
+              className={`py-2 px-3 rounded-lg text-xs font-bold transition-all flex items-center justify-center gap-1.5 ${
+                loginMode === "sales"
+                  ? "bg-[#0ea5e9] text-white shadow-sm"
+                  : "text-slate-600 hover:text-slate-900"
+              }`}
+            >
+              <Layers size={14} />
+              Sales Login
+            </button>
+          </div>
           {loginError && (
             <div className="mb-4 bg-rose-50 border border-rose-200 text-rose-700 text-xs p-3.5 rounded-xl flex items-center gap-2">
               <AlertCircle size={16} className="shrink-0 text-rose-500" />
@@ -393,7 +429,11 @@ export default function AdminLoginForm() {
                 autoCapitalize="none"
                 value={loginEmail}
                 onChange={(e) => setLoginEmail(e.target.value)}
-                placeholder="Enter work email manually"
+                placeholder={
+                  loginMode === "admin"
+                    ? "admin@skywalkholiday.com"
+                    : "sales@skywalkholiday.com"
+                }
                 className="bg-white border-slate-300 text-sm h-11 focus:ring-2 focus:ring-[#0ea5e9] focus:border-[#0ea5e9] rounded-xl"
               />
             </div>
