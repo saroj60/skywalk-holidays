@@ -225,7 +225,7 @@ export default function PackageInquirySidebar({
             ) : (
               <>
                 <Send size={14} />
-                Send Inquiry via WhatsApp
+                Send Inquiry
               </>
             )}
           </Button>
